@@ -290,7 +290,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
 
     private int doLoginSync() {
 
-        ToastUtils.showToast(MainActivity.getInstance(), "开始登录...");
+        // ToastUtils.showToast(MainActivity.getInstance(), "开始登录...");
         int loginstatus = loginSync();
 
         if (loginstatus == Integer.MIN_VALUE) {

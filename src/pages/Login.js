@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-17 17:02:53
+ * @Last Modified time: 2017-10-17 18:22:13
  */
 
 import React, { Component } from 'react';
@@ -16,9 +16,7 @@ import { NativeModules } from 'react-native';
 
 
 var anyOfficeLogin = NativeModules.AnyOfficeLogin;
-let name = ''
-let pswd = ''
-let navigate = ''
+var waitingLogin = false;
 
 const validate = values => {
     const error = {};
@@ -44,78 +42,78 @@ const validate = values => {
     return error;
 };
 
-waitingLogin = false;
+// waitingLogin = false;
 
-let success = resp => {
-    if (resp.BK_STATUS == "00") {
-        // alert(JSON.stringify(resp))
-        storage.save({
-            key: 'user',
-            data: JSON.stringify(resp),
-            // expires: 1000 * 3600 
-        }).then(() => navigate('Home'))
-    } else {
-        Toast.show({
-            text: resp.BK_DESC,
-            position: 'bottom',
-            buttonText: 'OK',
-            type: 'danger',
-            duration: 4000
-        })
-    }
-};
+// let success = resp => {
+//     if (resp.BK_STATUS == "00") {
+//         // alert(JSON.stringify(resp))
+//         storage.save({
+//             key: 'user',
+//             data: JSON.stringify(resp),
+//             // expires: 1000 * 3600 
+//         }).then(() => navigate('Home'))
+//     } else {
+//         Toast.show({
+//             text: resp.BK_DESC,
+//             position: 'bottom',
+//             buttonText: 'OK',
+//             type: 'danger',
+//             duration: 4000
+//         })
+//     }
+// };
 
-let failure = error => {
-    Toast.show({
-        text: error,
-        position: 'bottom',
-        buttonText: 'OK',
-        type: 'danger',
-        duration: 4000
-    })
-};
-
-
-DeviceEventEmitter.addListener("onNetConnected", (msg) => {
-    if (waitingLogin) {
-        waitingLogin = false;
-        fetchPost('A08461101', {
-            empeIdLandNm: name,
-            usrPswd: pswd,
-            cstCtcTel: '',
-            usrIpAdr: ''
-        }, success, failure);
-    }
-
-    // availabe for all requests
-});
-
-DeviceEventEmitter.addListener("onNetConnecting", (isConnecting) => {
-    //isConnecting == true 
-    //show loading 
-    //else hideloading
-});
-DeviceEventEmitter.addListener("onNetError", (errorCode) => {
-    alert(anyofficeCodeUtil(errorCode));
-});
-DeviceEventEmitter.addListener("onLoginError", (errorCode) => {
-    alert(anyofficeCodeUtil(errorCode));
-    //only triggered by auto relogin  
-    // this can be the same as login method's callback
-});
+// let failure = error => {
+//     Toast.show({
+//         text: error,
+//         position: 'bottom',
+//         buttonText: 'OK',
+//         type: 'danger',
+//         duration: 4000
+//     })
+// };
 
 
-const submit = (values) => {
-    name = values.name;
-    pswd = values.password;
-    waitingLogin = true;
-    //"bktest2.vu","ccb123456"
-    anyOfficeLogin.login(values.name, values.password, () => {
-        //waitingLogin = true;
-    }, rs => {
-        alert('Anyoffice连接失败');
-        waitingLogin = false;
-    });
+// DeviceEventEmitter.addListener("onNetConnected", (msg) => {
+//     if (waitingLogin) {
+//         waitingLogin = false;
+//         fetchPost('A08461101', {
+//             empeIdLandNm: name,
+//             usrPswd: pswd,
+//             cstCtcTel: '',
+//             usrIpAdr: ''
+//         }, success, failure);
+//     }
+
+//     // availabe for all requests
+// });
+
+// DeviceEventEmitter.addListener("onNetConnecting", (isConnecting) => {
+//     //isConnecting == true 
+//     //show loading 
+//     //else hideloading
+// });
+// DeviceEventEmitter.addListener("onNetError", (errorCode) => {
+//     alert(anyofficeCodeUtil(errorCode));
+// });
+// DeviceEventEmitter.addListener("onLoginError", (errorCode) => {
+//     alert(anyofficeCodeUtil(errorCode));
+//     //only triggered by auto relogin  
+//     // this can be the same as login method's callback
+// });
+
+
+// const submit = (values) => {
+//     name = values.name;
+//     pswd = values.password;
+//     waitingLogin = true;
+//     //"bktest2.vu","ccb123456"
+//     anyOfficeLogin.login(values.name, values.password, () => {
+//         //waitingLogin = true;
+//     }, rs => {
+//         alert('Anyoffice连接失败');
+//         waitingLogin = false;
+//     });
 
 
     // const json = await this.fetchUser();
@@ -189,15 +187,46 @@ const submit = (values) => {
     //         duration: 2000
     //     })
     // }
-}
+// }
 
 
 
 class LoginForm extends Component {
+
+    name =''
+    pswd=''
+
     constructor(props) {
         super(props);
         this.renderInput = this.renderInput.bind(this);
-        navigate = this.props.navigation.navigate;
+
+        DeviceEventEmitter.addListener("onNetConnected", (msg) => {
+            if (waitingLogin) {
+                waitingLogin = false;
+                fetchPost('A08461101', {
+                    empeIdLandNm: this.name,
+                    usrPswd: this.pswd,
+                    cstCtcTel: '',
+                    usrIpAdr: ''
+                }, this._success, this._failure);
+            }
+        
+            // availabe for all requests
+        });
+        
+        DeviceEventEmitter.addListener("onNetConnecting", (isConnecting) => {
+            //isConnecting == true 
+            //show loading 
+            //else hideloading
+        });
+        DeviceEventEmitter.addListener("onNetError", (errorCode) => {
+            alert(anyofficeCodeUtil(errorCode));
+        });
+        DeviceEventEmitter.addListener("onLoginError", (errorCode) => {
+            alert(anyofficeCodeUtil(errorCode));
+            //only triggered by auto relogin  
+            // this can be the same as login method's callback
+        });
     }
 
     renderInput({ input, meta: { touched, error, warning } }) {
@@ -223,7 +252,7 @@ class LoginForm extends Component {
                             <Image source={require('../img/CCB.png')} style={{ alignSelf: 'center' }} />
                             <Field name='name' component={this.renderInput} />
                             <Field name='password' component={this.renderInput} />
-                            <Button rounded primary small style={styles.loginbtn} onPress={handleSubmit(submit)}>
+                            <Button rounded primary small style={styles.loginbtn} onPress={handleSubmit(this._submit)}>
                                 <Text> 登陆</Text>
                             </Button>
                         </Content>
@@ -232,6 +261,49 @@ class LoginForm extends Component {
             </Root>
         )
     }
+
+    _submit = (values) => {
+        this.name = values.name;
+        this.pswd = values.password;
+        waitingLogin = true;
+        //"bktest2.vu","ccb123456"
+        anyOfficeLogin.login(values.name, values.password, () => {
+            //waitingLogin = true;
+        }, rs => {
+            alert('Anyoffice连接失败');
+            waitingLogin = false;
+        });
+    }
+
+    _success = resp => {
+        if (resp.BK_STATUS == "00") {
+            // alert(JSON.stringify(resp))
+            storage.save({
+                key: 'user',
+                data: JSON.stringify(resp),
+                // expires: 1000 * 3600 
+            }).then(() => this.props.navigation.navigate('Home'))
+        } else {
+            Toast.show({
+                text: resp.BK_DESC,
+                position: 'bottom',
+                buttonText: 'OK',
+                type: 'danger',
+                duration: 4000
+            })
+        }
+    };
+    
+    _failure = error => {
+        Toast.show({
+            text: error,
+            position: 'bottom',
+            buttonText: 'OK',
+            type: 'danger',
+            duration: 4000
+        })
+    };
+
 }
 
 const styles = StyleSheet.create({
