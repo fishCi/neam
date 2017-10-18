@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-13 16:40:25
+ * @Last Modified time: 2017-10-18 10:36:26
 */
 
 import React from 'react';
@@ -23,6 +23,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { PieChart } from 'react-native-charts-wrapper';
 import { getUser } from '../../utils/StorageUtil'
 import { fetchPost } from '../../utils/fetchAPI';
+import LoadingView from '../../components/LoadingView';
 
 const legend = {
   enabled: true,
@@ -37,15 +38,16 @@ class PartyInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ready: false,
-      position: this.props.navigation.state.params.pos, //enum：zongzhi，zhibu
+      showLoading: false,
+      position: '123',//this.props.navigation.state.params.pos, //enum：zongzhi，zhibu
       branch: '第一党支部',
       group: '第一党小组',
       data: getPartyPieData('sex')
     }
   }
-  
-  department = this.props.navigation.state.params.department.split(' ');
+
+  // department = this.props.navigation.state.params.department.split(' ');
+  department= ['1','2','3']
   info = {
     centerData: {
       sj: '',
@@ -93,7 +95,7 @@ class PartyInfo extends React.Component {
   render() {
     // info = getPartyInfoData(this.state.branch, this.state.group)
     return (
-      <View style={{ flex: 1, margin: 10 }}>
+      <Root style={{ flex: 1, margin: 10 }}>
         <ScrollView>
           <View style={{ height: 100, backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
             <View style={{ flex: 1, alignItems: 'center' }}>
@@ -106,11 +108,11 @@ class PartyInfo extends React.Component {
                 <Text style={{ flex: 1, fontSize: 12 }}>副书记：{this.info.centerData.fsj}</Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={{ flex: 1, fontSize: 12 }}>纪检委员：{this.info.centerData.jw}</Text>
                 <Text style={{ flex: 1, fontSize: 12 }}>组织委员：{this.info.centerData.zw}</Text>
+                <Text style={{ flex: 1, fontSize: 12 }}>宣传委员：{this.info.centerData.xw}</Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={{ flex: 1, fontSize: 12 }}>宣传委员：{this.info.centerData.xw}</Text>
+                <Text style={{ flex: 1, fontSize: 12 }}>纪检委员：{this.info.centerData.jw}</Text>
               </View>
             </View>
           </View>
@@ -190,7 +192,7 @@ class PartyInfo extends React.Component {
                   data={this.state.data}
                   legend={legend}
                   entryLabelColor={processColor('black')}
-                  entryLabelTextSize={12}
+                  entryLabelTextSize={0}
                   rotationEnabled={false}
                   drawSliceText={true}
                   usePercentValues={false}
@@ -206,8 +208,9 @@ class PartyInfo extends React.Component {
               </View>
             </View>
           }
+          <LoadingView showLoading={this.state.showLoading} backgroundColor='#323233' opacity={0.8} />
         </ScrollView>
-      </View>
+      </Root>
     );
   }
 
@@ -261,34 +264,33 @@ class PartyInfo extends React.Component {
   }
 
   _success = (resp) => {
-    
-    alert(JSON.stringify(resp))
     if (resp.BK_STATUS == "00") {
-      this._rolemap(this.info.centerData, resp.list1);
-      this._rolemap(this.info.branchData, resp.list2);
-      // this.info.centerDate.sj = resp.list1[0].usrNm
-      // this.info.centerDate.fsj = resp.list1[1].usrNm
-      // this.info.centerDate.jw = resp.list1[2].usrNm
-      // this.info.centerDate.zw = resp.list1[3].usrNm
-      // this.info.centerDate.xw = resp.list1[4].usrNm
-
-      // this.info.branchDate.sj = resp.list2[0].usrNm
-      // this.info.branchDate.fsj = resp.list2[1].usrNm
-      // this.info.branchDate.jw = resp.list2[2].usrNm
-      // this.info.branchDate.zw = resp.list2[3].usrNm
-      // this.info.branchDate.xw = resp.list2[4].usrNm
+      resp.list1 != undefined && this._rolemap(this.info.centerData, resp.list1);
+      resp.list2 != undefined && this._rolemap(this.info.branchData, resp.list2);
 
       this.info.groupData.zz = resp.usrNm;
-      this.info.groupData.zy = resp.list3.map((item)=>item.usrNm).join();
+      resp.list3 != undefined && (this.info.groupData.zy = resp.list3.map((item)=>item.usrNm).join());
  
-      this.setState({ ready: true })
+      this.setState({showLoading:false});
     } else {
-      alert(resp.BK_DESC)
+      Toast.show({
+        text: resp.BK_DESC,
+        position: 'bottom',
+        buttonText: 'OK',
+        duration: 2000
+      });
+      this.setState({showLoading:false});
     }
   };
 
   _failure(error) {
-    alert(error);
+    this.setState({showLoading:false});
+    Toast.show({
+      text: error,
+      position: 'bottom',
+      buttonText: 'OK',
+      duration: 2000
+    });
   };
 
 }

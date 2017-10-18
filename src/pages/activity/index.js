@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-12 20:08:39
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2017-10-18 14:55:46
  */
 
 
@@ -51,10 +51,7 @@ export default class activity extends Component {
             <Icon name='ios-paper-plane-outline' size={30} color='red' />
           </Left>
           <Right>
-            <TouchableOpacity>
-              <Icon name='md-search' size={30} color='skyblue' />
-            </TouchableOpacity>
-            <EmptyView w={10} />
+            
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Create')}>
               <Icon name='md-add' size={30} color='skyblue' />
             </TouchableOpacity>
@@ -69,16 +66,7 @@ export default class activity extends Component {
             data={butts}
             renderItem={this._renderButtonItem}
           />
-          <ModalDropdown style={{ alignSelf: 'center' }}
-            options={buttonmenus}
-            dropdownStyle={{ alignSelf: 'center', width: 200, height: 70, borderWidth: 2, borderRadius: 3 }}
-            onSelect={(idx, value) => this._dropdown_onSelect(idx, value)}>
-            <View style={{ width: 200, alignItems: 'center' }}>
-              <Image
-                source={require('../../img/activity/unfold.png')}
-              />
-            </View>
-          </ModalDropdown>
+          
         </View>
         <View style={styles.activityList}>
           {ready ? <FlatList

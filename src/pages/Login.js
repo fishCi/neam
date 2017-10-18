@@ -1,18 +1,19 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-17 18:22:13
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2017-10-18 14:44:52
  */
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, ImageBackground, DeviceEventEmitter } from 'react-native';
+import { View, StyleSheet, Image, ImageBackground, DeviceEventEmitter, Keyboard ,TextInput} from 'react-native';
 import { Container, Item, Input, Header, Body, Content, Title, Button, Text, Spinner, Label, Toast, Root } from 'native-base';
 import { Field, reduxForm } from 'redux-form';
 import common from '../common'
 import { fetchPost } from '../utils/fetchAPI';
 import { anyofficeCodeUtil } from '../utils/AnyOfficeCodeUtil'
 import { NativeModules } from 'react-native';
+import LoadingView from '../components/LoadingView';
 
 
 var anyOfficeLogin = NativeModules.AnyOfficeLogin;
@@ -116,133 +117,166 @@ const validate = values => {
 //     });
 
 
-    // const json = await this.fetchUser();
-    // if (json.results[0].login.username == values.name
-    //     && json.results[0].login.password == values.password) {
-    //     navigate('Home');
-    // } else {
-    //     Toast.show({
-    //         text: '登录失败!',
-    //         position: 'bottom',
-    //         buttonText: 'OK',
-    //         type:'danger',
-    //         duration:2000
-    //     })
-    // }
+// const json = await this.fetchUser();
+// if (json.results[0].login.username == values.name
+//     && json.results[0].login.password == values.password) {
+//     navigate('Home');
+// } else {
+//     Toast.show({
+//         text: '登录失败!',
+//         position: 'bottom',
+//         buttonText: 'OK',
+//         type:'danger',
+//         duration:2000
+//     })
+// }
 
-    // const testdata = [{
-    //     title: '北京开发中心运动会',
-    //     address: '晓月楼412',
-    //     type: '党员活动',
-    //     // secondtype: '',
-    //     content: '党员活动内容',
-    //     tip: '带好防暑装备',
-    //     isreg: false,
-    //     starttime: '2017-09-20 00:00',
-    //     endtime: '2017-09-20 12:00',
-    //     regstarttime: '',
-    //     regendtime: '',
-    //     host: '张三',
-    //     phone: '88888888'
-    // },
-    // {
-    //     title: '团员植树节',
-    //     address: '致真大厦1010',
-    //     type: '团员活动',
-    //     // secondtype: '',
-    //     content: '植树造林，减少碳排放',
-    //     tip: '带好防暑装备',
-    //     isreg: false,
-    //     starttime: '2017-08-10 11:00',
-    //     endtime: '2017-08-10 17:00',
-    //     regstarttime: '',
-    //     regendtime: '',
-    //     host: '李四',
-    //     phone: '18569547212'
-    // }
+// const testdata = [{
+//     title: '北京开发中心运动会',
+//     address: '晓月楼412',
+//     type: '党员活动',
+//     // secondtype: '',
+//     content: '党员活动内容',
+//     tip: '带好防暑装备',
+//     isreg: false,
+//     starttime: '2017-09-20 00:00',
+//     endtime: '2017-09-20 12:00',
+//     regstarttime: '',
+//     regendtime: '',
+//     host: '张三',
+//     phone: '88888888'
+// },
+// {
+//     title: '团员植树节',
+//     address: '致真大厦1010',
+//     type: '团员活动',
+//     // secondtype: '',
+//     content: '植树造林，减少碳排放',
+//     tip: '带好防暑装备',
+//     isreg: false,
+//     starttime: '2017-08-10 11:00',
+//     endtime: '2017-08-10 17:00',
+//     regstarttime: '',
+//     regendtime: '',
+//     host: '李四',
+//     phone: '18569547212'
+// }
 
-    // ]
-    // await storage.save({
-    //     key: 'Activity',
-    //     id: testdata[0].title,
-    //     data: JSON.stringify(testdata[0]),
-    //     // expires: 1000 * 3600 
-    // })
-    // await storage.save({
-    //     key: 'Activity',
-    //     id: testdata[1].title,
-    //     data: JSON.stringify(testdata[1]),
-    //     // expires: 1000 * 3600 
-    // })
+// ]
+// await storage.save({
+//     key: 'Activity',
+//     id: testdata[0].title,
+//     data: JSON.stringify(testdata[0]),
+//     // expires: 1000 * 3600 
+// })
+// await storage.save({
+//     key: 'Activity',
+//     id: testdata[1].title,
+//     data: JSON.stringify(testdata[1]),
+//     // expires: 1000 * 3600 
+// })
 
-    // if ('test' == values.name
-    //     && 'test' == values.password) {
-    //     navigate('Home');
-    // } else {
-    //     Toast.show({
-    //         text: '登录失败!',
-    //         position: 'bottom',
-    //         buttonText: 'OK',
-    //         type: 'danger',
-    //         duration: 2000
-    //     })
-    // }
+// if ('test' == values.name
+//     && 'test' == values.password) {
+//     navigate('Home');
+// } else {
+//     Toast.show({
+//         text: '登录失败!',
+//         position: 'bottom',
+//         buttonText: 'OK',
+//         type: 'danger',
+//         duration: 2000
+//     })
+// }
 // }
 
 
 
-class LoginForm extends Component {
-
-    name =''
-    pswd=''
+export default class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-        this.renderInput = this.renderInput.bind(this);
 
         DeviceEventEmitter.addListener("onNetConnected", (msg) => {
             if (waitingLogin) {
                 waitingLogin = false;
                 fetchPost('A08461101', {
-                    empeIdLandNm: this.name,
-                    usrPswd: this.pswd,
+                    empeIdLandNm: this.state.name,
+                    usrPswd: this.state.pswd,
                     cstCtcTel: '',
                     usrIpAdr: ''
                 }, this._success, this._failure);
             }
-        
+
             // availabe for all requests
         });
-        
+
         DeviceEventEmitter.addListener("onNetConnecting", (isConnecting) => {
+
             //isConnecting == true 
             //show loading 
             //else hideloading
         });
         DeviceEventEmitter.addListener("onNetError", (errorCode) => {
-            alert(anyofficeCodeUtil(errorCode));
+            Toast.show({
+                text: anyofficeCodeUtil(errorCode),
+                position: 'bottom',
+                buttonText: 'OK',
+                duration: 2000
+            })
+            this.setState({
+                showLoading: false,
+            });
         });
         DeviceEventEmitter.addListener("onLoginError", (errorCode) => {
-            alert(anyofficeCodeUtil(errorCode));
+            Toast.show({
+                text: anyofficeCodeUtil(errorCode),
+                position: 'bottom',
+                buttonText: 'OK',
+                duration: 2000
+            })
+            this.setState({
+                name:'',
+                pswd:'',
+                showLoading: false,
+            });
             //only triggered by auto relogin  
             // this can be the same as login method's callback
         });
+
+        this.state = {
+            showLoading: false,
+        }
     }
 
-    renderInput({ input, meta: { touched, error, warning } }) {
-        var hasError = false;
-        if (error !== undefined) {
-            hasError = true;
-        }
-        return (
-            <Item error={hasError} inlineLabel style={{ width: common.width * 4 / 5 }}>
-                <Label>{input.name == 'name' ? '用户名:' : '密码:'}</Label>
-                {input.name == 'name' ? <Input {...input} /> : <Input {...input} secureTextEntry />}
-                {hasError ? <Text style={{ color: 'red' }}>{error}</Text> : <Text />}
-            </Item>
-        )
+    componentWillMount() {
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
+
+    componentWillUnmount() {
+        this.keyboardDidHideListener.remove();
+    }
+
+    _keyboardDidHide = () => {
+        this.refs.textInput1.blur();
+        this.refs.textInput2.blur();
+    }
+
+    // renderInput({ input, meta: { touched, error, warning } }) {
+    //     var hasError = false;
+    //     if (error !== undefined) {
+    //         hasError = true;
+    //     }
+    //     return (
+    //         <Item error={hasError} inlineLabel style={{ width: common.width * 4 / 5 }}>
+    //             <Label>{input.name == 'name' ? '用户名:' : '密码:'}</Label>
+    //             {input.name == 'name' ? <Input {...input} /> : <Input {...input} secureTextEntry/>}
+    //             {hasError ? <Text style={{ color: 'red' }}>{error}</Text> : <Text />}
+    //         </Item>
+    //     )
+    // }
     render() {
+        console.log("render" + this.state.showLoading);
         const { handleSubmit, navigation: { navigate } } = this.props;
         return (
             <Root>
@@ -250,32 +284,73 @@ class LoginForm extends Component {
                     <Container style={styles.userform}>
                         <Content padder>
                             <Image source={require('../img/CCB.png')} style={{ alignSelf: 'center' }} />
-                            <Field name='name' component={this.renderInput} />
-                            <Field name='password' component={this.renderInput} />
-                            <Button rounded primary small style={styles.loginbtn} onPress={handleSubmit(this._submit)}>
-                                <Text> 登陆</Text>
+
+                            <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
+                                <Label>用户名: </Label>
+                                <TextInput 
+                                  style={{flex:1,fontSize: 16}}
+                                  onChangeText={(name) => this.setState({ name})}
+                                  value={this.state.name}
+                                  underlineColorAndroid="transparent"
+                                  ref="textInput1"
+                                />
+                            </Item>
+                            <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
+                                <Label>密码: </Label>
+                                <TextInput
+                                  secureTextEntry = {true}
+                                  style={{flex:1,fontSize: 16}}
+                                  onChangeText={(pswd) => this.setState({ pswd})}
+                                  underlineColorAndroid="transparent"
+                                  value={this.state.pswd}
+                                  ref="textInput2"
+                                  />
+                            </Item>
+                            <Button rounded primary small style={styles.loginbtn} onPress={this._submit}>
+                                <Text>登陆</Text>
                             </Button>
                         </Content>
                     </Container>
                 </ImageBackground>
+                {this.state.showLoading && <LoadingView showLoading={true} backgroundColor='#323233' opacity={0.8} />}
             </Root>
         )
     }
 
-    _submit = (values) => {
-        this.name = values.name;
-        this.pswd = values.password;
+    _submit = () => {
         waitingLogin = true;
-        //"bktest2.vu","ccb123456"
-        anyOfficeLogin.login(values.name, values.password, () => {
-            //waitingLogin = true;
-        }, rs => {
-            alert('Anyoffice连接失败');
-            waitingLogin = false;
+        this.setState({
+            showLoading: true,
         });
+
+        // fetchPost('A08461101', {
+        //     empeIdLandNm: this.state.name,
+        //     usrPswd: this.state.pswd,
+        //     cstCtcTel: '',
+        //     usrIpAdr: ''
+        // }, this._success, this._failure);
+        setTimeout(
+            ()=>anyOfficeLogin.login(this.state.name, this.state.password, () => {
+            //waitingLogin = true;
+                }, rs => {
+                this.setState({
+                    showLoading: false,
+                });
+                Toast.show({
+                    text: "AnyOffice连接失败！",
+                    position: 'bottom',
+                    buttonText: 'OK',
+                    duration: 2000
+                });
+                waitingLogin = false;
+            }), 1
+        );
     }
 
     _success = resp => {
+        this.setState({
+            showLoading: false,
+        });
         if (resp.BK_STATUS == "00") {
             // alert(JSON.stringify(resp))
             storage.save({
@@ -288,20 +363,21 @@ class LoginForm extends Component {
                 text: resp.BK_DESC,
                 position: 'bottom',
                 buttonText: 'OK',
-                type: 'danger',
-                duration: 4000
+                duration: 2000
             })
         }
     };
-    
+
     _failure = error => {
+        this.setState({
+            showLoading: false,
+        });
         Toast.show({
             text: error,
             position: 'bottom',
             buttonText: 'OK',
-            type: 'danger',
-            duration: 4000
-        })
+            duration: 2000
+        });
     };
 
 }
@@ -327,9 +403,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default reduxForm({
-    form: 'loginform',
-    validate
-})(LoginForm)
+// export default reduxForm({
+//     form: 'loginform',
+//     validate
+// })(LoginForm)
 
 

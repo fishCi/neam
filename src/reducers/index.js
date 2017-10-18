@@ -16,13 +16,11 @@
  *
  */
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 
 import read from './read';
 import category from './category';
 
 const rootReducer = combineReducers({
-  form: formReducer,
   read,
   category
 });

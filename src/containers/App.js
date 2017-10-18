@@ -103,7 +103,7 @@ const App = StackNavigator(
     },
   },
   {
-    initialRouteName:'Splash',
+    initialRouteName:'Login',
     headerMode: 'screen',
     navigationOptions: {
       headerStyle: {

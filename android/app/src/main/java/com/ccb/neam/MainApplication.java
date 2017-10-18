@@ -7,12 +7,13 @@ import android.os.Bundle;
 import com.ccb.neam.module.AppReactPackage;
 import com.ccb.neam.utils.AnyOfficeUtil;
 import com.facebook.react.ReactApplication;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.github.wuxudong.rncharts.MPAndroidChartPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new MPAndroidChartPackage(),
             new VectorIconsPackage(),
+            new MPAndroidChartPackage(),
               new AppReactPackage()
       );
     }
