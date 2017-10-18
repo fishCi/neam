@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-18 14:55:46
+ * @Last Modified by: zhaozheng1.zh
+ * @Last Modified time: 2017-10-18 17:08:20
  */
 
 
@@ -94,15 +94,16 @@ export default class activity extends Component {
   // };
 
 
-  fetchData = (pageNo, pageCount, type, flag) => {
+  fetchData = async (pageNo, pageCount, type, flag) => {
     const now = new Date();
     const beginDate = now.getFullYear() + "" + this.formatTime(now.getMonth() + 1) + "" + this.formatTime(now.getDate());
     const beginTime = '000000';
     const end = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 30);
     const endDate = end.getFullYear() + "" + this.formatTime(end.getMonth() + 1) + "" + this.formatTime(end.getDate());
     const endTime = '235959';
+    u = await getUser();
     fetchPost('A08464102', {
-      thpyadthmsStmUsrId: '12345678',
+      thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
       thpyadthmsAvyStdt: beginDate,
       thpyadthmsAvySttm: beginTime,
       thpyadthmsAvyEddt: endDate,
@@ -118,6 +119,7 @@ export default class activity extends Component {
   };
 
    _success(resp) {
+     console.log(resp);
     if (resp.BK_STATUS == "00") {
       const acts = this.state.activities.concat(resp.list)
       this.setState({

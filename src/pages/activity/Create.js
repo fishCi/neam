@@ -19,6 +19,7 @@ import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import EmptyView from '../../components/EmptyView'
 import { fetchPost } from '../../utils/fetchAPI'
+import { getUser } from '../../utils/StorageUtil'
 
 
 const ACTIVITY_TYPE = [{ key: '02', value: '党员活动' }, { key: '03', value: '团员活动' }, { key: '04', value: '工会活动' }, { key: '05', value: '协会活动' }, { key: '01', value: '其他活动' }];
@@ -43,7 +44,7 @@ export default class CreateActivity extends Component {
         title: '',
         address: '',
         description: '',
-        type: -1,
+        type: '',
         // secondtype: '',
         detail: '',
         tip: '',
@@ -53,7 +54,9 @@ export default class CreateActivity extends Component {
         regstarttime: '',
         regendtime: '',
         host: '',
-        phone: ''
+        phone: '',
+
+        hasReg:'00'
       }
     } else {
       form = this.props.navigation.state.params.form;
@@ -74,10 +77,11 @@ export default class CreateActivity extends Component {
         regstarttime: form.regstarttime,
         regendtime: form.regendtime,
         host: form.host,
-        phone: form.phone
+        phone: form.phone,
+
+        hasReg:form.hasReg
       };
     }
-    this.handlePress = this.handlePress.bind(this)
   }
 
   componentWillMount() {
@@ -165,7 +169,6 @@ export default class CreateActivity extends Component {
               <Text
                   style={[styles.datetext]}
                   onPress={() =>{
-                    alert("123");
                     ActionSheet.show(
                       {
                         options: types,
@@ -462,19 +465,14 @@ export default class CreateActivity extends Component {
     );
   }
 
-  _submit = () => {
+  _submit = async () => {
+    u = await getUser();
     if (this.validate() == true) {
       this.state.isEdit
-        ? fetchPost('A08464104', { ...this._tranferToJSON(), Pty_Grp_Avy_ID: this.state.actId }, this._success, this._failure)
-        : fetchPost('A08464101', this._tranferToJSON(), this._success, this._failure)
+        ? fetchPost('A08464104', { ...this._tranferToJSON(u), thpyadthmsAvyId: this.state.actId }, this._success, this._failure)
+        : fetchPost('A08464101', this._tranferToJSON(u), this._success, this._failure)
     } else {
       alert(this.validate());
-      // Toast.show({
-      //   text: this.validate(),
-      //   position: 'bottom',
-      //   buttonText: 'OK',
-      //   duration: 2000
-      // });
     }
   }
 
@@ -518,33 +516,40 @@ export default class CreateActivity extends Component {
 
   _tranferToJSON = () => {
     return {
-      Pty_Grp_Avy_Nm: this.state.title,
-      Pty_Grp_Avy_Plc_CntDsc: this.state.address,
-      Pty_Grp_Avy_CntDsc: this.state.description,
-      Pty_Grp_Avy_CLCd: this.state.type,
-      Pty_Grp_Avy_StDt: this.state.starttime.split(' ')[0].replace(/-/g, ''),	    //活动开始日期         
-      Pty_Grp_Avy_StTm: this.state.starttime.split(' ')[1].replace(':', '') + "00",
-      Pty_Grp_Avy_EdDt: this.state.endtime.split(' ')[0].replace(/-/g, ''),		//活动结束日期
-      Pty_Grp_Avy_EdTm: this.state.endtime.split(' ')[1].replace(':', '') + "00",
-      Pty_Grp_Avy_Rgst_Ind: this.state.isreg ? 1 : 0,
-      Pty_Grp_Avy_Rgst_StDt: this.state.isreg ? this.state.regstarttime.split(' ')[0].replace(/-/g, '') : '00000000',		    //活动报名开始日期
-      Pty_Grp_Avy_Rgst_StTm: this.state.isreg ? this.state.regstarttime.split(' ')[1].replace(':', '') + "00" : '000000',
-      Pty_Grp_Avy_Rgst_EdDt: this.state.isreg ? this.state.regendtime.split(' ')[0].replace(/-/g, '') : '00000000',			//活动报名结束日期
-      Pty_Grp_Avy_Rgst_EdTm: this.state.isreg ? this.state.regendtime.split(' ')[1].replace(':', '') + "00" : '000000',
-      Pty_Grp_Avy_CtcPsn_Nm: this.state.host,
-      PtyGrpAvyCtcPsn_TelNo: this.state.phone,
-      Pty_Grp_Avy_Dtl_CntDsc: this.state.detail,
-      PtyGrpAvy_Ancm_CntDsc: this.state.tip,
+      thpyadthmsAvyNm: this.state.title, 
+      thpyadthmavyplccntdsc: this.state.address,
+      thpyadthmsAvyCntdsc: this.state.description,
+      thpyadthmsAvyClcd: typeValue[this.state.type],
+      thpyadthmsAvyStdt: this.state.starttime.split(' ')[0].replace(/-/g, ''),	    //活动开始日期         
+      thpyadthmsAvySttm: this.state.starttime.split(' ')[1].replace(':', '') + "00",
+      thpyadthmsAvyEddt: this.state.endtime.split(' ')[0].replace(/-/g, ''),		//活动结束日期
+      thpyadthmsAvyEdtm: this.state.endtime.split(' ')[1].replace(':', '') + "00",
+      thpyadthmsavyrgstInd: this.state.isreg ? '1' : '0',
+      thpyadthmsavyrgststdt: this.state.isreg ? this.state.regstarttime.split(' ')[0].replace(/-/g, '') : '00000000',		    //活动报名开始日期
+      thpyadthmsavyrgststtm: this.state.isreg ? this.state.regstarttime.split(' ')[1].replace(':', '') + "00" : '000000',
+      thpyadthmsavyrgstcodt: this.state.isreg ? this.state.regendtime.split(' ')[0].replace(/-/g, '') : '00000000',			//活动报名结束日期
+      thpyadthmsargstctoftm: this.state.isreg ? this.state.regendtime.split(' ')[1].replace(':', '') + "00" : '000000',
+      thpyadthmsavyctcpsnnm: this.state.host,
+      thpyadthmactcpsntelno: this.state.phone,
+      thpyadthmavydtlcntdsc: this.state.detail,
+      thpyadthmayancmcntdsc: this.state.tip,
 
-      Pty_Grp_Stm_Usr_ID: '12345678',
-      Empe_Id_Land_Nm: 'zhangsan.zh',
-      HmnRsc_EmpID: '000000000000000',
-      Usr_Nm: '张三',
-      Usr_Blng_Pty_Grp_Org_Nm: '北京开发中心党总支 - 第一党支部 - 第二党小组',   // 用户所属党群组织名称
-      Pty_Grp_Avy_StCd: '04',  //默认生效
-      Pty_Grp_Avy_Itt_TpCd: '01', //默认发起组织类型为党群组织
-      CCBIns_ID: '000000000',
-      Pty_Grp_Org_ID: '0000000000',
+      rmrk1:'',
+      rmrk2:'',
+      rmrk3:'',
+      thpyadthmsAvyStcd: '04',
+      thpyadthmsavyittTpcd:'01',
+      thpyadthmsOrgNm:'',
+      thpyadathmsOrgTpcd:'',
+      ccbinsId:'000000000',
+      thpyadthmsOrgId:u.thpyadthmsOrgId,
+      thpyadthmsStmUsrId:u.thpyadthmsStmUsrId,
+      empeIdLandNm:u.empeIdLandNm,
+      hmnrscEmpid:u.hmnrscEmpid,
+      usrblngthpyathmsorgnm:u.ptytbrOrgId + ' - ' + u.ptybrchOrgId + ' - ' + u.ptygrpOrgId,
+      usrNm:u.usrNm,
+      pcpthpyadthmsavyTpcd:this.state.hasReg
+
     };
   }
 

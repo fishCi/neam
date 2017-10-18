@@ -1,12 +1,12 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-18 14:44:52
+ * @Last Modified by: zhaozheng1.zh
+ * @Last Modified time: 2017-10-18 17:16:37
  */
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, ImageBackground, DeviceEventEmitter, Keyboard ,TextInput} from 'react-native';
+import { View, StyleSheet, Image, ImageBackground, DeviceEventEmitter, Keyboard, TextInput } from 'react-native';
 import { Container, Item, Input, Header, Body, Content, Title, Button, Text, Spinner, Label, Toast, Root } from 'native-base';
 import { Field, reduxForm } from 'redux-form';
 import common from '../common'
@@ -236,8 +236,8 @@ export default class LoginForm extends Component {
                 duration: 2000
             })
             this.setState({
-                name:'',
-                pswd:'',
+                name: '',
+                pswd: '',
                 showLoading: false,
             });
             //only triggered by auto relogin  
@@ -287,24 +287,24 @@ export default class LoginForm extends Component {
 
                             <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
                                 <Label>用户名: </Label>
-                                <TextInput 
-                                  style={{flex:1,fontSize: 16}}
-                                  onChangeText={(name) => this.setState({ name})}
-                                  value={this.state.name}
-                                  underlineColorAndroid="transparent"
-                                  ref="textInput1"
+                                <TextInput
+                                    style={{ flex: 1, fontSize: 16 }}
+                                    onChangeText={(name) => this.setState({ name })}
+                                    value={this.state.name}
+                                    underlineColorAndroid="transparent"
+                                    ref="textInput1"
                                 />
                             </Item>
                             <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
                                 <Label>密码: </Label>
                                 <TextInput
-                                  secureTextEntry = {true}
-                                  style={{flex:1,fontSize: 16}}
-                                  onChangeText={(pswd) => this.setState({ pswd})}
-                                  underlineColorAndroid="transparent"
-                                  value={this.state.pswd}
-                                  ref="textInput2"
-                                  />
+                                    secureTextEntry={true}
+                                    style={{ flex: 1, fontSize: 16 }}
+                                    onChangeText={(pswd) => this.setState({ pswd })}
+                                    underlineColorAndroid="transparent"
+                                    value={this.state.pswd}
+                                    ref="textInput2"
+                                />
                             </Item>
                             <Button rounded primary small style={styles.loginbtn} onPress={this._submit}>
                                 <Text>登陆</Text>
@@ -330,27 +330,24 @@ export default class LoginForm extends Component {
         //     usrIpAdr: ''
         // }, this._success, this._failure);
         setTimeout(
-            ()=>anyOfficeLogin.login(this.state.name, this.state.password, () => {
-            //waitingLogin = true;
-                }, rs => {
+            () => anyOfficeLogin.login(this.state.name, this.state.password, () => {
+                //waitingLogin = true;
+            }, rs => {
                 this.setState({
                     showLoading: false,
                 });
                 Toast.show({
-                    text: "AnyOffice连接失败！",
+                    text: anyofficeCodeUtil(rs),
                     position: 'bottom',
                     buttonText: 'OK',
                     duration: 2000
-                });
+                }); 0
                 waitingLogin = false;
             }), 1
         );
     }
 
     _success = resp => {
-        this.setState({
-            showLoading: false,
-        });
         if (resp.BK_STATUS == "00") {
             // alert(JSON.stringify(resp))
             storage.save({
@@ -358,6 +355,11 @@ export default class LoginForm extends Component {
                 data: JSON.stringify(resp),
                 // expires: 1000 * 3600 
             }).then(() => this.props.navigation.navigate('Home'))
+                .then(() => {
+                    this.setState({
+                        showLoading: false,
+                    });
+                })
         } else {
             Toast.show({
                 text: resp.BK_DESC,
@@ -365,6 +367,9 @@ export default class LoginForm extends Component {
                 buttonText: 'OK',
                 duration: 2000
             })
+            this.setState({
+                showLoading: false,
+            });
         }
     };
 
