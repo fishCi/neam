@@ -24,7 +24,7 @@ const { logger } = require('redux-logger');
 
 /* global __DEV__  */
 if (__DEV__) {
-  middlewares.push(logger);
+  //middlewares.push(logger);
 }
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 

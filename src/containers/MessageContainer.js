@@ -12,7 +12,7 @@ import { ListItem, Header,Left, Body, Right, Text, Thumbnail } from 'native-base
 const notices = [
   { title: '关于2017年度国庆节放假安排通知', note: '10月1日（星期日）至8日放假调休', time: '13:49' },
   { title: '因公出国（境）团组公示', note: '马德里分行技术支持', time: '08:10' },
-  { title: '关于禁止快递、外卖进入汇融大厦通知', note: '维护世界和平', time: '12:00' }
+  { title: '关于禁止快递、外卖进入汇融大厦通知', note: '维护世界和平', time: '12:00', last:true }
 ];
 
 
@@ -29,6 +29,7 @@ class MessageContainer extends Component {
   };
 
   _renderNoticeList = ({ item }) => (
+    item.last == undefined ?
     <ListItem avatar>
       <Left>
         <Image source={require('../img/message/notice.png')} />
@@ -40,7 +41,19 @@ class MessageContainer extends Component {
       <Right>
         <Text note>{item.time}</Text>
       </Right>
-    </ListItem>
+    </ListItem> :
+    <ListItem avatar last>
+    <Left>
+      <Image source={require('../img/message/notice.png')} />
+    </Left>
+    <Body>
+      <Text>{item.title}</Text>
+      <Text note>{item.note}</Text>
+    </Body>
+    <Right>
+      <Text note>{item.time}</Text>
+    </Right>
+  </ListItem> 
   )
 
   render() {
@@ -53,11 +66,13 @@ class MessageContainer extends Component {
           <Right>
           </Right>
         </Header>
-        <FlatList
-          data={notices}
-          keyExtractor={(item, index) => item.title}
-          renderItem={this._renderNoticeList}
-        />
+        <View style={{backgroundColor: '#ffffff'}}>
+          <FlatList
+            data={notices}
+            keyExtractor={(item, index) => item.title}
+            renderItem={this._renderNoticeList}
+          />
+        </View>
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator } from 'react-native'
-import { Container, Header, Content, List, ListItem, Thumbnail, Text, Body, Separator, Left, Right} from 'native-base';
+import { Container,Root, Header, Content, List, ListItem, Thumbnail, Text, Body, Separator, Left, Right} from 'native-base';
 import common from '../../common'
 import EmptyView from '../../components/EmptyView'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,7 +13,7 @@ export default class Person extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ready: false
+      ready: true
     }
   }
 
@@ -49,7 +49,7 @@ export default class Person extends Component {
         };
         item.time = resp.list1[i].rsmStdt;
         item.title = resp.list1[i].ptytbrOrgNm + ' ' + resp.list1[i].ptybrchOrgNm + ' ' + resp.list1[i].ptygrpOrgNm
-        item.description = '党员'
+        item.description = '共产党员'
         this.records.push(item);
       }
       this.setState({ ready: true })
@@ -70,9 +70,10 @@ export default class Person extends Component {
 
   _page = () => {
     return (
+      <Root>
         <Content>
           <List>
-            <ListItem>
+            <ListItem last>
               <Thumbnail square size={80} source={require('../../img/person/hongjun.png')} />
               <Body>
                 <Text>{this.name}</Text>
@@ -80,6 +81,7 @@ export default class Person extends Component {
               </Body>
             </ListItem>
             <Separator />
+            <View style={{backgroundColor: '#ffffff'}}>
             <ListItem icon>
               <Left>
                 <Icon name='ios-contact-outline' size={25} color='skyblue' />
@@ -106,7 +108,7 @@ export default class Person extends Component {
                 <Icon name='ios-arrow-forward-outline' size={25} color='black' />
               </Right>
             </ListItem>
-            <ListItem icon>
+            <ListItem icon last>
               <Left>
                 <Icon name='ios-book-outline' size={25} color='skyblue' />
               </Left>
@@ -117,8 +119,9 @@ export default class Person extends Component {
                 <Icon name='ios-arrow-forward-outline' size={25} color='black' />
               </Right>
             </ListItem>
+            </View>
             <Separator />
-            <ListItem icon>
+            <ListItem icon last>
               <Left>
                 <Icon name='ios-hand-outline' size={25} color='skyblue' />
               </Left>
@@ -130,7 +133,7 @@ export default class Person extends Component {
               </Right>
             </ListItem>
             <Separator />
-            <ListItem icon>
+            <ListItem icon last>
               <Left>
                 <Icon name='ios-build-outline' size={25} color='skyblue' />
               </Left>
@@ -142,8 +145,9 @@ export default class Person extends Component {
               </Right>
             </ListItem>
             <Separator />
-          </List>
+          </List>       
         </Content>
+      </Root>
     );
 
   }

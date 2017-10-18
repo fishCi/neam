@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-13 17:05:43
+ * @Last Modified time: 2017-10-17 23:35:52
  */
 
 import React, { Component } from 'react';
@@ -79,7 +79,6 @@ export default class BackPage extends Component {
         } else {
             alert(resp.BK_DESC)
         }
-        alert(this.props.actId+"##" + this.u.thpyadthmsStmUsrId);
     };
 
     _failure(error) {
@@ -181,8 +180,8 @@ export default class BackPage extends Component {
                 </CardItem>
                 <View style={{ height: 1, backgroundColor: 'lightgray' }} />
                 <CardItem footer>
-                    {this.state.hasReg == '00'? <Button block success onPress={this.registe} style={{ flex: 1, height: 30 }}><Text>报名</Text></Button>
-                    : <Button block disabled onPress={this.registe} style={{ flex: 1, height: 30 }}><Text>已报名</Text></Button> }
+                {this.state.hasReg == '01'? <Button block disabled onPress={this.registe} style={{ flex: 1, height: 30 }}><Text>已报名</Text></Button>
+                : <Button block success onPress={this.registe} style={{ flex: 1, height: 30 }}><Text>报名</Text></Button> }
                 </CardItem>
             </Card>
         )

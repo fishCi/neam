@@ -294,14 +294,14 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
         int loginstatus = loginSync();
 
         if (loginstatus == Integer.MIN_VALUE) {
-            ToastUtils.showToast(MainActivity.getInstance(), "登录失败:" + loginstatus);
+            // ToastUtils.showToast(MainActivity.getInstance(), "登录失败:" + loginstatus);
             return 1;
         } else if (loginstatus != 0) {
             JsCallModule.onNetConnecting(false);
             //HandlerUtils.sendToMain(MyConstants.L_LOADING_END, null);
             //HandlerHelper.getInstance().sendMessage(true, 0, AppConfig.H_AnyOffice_LOGIN_Fail, getAnyofficceByCode(loginstatus));
             //ToastUtils.showToast(context, "登陆失败:" + getAnyofficceByCode(loginstatus));
-            ToastUtils.showToast(MainActivity.getInstance(), "登录失败:" + loginstatus);
+            // ToastUtils.showToast(MainActivity.getInstance(), "登录失败:" + loginstatus);
             JsCallModule.onLoginError(loginstatus);
             return loginstatus;
         } else {
