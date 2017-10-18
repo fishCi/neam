@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-18 17:16:37
+ * @Last Modified time: 2017-10-18 20:33:16
  */
 
 import React, { Component } from 'react';
@@ -323,28 +323,31 @@ export default class LoginForm extends Component {
             showLoading: true,
         });
 
-        // fetchPost('A08461101', {
-        //     empeIdLandNm: this.state.name,
-        //     usrPswd: this.state.pswd,
-        //     cstCtcTel: '',
-        //     usrIpAdr: ''
-        // }, this._success, this._failure);
-        setTimeout(
-            () => anyOfficeLogin.login(this.state.name, this.state.password, () => {
-                //waitingLogin = true;
-            }, rs => {
-                this.setState({
-                    showLoading: false,
-                });
-                Toast.show({
-                    text: anyofficeCodeUtil(rs),
-                    position: 'bottom',
-                    buttonText: 'OK',
-                    duration: 2000
-                }); 0
-                waitingLogin = false;
-            }), 1
-        );
+        if (this.props.navigation.state.params !== undefined) {
+            fetchPost('A08461101', {
+                empeIdLandNm: this.state.name,
+                usrPswd: this.state.pswd,
+                cstCtcTel: '',
+                usrIpAdr: ''
+            }, this._success, this._failure);
+        } else {
+            setTimeout(
+                () => anyOfficeLogin.login(this.state.name, this.state.password, () => {
+                    //waitingLogin = true;
+                }, rs => {
+                    this.setState({
+                        showLoading: false,
+                    });
+                    Toast.show({
+                        text: anyofficeCodeUtil(rs),
+                        position: 'bottom',
+                        buttonText: 'OK',
+                        duration: 2000
+                    }); 0
+                    waitingLogin = false;
+                }), 1
+            );
+        }
     }
 
     _success = resp => {

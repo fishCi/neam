@@ -156,7 +156,7 @@ export default class Person extends Component {
 
  _logout=()=>{
    storage.clearMapForKey('user');
-   this.props.navigation.navigate('Login');
+   this.props.navigation.navigate('Login',{logout:true});
  }
 
   render() {
