@@ -145,12 +145,19 @@ export default class Person extends Component {
               </Right>
             </ListItem>
             <Separator />
-          </List>       
-        </Content>
-      </Root>
-    );
+            <Button full onPress={this._logout}>
+            <Text>退出</Text>
+           </Button>
+         </List>       
+       </Content>
+     </Root>
+   );
+ }
 
-  }
+ _logout=()=>{
+   storage.clearMapForKey('user');
+   this.props.navigation.navigate('Login');
+ }
 
   render() {
     return (
