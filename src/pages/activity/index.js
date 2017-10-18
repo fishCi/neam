@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-18 17:08:20
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2017-10-18 21:00:40
  */
 
 
@@ -69,7 +69,7 @@ export default class activity extends Component {
           
         </View>
         <View style={styles.activityList}>
-          {ready ? <FlatList
+          {ready ? activities.length > 0 ? <FlatList
             data={activities}
             keyExtractor={(item, index) => item.thpyadthmsAvyId}
             renderItem={this._renderActivityItem}
@@ -78,7 +78,7 @@ export default class activity extends Component {
               return pager &&
                 <ActivityIndicator size="large" style={styles.loading} />
             }}
-          />
+          /> :<Text style={{fontSize:16}}> 无活动 </Text>
             : <ActivityIndicator size="large" style={styles.loading} />}
         </View>
       </Root>
@@ -121,7 +121,10 @@ export default class activity extends Component {
    _success(resp) {
      console.log(resp);
     if (resp.BK_STATUS == "00") {
-      const acts = this.state.activities.concat(resp.list)
+      const acts = [];
+      if(resp.list != undefined && resp.list != null && resp.list.length > 0) {
+        acts = this.state.activities.concat(resp.list)
+      }
       this.setState({
         activities: acts
       },
@@ -254,5 +257,3 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-
-
