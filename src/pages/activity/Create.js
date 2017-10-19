@@ -21,6 +21,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import EmptyView from '../../components/EmptyView'
 import { fetchPost } from '../../utils/fetchAPI'
 import { getUser } from '../../utils/StorageUtil'
+import LoadingView from '../../components/LoadingView';
 
 
 const ACTIVITY_TYPE = [{ key: '02', value: '党员活动' }, { key: '03', value: '团员活动' }, { key: '04', value: '工会活动' }, { key: '05', value: '协会活动' }, { key: '01', value: '其他活动' }];
@@ -41,7 +42,6 @@ export default class CreateActivity extends Component {
     if (this.props.navigation.state.params == undefined) {
       this.state = {
         isEdit: false,
-
         title: '',
         address: '',
         description: '',
@@ -56,7 +56,7 @@ export default class CreateActivity extends Component {
         regendtime: '',
         host: '',
         phone: '',
-
+        showLoading: false,
         hasReg:'00'
       }
     } else {
@@ -79,7 +79,7 @@ export default class CreateActivity extends Component {
         regendtime: form.regendtime,
         host: form.host,
         phone: form.phone,
-
+        showLoading: false,
         hasReg:form.hasReg
       };
     }
@@ -101,12 +101,6 @@ export default class CreateActivity extends Component {
     this.refs.textInput4.blur();
     this.refs.textInput5.blur();
     this.refs.textInput6.blur();
-  }
-
-  handlePress(i) {
-    this.setState({
-      type: i
-    })
   }
 
 
@@ -201,7 +195,7 @@ export default class CreateActivity extends Component {
               <Text style={[styles.datetext]}>活动开始时间</Text>
               <DatePicker
                 style={[styles.datepicker, styles.margintop]}
-                date={this.state.starttime}
+                date={this.state.starttime == '000000'?'':this.state.starttime}
                 mode="datetime"
                 placeholder="活动开始时间"
                 format="YYYY-MM-DD HH:mm"
@@ -237,7 +231,7 @@ export default class CreateActivity extends Component {
               <Text style={[styles.datetext]}>活动结束时间</Text>
               <DatePicker
                 style={[styles.datepicker]}
-                date={this.state.endtime}
+                date={this.state.endtime == '000000'?'':this.state.endtime}
                 mode="datetime"
                 placeholder="活动结束时间"
                 format="YYYY-MM-DD HH:mm"
@@ -441,18 +435,21 @@ export default class CreateActivity extends Component {
           <Text style={{ color: 'white' }}>确定</Text>
         </Button>
         <View sytle={[styles.separator]}><Text> </Text></View>
-        
+        <LoadingView showLoading={this.state.showLoading} backgroundColor='#323233' opacity={0.8} />
       </ScrollView>
       </Root>
     );
   }
 
   _submit = async () => {
-    u = await getUser();
+    let u = await getUser();
     if (this.validate() == true) {
+      this.setState({
+        showLoading: true,
+      },
       this.state.isEdit
         ? fetchPost('A08464104', { ...this._tranferToJSON(u), thpyadthmsAvyId: this.state.actId }, this._success, this._failure)
-        : fetchPost('A08464101', this._tranferToJSON(u), this._success, this._failure)
+        : fetchPost('A08464101', this._tranferToJSON(u), this._success, this._failure));
     } else {
       ToastAndroid.show(this.validate(),ToastAndroid.SHORT);
     }
@@ -460,14 +457,22 @@ export default class CreateActivity extends Component {
 
   _success = resp => {
     if (resp.BK_STATUS == "00") {
-      this.props.navigation.navigate('Home')
+        this.setState({
+            showLoading: false,
+        },() => this.props.navigation.navigate('Home'));
     } else {
-      alert(resp.BK_DESC)
+      this.setState({
+        showLoading: false,
+    },
+      ToastAndroid.show(resp.BK_DESC,ToastAndroid.SHORT));
     }
   };
 
   _failure = error => {
-    alert(error);
+    this.setState({
+      showLoading: false,
+    },
+    ToastAndroid.show(error,ToastAndroid.SHORT));
   };
 
 
@@ -496,7 +501,7 @@ export default class CreateActivity extends Component {
   //   }
   // }
 
-  _tranferToJSON = () => {
+  _tranferToJSON = (u) => {
     return {
       thpyadthmsAvyNm: this.state.title, 
       thpyadthmavyplccntdsc: this.state.address,

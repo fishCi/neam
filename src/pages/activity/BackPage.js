@@ -2,11 +2,11 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-17 23:35:52
+ * @Last Modified time: 2017-10-19 16:14:07
  */
 
 import React, { Component } from 'react';
-import { LayoutAnimation, UIManager, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { LayoutAnimation, UIManager, View, TouchableOpacity, StyleSheet, ToastAndroid } from 'react-native';
 import { Container, Header, Left, Body, Right, Button, Title, Text, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import common from '../../common'
@@ -77,12 +77,12 @@ export default class BackPage extends Component {
                 hasReg:resp.pcpthpyadthmsavyTpcd
             });
         } else {
-            alert(resp.BK_DESC)
+            ToastAndroid.show(resp.BK_DESC,ToastAndroid.SHORT);
         }
     };
 
     _failure(error) {
-        alert(error);
+        ToastAndroid.show(error,ToastAndroid.SHORT);
     };
      
     render() {
@@ -194,7 +194,7 @@ export default class BackPage extends Component {
             thpyadthmsStmUsrId: this.u.thpyadthmsStmUsrId
         },
             (resp) => {
-                if (resp.BK_STATUS == "00" &&  resp.ScsInd == "0" ) {
+                if (resp.BK_STATUS == "00" &&  resp.scsInd == "0" ) {
                     this.setState({hasReg:'01'})
                 }else{
                     alert(resp.BK_DESC)

@@ -1,8 +1,8 @@
 /*
-* @Author: miaoxinyu.zh
-* @Date:   2017-08-22 06:06:10
+* @Author: caixin1.zh
+* @Date:   2017-10-19 06:06:10
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-18 21:03:12
+ * @Last Modified time: 2017-10-19 16:55:48
 */
 import React from 'react';
 import {
@@ -12,87 +12,74 @@ import {
   View,
   processColor,
   ScrollView,
-  FlatList,Toast,Root
+  FlatList,Toast,Root, ToastAndroid,Dimensions
 } from 'react-native';
 import { Button, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EmptyView from '../../components/EmptyView';
 import { getUser } from '../../utils/StorageUtil'
 import { fetchPost } from '../../utils/fetchAPI';
+import LoadingView from '../../components/LoadingView';
 
 class PartyFee extends React.Component {
 
   constructor(props) {
     super(props);
+    this.data = [];
+    this.now = new Date()
     this.state = {
       ready: false,
-      year: '2017',
+      year: this.now.getFullYear(),
+      showLoading: true 
     }
   }
-  data = []
 
   async componentDidMount() {
     u = await getUser();    
     fetchPost('A08463104', {
-      thpyadthmsStmUsrId:u.thpyadthmsStmUsrId,
-      yrYyyy: '2017'
-    }, this._success.bind(this), this._failure.bind(this))
+      thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
+      yrYyyy: this.state.year + ""
+    }, this._success.bind(this), this._failure.bind(this));
   }
 
 
 
   _success(resp) {
-    alert(JSON.stringify(resp));
-    if (resp.BK_STATUS == "00") {
-      for (let i = 0; i < resp.LIST1.length; i++) {
-        let item = {
-          month:'',
-          money :'',
-          status :'00'
-        };
-        item.month = resp.LIST1[i].Mo_MO;
-        item.money = resp.LIST1[i].Pbl_Pty_Fee_Amt;
-        item.status = resp.LIST1[i].Py_StCd;
-        this.data.push(item);
+    this.setState({showLoading:false},()=>{
+      if (resp.BK_STATUS == "00") {
+        this.data =[];
+        for (let i = 0; resp.list != undefined && i < resp.list.length; i++) {
+          let item = {
+            month:'',
+            money:'',
+            status:'00'
+          };
+          item.month = resp.list[i].moMo;
+          item.money = resp.list[i].thpyadthmsactPyfAmt;
+          item.status = resp.list[i].thpyadthmsPyfStcd;
+          this.data.push(item);
+        }
+        this.setState({year: resp.yrYyyy});
+      } else {
+        this.setState({showLoading:false},()=>
+        ToastAndroid.show(error, ToastAndroid.SHORT));
       }
-      this.setState({ ready: true })
-    } else {
-      alert(resp.BK_DESC)
-    }
+    })
   };
 
   _failure(error) {
-    alert(error);
+    this.setState({showLoading:false},()=>
+      ToastAndroid.show(JSON.stringify(error), ToastAndroid.SHORT)
+    );
   };
 
   _onClick = year => {
+    if(year == this.state.year) return;
+    this.setState({showLoading:true});
     fetchPost('A08463104', {
-      Pty_Grp_Stm_Usr_ID: '01000364',
-      Yr_YYYY: year
-    },
-      (resp) => {
-        if (resp.BK_STATUS == "00" && resp.ScsInd == "0") {
-          this.data =[];
-          for (let i = 0; i < resp.LIST1.length; i++) {
-            let item = {
-              month:'',
-              money:'',
-              status:'00'
-            };
-            item.month = resp.LIST1[i].Mo_MO;
-            item.money = resp.LIST1[i].Pbl_Pty_Fee_Amt;
-            item.status = resp.LIST1[i].Py_StCd;
-            this.data.push(item);
-          }
-        } else {
-          alert(resp.BK_DESC)
-        }
-      },
-      (error) => {
-        alert(error)
-      }
-    )
-    this.setState({ year: year});
+      thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
+      yrYyyy: year + ""
+    }, this._success.bind(this), this._failure.bind(this))
   }
 
 
@@ -109,13 +96,13 @@ class PartyFee extends React.Component {
         color = 'grey';
     }
     return (
-      <View style={{ flexDirection: 'row', width: 115 }}>
+      <View style={{ flexDirection: 'row', width: (Dimensions.get('window').width - 40) /3, margin:5 }}>
         <Card>
           <CardItem style={{ backgroundColor: color, justifyContent: 'center' }}>
-            <Text>{item.month}</Text>
+            <Text>{item.month}月</Text>
           </CardItem>
           <CardItem style={{ justifyContent: 'center' }}>
-            <Text>{item.money}</Text>
+            <Text>{item.money}元</Text>
           </CardItem>
         </Card>
       </View>
@@ -124,7 +111,7 @@ class PartyFee extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, margin: 10 }}>
+      <View style={{ flex: 1, margin: 5 }}>
         <ScrollView>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <Text style={{ flex: 1 }}>本次应缴党费：</Text>
@@ -144,19 +131,21 @@ class PartyFee extends React.Component {
           <EmptyView h={10} />
           <View style={{ height: 1, backgroundColor: 'grey' }} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 5 }}>
-            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick('2017')}><Text>2017年</Text></Button>
-            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick('2016')}><Text>2016年</Text></Button>
-            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick('2015')}><Text>2015年</Text></Button>
+            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick(parseInt(this.now.getFullYear()))}><Text>{this.now.getFullYear()}年</Text></Button>
+            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 1)}><Text>{"" + (parseInt(this.now.getFullYear() - 1))}年</Text></Button>
+            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 2)}><Text>{"" + (parseInt(this.now.getFullYear() - 2))}年</Text></Button>
           </View>
           <EmptyView h={20} />
+          {this.data.length > 0?
           <FlatList
             data={this.data}
             horizontal={false}
             numColumns={3}
-            columnWrapperStyle={{ justifyContent: 'space-around' }}
+            columnWrapperStyle={{ justifyContent: 'flex-start' }}
             renderItem={this._renderItemComponent}
-          />
-        </ScrollView>
+          />:<Text style={{fontSize:16}}> 无数据 </Text>}
+        </ScrollView> 
+        <LoadingView showLoading={this.state.showLoading} backgroundColor='#323233' opacity={0.8} />
       </View>
     );
   }
