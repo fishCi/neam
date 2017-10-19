@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-18 21:00:40
+ * @Last Modified by: zhaozheng1.zh
+ * @Last Modified time: 2017-10-19 14:14:02
  */
 
 
@@ -16,6 +16,7 @@ import FC from './FlipCard';
 import EmptyView from '../../components/EmptyView';
 import { fetchPost } from '../../utils/fetchAPI';
 import { getUser } from '../../utils/StorageUtil';
+import W from '../../common/index'
 
 
 const butts = [{ name: '全部', type: '00' }, { name: '党', type: '02' }, { name: '团', type: '03' }, { name: '工会', type: '04' }, { name: '协会', type: '05' }, { name: '其他', type: '01' }];
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   butt: {
-    // width: 80,
+    width: W.width / 4 - 15,
     height: 28,
     marginHorizontal:5
   },

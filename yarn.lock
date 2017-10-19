@@ -3591,9 +3591,9 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-"react-native-drawer@git+https://github.com/GeekyAnts/react-native-drawer.git":
+"react-native-drawer@https://github.com/GeekyAnts/react-native-drawer":
   version "2.3.0"
-  resolved "git+https://github.com/GeekyAnts/react-native-drawer.git#8d9078516d177c9cb02d2579a6860706d2370d25"
+  resolved "https://github.com/GeekyAnts/react-native-drawer#8d9078516d177c9cb02d2579a6860706d2370d25"
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
@@ -3608,9 +3608,9 @@ react-native-flip-card-view@0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/react-native-flip-card-view/download/react-native-flip-card-view-0.0.6.tgz#8a6b17206618a0991bd76824cb323738f3a71101"
 
-"react-native-keyboard-aware-scroll-view@git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git":
+"react-native-keyboard-aware-scroll-view@https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view":
   version "0.2.9"
-  resolved "git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git#f4805f254d6cc8e3329f5fb224944401f66655db"
+  resolved "https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view#f4805f254d6cc8e3329f5fb224944401f66655db"
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
@@ -3619,6 +3619,10 @@ react-native-flip-card-view@0.0.6:
 react-native-modal-dropdown@^0.5.0:
   version "0.5.0"
   resolved "http://registry.npm.taobao.org/react-native-modal-dropdown/download/react-native-modal-dropdown-0.5.0.tgz#f6c4cd4d077792e56902b43b14d83959f5f40f46"
+
+react-native-network-info@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.taobao.org/react-native-network-info/download/react-native-network-info-3.0.0.tgz#fafc0ccea2803ef3b6ba3e01c34e89df90ba1a87"
 
 react-native-storage@^0.2.2:
   version "0.2.2"
