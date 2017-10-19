@@ -10,9 +10,10 @@ import {
   Dimensions,
   TouchableHighlight,
   ScrollView,
-  Switch
+  Switch,
+  ToastAndroid
 } from 'react-native';
-import {Root,Button,ListItem,Item,Label,Input,Right,Body,Toast,ActivityIndicator,ActionSheet} from 'native-base';
+import {Button,ListItem,Item,Label,Input,Right,Body,ActivityIndicator,ActionSheet,Toast, Root} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import DatePicker from 'react-native-datepicker';
@@ -99,7 +100,6 @@ export default class CreateActivity extends Component {
     this.refs.textInput3.blur();
     this.refs.textInput4.blur();
     this.refs.textInput5.blur();
-    console.log(123);
     this.refs.textInput6.blur();
   }
 
@@ -177,11 +177,11 @@ export default class CreateActivity extends Component {
                         title: "请选择活动类型"
                       },
                       buttonIndex => {
-                        this.setState({type : buttonIndex});
+                        this.setState({type : typeValue[buttonIndex]});
                       }
                     )}
                   }
-                >{this.state.type == -1?'请选择':types[this.state.type]}</Text>
+                >{this.state.type == ''?'请选择':this._getddValue(this.state.type)}</Text>
               
                 </Body>
               
@@ -218,14 +218,9 @@ export default class CreateActivity extends Component {
                 minuteInterval={10}
                 onDateChange={(date) => { 
                   if(this.state.endtime != '' && this.state.endtime != undefined 
-                    && this.state.endtime > date) {
-                      alert("活动开始时间不能晚于结束时间！");
-                      Toast.show({
-                        text: "活动开始时间不能晚于结束时间！",
-                        position: 'bottom',
-                        buttonText: 'OK',
-                        duration: 2000
-                      });
+                    && this.state.endtime < date) {
+                      ToastAndroid.show("活动开始时间不能晚于结束时间！",ToastAndroid.SHORT);
+                      
                   } else {
                     this.setState({ starttime: date })
                   }
@@ -260,13 +255,8 @@ export default class CreateActivity extends Component {
                 onDateChange={(date) => { 
                   if(this.state.starttime != '' && this.state.starttime != undefined 
                     && this.state.starttime > date) {
-                      alert("活动结束时间不能早于开始时间！");
-                      // Toast.show({
-                      //   text: "活动结束时间不能早于开始时间！",
-                      //   position: 'bottom',
-                      //   buttonText: 'OK',
-                      //   duration: 2000
-                      // });
+                      ToastAndroid.show("活动结束时间不能早于开始时间！",ToastAndroid.SHORT);
+                     
                   } else {
                       this.setState({ endtime: date })
                   }
@@ -317,13 +307,9 @@ export default class CreateActivity extends Component {
                 minuteInterval={10}
                 onDateChange={(date) => { 
                   if(this.state.regendtime != '' && this.state.regendtime != undefined 
-                    && this.state.regendtime > date) {
-                      Toast.show({
-                        text: "报名开始时间不能晚于截止时间！",
-                        position: 'bottom',
-                        buttonText: 'OK',
-                        duration: 2000
-                      });
+                    && this.state.regendtime < date) {
+                      ToastAndroid.show("报名开始时间不能晚于截止时间！",ToastAndroid.SHORT);
+                      
                   } else {
                     this.setState({ regstarttime: date })
                   }
@@ -361,12 +347,8 @@ export default class CreateActivity extends Component {
                 onDateChange={(date) => { 
                   if(this.state.regstarttime != '' && this.state.regstarttime != undefined 
                     && this.state.regstarttime > date) {
-                      Toast.show({
-                        text: "报名截止时间不能早于开始时间！",
-                        position: 'bottom',
-                        buttonText: 'OK',
-                        duration: 2000
-                      });
+                      ToastAndroid.show("报名截止时间不能早于开始时间！",ToastAndroid.SHORT);
+                
                   } else {
                     this.setState({ regendtime: date })
                   }
@@ -472,7 +454,7 @@ export default class CreateActivity extends Component {
         ? fetchPost('A08464104', { ...this._tranferToJSON(u), thpyadthmsAvyId: this.state.actId }, this._success, this._failure)
         : fetchPost('A08464101', this._tranferToJSON(u), this._success, this._failure)
     } else {
-      alert(this.validate());
+      ToastAndroid.show(this.validate(),ToastAndroid.SHORT);
     }
   }
 

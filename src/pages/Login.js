@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-18 20:33:16
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2017-10-18 21:09:24
  */
 
 import React, { Component } from 'react';
@@ -343,7 +343,7 @@ export default class LoginForm extends Component {
                         position: 'bottom',
                         buttonText: 'OK',
                         duration: 2000
-                    }); 0
+                    });
                     waitingLogin = false;
                 }), 1
             );

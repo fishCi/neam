@@ -36,7 +36,10 @@ export default class Person extends Component {
   _success = (resp) => {
     if (resp.BK_STATUS == "00") {
       this.name = resp.usrNm;
-      this.dscp = resp.wrkUnitNm + ' ' + resp.blngDeptNm;
+      if(resp.wrkUnitNm != undefined && resp.blngDeptNm != undefined) {
+        this.dscp = resp.wrkUnitNm + ' ' + resp.blngDeptNm;
+      }
+      
       this.department = resp.ptytbrOrgNm + ' ' + resp.ptybrchOrgNm + ' ' + resp.ptygrpOrgNm;
       this.pos = resp.List3 === undefined? true:false
       for (let i = 0; resp.list1!=undefined && i < resp.list1.length; i++) {

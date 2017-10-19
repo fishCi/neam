@@ -28,7 +28,7 @@ class Party extends Component {
       <View>
         <ScrollView>
           <List>
-            <ListItem>
+            <ListItem last>
               <Thumbnail square size={80} source={require('../../img/person/hongjun.png')} />
               <Body>
                 <Text>{this.name}</Text>

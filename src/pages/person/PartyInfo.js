@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-18 10:36:26
+ * @Last Modified time: 2017-10-18 21:03:33
 */
 
 import React from 'react';
@@ -15,7 +15,7 @@ import {
   ScrollView,
   Image
 } from 'react-native';
-import { Button } from 'native-base';
+import { Button,Root,Toast } from 'native-base';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { getPartyInfoData } from '../../utils/PartyData'
 import { getPartyPieData } from '../../utils/PartyData'
@@ -46,8 +46,8 @@ class PartyInfo extends React.Component {
     }
   }
 
-  // department = this.props.navigation.state.params.department.split(' ');
-  department= ['1','2','3']
+  department = this.props.navigation.state.params.department.split(' ');
+  
   info = {
     centerData: {
       sj: '',

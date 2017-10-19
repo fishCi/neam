@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-13 14:48:14
+ * @Last Modified time: 2017-10-18 21:03:12
 */
 import React from 'react';
 import {
@@ -12,7 +12,7 @@ import {
   View,
   processColor,
   ScrollView,
-  FlatList
+  FlatList,Toast,Root
 } from 'react-native';
 import { Button, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -34,14 +34,15 @@ class PartyFee extends React.Component {
   async componentDidMount() {
     u = await getUser();    
     fetchPost('A08463104', {
-      Pty_Grp_Stm_Usr_ID:  u.Pty_Grp_Stm_Usr_ID,
-      Yr_YYYY: '2017'
+      thpyadthmsStmUsrId:u.thpyadthmsStmUsrId,
+      yrYyyy: '2017'
     }, this._success.bind(this), this._failure.bind(this))
   }
 
 
 
   _success(resp) {
+    alert(JSON.stringify(resp));
     if (resp.BK_STATUS == "00") {
       for (let i = 0; i < resp.LIST1.length; i++) {
         let item = {
@@ -156,7 +157,7 @@ class PartyFee extends React.Component {
             renderItem={this._renderItemComponent}
           />
         </ScrollView>
-      </View >
+      </View>
     );
   }
 }
