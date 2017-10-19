@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-19 14:13:13
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2017-10-19 16:14:39
  */
 
 import React, { Component } from 'react';
@@ -150,7 +150,7 @@ export default class LoginForm extends Component {
             }, this._success, this._failure)})
         } else {
             setTimeout(
-                () => anyOfficeLogin.login(this.state.name, this.state.password, () => {
+                () => anyOfficeLogin.login(this.state.name, this.state.pswd, () => {
                     //waitingLogin = true;
                 }, rs => {
                     this.setState({
