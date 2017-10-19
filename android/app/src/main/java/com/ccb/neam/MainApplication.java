@@ -7,6 +7,9 @@ import android.os.Bundle;
 import com.ccb.neam.module.AppReactPackage;
 import com.ccb.neam.utils.AnyOfficeUtil;
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.pusherman.networkinfo.RNNetworkInfoPackage;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.github.wuxudong.rncharts.MPAndroidChartPackage;
@@ -31,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
+            new RNNetworkInfoPackage(),
             new MPAndroidChartPackage(),
               new AppReactPackage()
       );
