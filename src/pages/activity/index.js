@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-19 14:14:02
+ * @Last Modified time: 2017-10-19 15:13:06
  */
 
 
@@ -49,10 +49,9 @@ export default class activity extends Component {
       <Root>
         <Header style={styles.header}>
           <Left>
-            <Icon name='ios-paper-plane-outline' size={30} color='red' />
+            <Text>活动</Text>
           </Left>
           <Right>
-            
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Create')}>
               <Icon name='md-add' size={30} color='skyblue' />
             </TouchableOpacity>
@@ -67,7 +66,6 @@ export default class activity extends Component {
             data={butts}
             renderItem={this._renderButtonItem}
           />
-          
         </View>
         <View style={styles.activityList}>
           {ready ? activities.length > 0 ? <FlatList
@@ -79,7 +77,7 @@ export default class activity extends Component {
               return pager &&
                 <ActivityIndicator size="large" style={styles.loading} />
             }}
-          /> :<Text style={{fontSize:16}}> 无活动 </Text>
+          /> : <Text style={{ fontSize: 16 }}> 无活动 </Text>
             : <ActivityIndicator size="large" style={styles.loading} />}
         </View>
       </Root>
@@ -119,11 +117,11 @@ export default class activity extends Component {
     }, this._success.bind(this), this._failure.bind(this))
   };
 
-   _success(resp) {
-     console.log(resp);
+  _success(resp) {
+    console.log(resp);
     if (resp.BK_STATUS == "00") {
       const acts = [];
-      if(resp.list != undefined && resp.list != null && resp.list.length > 0) {
+      if (resp.list != undefined && resp.list != null && resp.list.length > 0) {
         acts = this.state.activities.concat(resp.list)
       }
       this.setState({
@@ -149,8 +147,8 @@ export default class activity extends Component {
 
 
   fetchMore = () => {
-    if(this.state.pager || this.listPageEnd){
-       return
+    if (this.state.pager || this.listPageEnd) {
+      return
     }
     // if (this.listPageEnd) {
     //   Toast.show({
@@ -210,25 +208,25 @@ export default class activity extends Component {
 
   _renderButtonItem = ({ item }) => {
     return (
-      <Button light rounded style={styles.butt} onPress={() => this._filterActivities(item.type)}>
-        <Text>{item.name}</Text>
-      </Button>
+      this.state.type === item.type ?
+        <Button primary style={styles.butt} onPress={() => this._filterActivities(item.type)}>
+          <Text style={{ textAlign: 'center' }}>{item.name}</Text>
+        </Button>
+        : <Button bordered style={styles.butt} onPress={() => this._filterActivities(item.type)}>
+          <Text style={{ textAlign: 'center' }}>{item.name}</Text>
+        </Button>
     );
   }
 
 
-  _filterActivities = async type =>{
+  _filterActivities = async type => {
     this.setState({
-      ready:false,
+      ready: false,
+      type,
       activities: []
-    }, () => this.fetchData(1, 10,type, '00')); 
-    this.setState({ type: type });
+    }, () => this.fetchData(1, 10, type, '00'));
   }
 
-
-  _dropdown_onSelect = () => {
-
-  }
 }
 
 const styles = StyleSheet.create({
@@ -242,16 +240,15 @@ const styles = StyleSheet.create({
   },
   filter: {
     marginHorizontal: 10,
-    marginTop: 10,
-    marginBottom: 5,
+    paddingVertical: 10,
     borderStyle: 'solid',
     borderColor: 'aliceblue',
-    borderBottomWidth: 1
   },
   butt: {
     width: W.width / 4 - 15,
     height: 28,
-    marginHorizontal:5
+    marginHorizontal: 5,
+    justifyContent: 'center'
   },
   activityList: {
     paddingHorizontal: 10,
