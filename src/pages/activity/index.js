@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-19 15:13:06
+ * @Last Modified time: 2017-10-24 15:02:28
  */
 
 
@@ -12,11 +12,11 @@ import { Container, Header, Left, Body, Right, Button, Title, Text, Card, CardIt
 import ModalDropdown from 'react-native-modal-dropdown';
 import { ACTIVITY_TYPE } from '../../constants/ActivityFilterType';
 import Icon from 'react-native-vector-icons/Ionicons';
-import FC from './FlipCard';
 import EmptyView from '../../components/EmptyView';
 import { fetchPost } from '../../utils/fetchAPI';
 import { getUser } from '../../utils/StorageUtil';
-import W from '../../common/index'
+import W from '../../common/index';
+import C from '../activity/Card';
 
 
 const butts = [{ name: '全部', type: '00' }, { name: '党', type: '02' }, { name: '团', type: '03' }, { name: '工会', type: '04' }, { name: '协会', type: '05' }, { name: '其他', type: '01' }];
@@ -177,7 +177,7 @@ export default class activity extends Component {
 
 
   _renderActivityItem = ({ item }) => (
-    <FC item={item} nav={this.props.navigation.navigate} />
+    <C item={item} />
     // <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail', { info: item })}>
     //   <Card style={{ backgroundColor: 'red' }}>
     //     <CardItem header style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
