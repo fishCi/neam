@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-24 14:43:03
+ * @Last Modified time: 2017-10-24 16:18:02
  */
 
 import React, { Component } from 'react';
@@ -41,12 +41,11 @@ export default class Detail extends Component {
     u = {};
 
     async componentDidMount() {
-        // this.u = await getUser();        
-        // fetchPost('A08464103', {
-        //     thpyadthmsAvyId: this.props.navigation.state.params.actId,
-        //     thpyadthmsStmUsrId: this.u.thpyadthmsStmUsrId
-        // }, this._success.bind(this), this._failure.bind(this))
-
+        this.u = await getUser();        
+        fetchPost('A08464103', {
+            thpyadthmsAvyId: this.props.navigation.state.params.actId,
+            thpyadthmsStmUsrId: this.u.thpyadthmsStmUsrId
+        }, this._success.bind(this), this._failure.bind(this))
     }
 
 
@@ -91,10 +90,10 @@ export default class Detail extends Component {
             <View style={{ flex: 1 }}>
                 <Header style={styles.header}>
                     <Left>
-                        <Text>活动</Text>
+                        <Text style={{color:'white'}}>活动详情</Text>
                     </Left>
                     <Right>
-                        <Icon.Button name='ios-create-outline' color='white' backgroundColor='blue' style={{ alignSelf: 'flex-end', marginRight: 60 }} size={20} onPress={() => this.props.nav('Create', { form: this._getFormProps() })} />
+                        <Icon.Button name='ios-create-outline' color='white' style={{ alignSelf: 'flex-end'}} size={20} onPress={() => this.props.navigation.navigate('Create', { form: this._getFormProps() })} />
                     </Right>
                 </Header>
                 <ScrollView>
@@ -158,7 +157,7 @@ export default class Detail extends Component {
                             <Text>{this.state.phone}</Text>
                         </View>
                         {(this.state.hasReg == '01' ? <Button block disabled onPress={this._registe} style={{ flex: 1, height: 40 }}><Text>已报名</Text></Button>
-                            : <Button block success onPress={this.registe} style={{ flex: 1, height: 30 }}><Text>报名</Text></Button>)}
+                            : <Button block success onPress={this._registe} style={{ flex: 1, height: 30 }}><Text>报名</Text></Button>)}
                     </View>
                 </ScrollView>
             </View>

@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-24 15:02:28
+ * @Last Modified time: 2017-10-24 16:00:46
  */
 
 
@@ -177,7 +177,7 @@ export default class activity extends Component {
 
 
   _renderActivityItem = ({ item }) => (
-    <C item={item} />
+    <C item={item} navigate = {this.props.navigation.navigate}/>
     // <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail', { info: item })}>
     //   <Card style={{ backgroundColor: 'red' }}>
     //     <CardItem header style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

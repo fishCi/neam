@@ -70,7 +70,12 @@ const App = StackNavigator(
         title: '活动创建',
       }
     },
-    Detail:{screen:Detail},
+    Detail:{
+      screen:Detail,
+      navigationOptions: {
+        header: null,
+      }
+    },
     Login: {
       screen : Login,
       navigationOptions: {

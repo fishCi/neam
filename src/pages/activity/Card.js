@@ -13,7 +13,7 @@ export default class C extends Component {
   render() {
     return (
       <Card>
-        <CardItem header bordered button style={{ flexDirection: 'row', justifyContent: 'space-between' }} onPress={() => this.props.navigation.navigate('Detail', { actId: this.props.item.thpyadthmsAvyId })}>
+        <CardItem header bordered button style={{ flexDirection: 'row', justifyContent: 'space-between' }} onPress={() => this.props.navigate('Detail', { actId: this.props.item.thpyadthmsAvyId })}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image source={require('../../img/activity/party.png')} />
             <Text style={{ marginLeft: 10, fontWeight: '600', fontSize: 18 }}>{this.props.item.thpyadthmsAvyNm}</Text>
