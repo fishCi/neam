@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator } from 'react-native'
+import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator,ToastAndroid} from 'react-native'
 import { Container,Root, Header, Content, List, ListItem, Thumbnail, Text, Body, Separator, Left, Right,Button} from 'native-base';
 import common from '../../common'
 import EmptyView from '../../components/EmptyView'
@@ -129,7 +129,13 @@ export default class Person extends Component {
                 <Icon name='ios-aperture-outline' size={25} color='skyblue' />
               </Left>
               <Body>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Party', { name: this.name, department: this.department, records: this.records,pos:this.pos})}>
+                <TouchableOpacity onPress={() => {
+                  if(this.records.length == 0) {
+                    ToastAndroid.show("暂时未录入党员履历！",ToastAndroid.SHORT);
+                  } else {
+                    this.props.navigation.navigate('Party', { name: this.name, department: this.department, records: this.records,pos:this.pos})}
+                  }
+                }>
                   <Text>党员历程</Text>
                 </TouchableOpacity>
               </Body>

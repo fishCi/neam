@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-24 18:02:15
+ * @Last Modified time: 2017-10-24 18:45:36
  */
 
 import React, { Component } from 'react';
@@ -172,7 +172,6 @@ export default class LoginForm extends Component {
     _success = resp => {
         console.log(JSON.stringify(resp));
         if (resp.BK_STATUS == "00") {
-            alert(JSON.stringify(resp))
             storage.save({
                 key: 'user',
                 data: JSON.stringify(resp),
