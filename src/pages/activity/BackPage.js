@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-19 16:14:07
+ * @Last Modified time: 2017-10-20 17:20:46
  */
 
 import React, { Component } from 'react';
@@ -54,6 +54,7 @@ export default class BackPage extends Component {
     }
 
     _success(resp) {
+        alert(JSON.stringify(resp))
         this.setState({
             refreshing: false,
         });

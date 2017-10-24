@@ -2,11 +2,11 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-19 16:14:39
+ * @Last Modified time: 2017-10-24 18:02:15
  */
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, ImageBackground, DeviceEventEmitter, Keyboard, TextInput } from 'react-native';
+import { View, StyleSheet, Image, ImageBackground, DeviceEventEmitter, Keyboard, TextInput,ToastAndroid,Dimensions,TouchableOpacity,Modal,ActivityIndicator } from 'react-native';
 import { Container, Item, Input, Header, Body, Content, Title, Button, Text, Spinner, Label, Toast, Root } from 'native-base';
 import { Field, reduxForm } from 'redux-form';
 import common from '../common'
@@ -19,6 +19,7 @@ import { NetworkInfo } from 'react-native-network-info';
 
 var anyOfficeLogin = NativeModules.AnyOfficeLogin;
 var waitingLogin = false;
+const { width, height } = Dimensions.get('window')
 
 
 export default class LoginForm extends Component {
@@ -26,7 +27,8 @@ export default class LoginForm extends Component {
     constructor(props) {
         super(props);
 
-        DeviceEventEmitter.addListener("onNetConnected", (msg) => {
+        this.onNetConnected = DeviceEventEmitter.addListener("onNetConnected", (msg) => {
+            console.log("onNetConnected");
             if (waitingLogin) {
                 waitingLogin = false;
                 NetworkInfo.getIPV4Address(ipv4=>{
@@ -34,42 +36,39 @@ export default class LoginForm extends Component {
                     empeIdLandNm: this.state.name,
                     usrPswd: this.state.pswd,
                     cstCtcTel: '',
-                    usrIpAdr: ipv4
-                }, this._success, this._failure)})
+                    usrIpAdr: ''
+                }, this._success, this._failure)});
             }
 
             // availabe for all requests
         });
-
-        DeviceEventEmitter.addListener("onNetConnecting", (isConnecting) => {
+        
+        this.onNetConnecting = DeviceEventEmitter.addListener("onNetConnecting", (isConnecting) => {
 
             //isConnecting == true 
             //show loading 
             //else hideloading
+            console.log("onNetConnecting");
         });
-        DeviceEventEmitter.addListener("onNetError", (errorCode) => {
-            Toast.show({
-                text: anyofficeCodeUtil(errorCode),
-                position: 'bottom',
-                buttonText: 'OK',
-                duration: 2000
-            })
+
+        this.onNetError = DeviceEventEmitter.addListener("onNetError", (errorCode) => {
+            console.log("onNetError");
+            ToastAndroid.show(anyofficeCodeUtil(parseInt(errorCode)),ToastAndroid.SHORT);
             this.setState({
                 showLoading: false,
             });
         });
-        DeviceEventEmitter.addListener("onLoginError", (errorCode) => {
-            Toast.show({
-                text: anyofficeCodeUtil(errorCode),
-                position: 'bottom',
-                buttonText: 'OK',
-                duration: 2000
-            })
+
+
+        this.onLoginError = DeviceEventEmitter.addListener("onLoginError", (errorCode) => {
+            console.log("onLoginError" + errorCode);
             this.setState({
                 name: '',
                 pswd: '',
                 showLoading: false,
             });
+            //ToastAndroid.show(anyofficeCodeUtil(parseInt(errorCode)),ToastAndroid.SHORT);
+            // this.props.navigation.navigate('Home');
             //only triggered by auto relogin  
             // this can be the same as login method's callback
         });
@@ -77,14 +76,27 @@ export default class LoginForm extends Component {
         this.state = {
             showLoading: false,
         }
+        console.log("construct");
     }
 
     componentWillMount() {
+        console.log("mount");
+        console.log(JSON.stringify(this.props.navigation.state));
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
 
+    componentDidMount() {
+        console.log("didmount");
+    }
+
     componentWillUnmount() {
+        console.log("unmount");
+        this.timer && clearTimeout(this.timer);
         this.keyboardDidHideListener.remove();
+        this.onNetConnected.remove();
+        this.onNetConnecting.remove();
+        this.onNetError.remove();
+        this.onLoginError.remove();
     }
 
     _keyboardDidHide = () => {
@@ -96,7 +108,6 @@ export default class LoginForm extends Component {
         console.log("render" + this.state.showLoading);
         const { handleSubmit, navigation: { navigate } } = this.props;
         return (
-            <Root>
                 <ImageBackground style={styles.backgroundImage} source={require('../img/login.png')} resizeMode='cover'>
                     <Container style={styles.userform}>
                         <Content padder>
@@ -128,10 +139,13 @@ export default class LoginForm extends Component {
                             </Button>
                         </Content>
                     </Container>
+                    <LoadingView showLoading={this.state.showLoading} backgroundColor='#323233' opacity={0.8} />
                 </ImageBackground>
-                {this.state.showLoading && <LoadingView showLoading={true} backgroundColor='#323233' opacity={0.8} />}
-            </Root>
         )
+    }
+
+    _close(){
+        console.log("onRequestClose ---- ")
     }
 
     _submit = () => {
@@ -139,55 +153,36 @@ export default class LoginForm extends Component {
         this.setState({
             showLoading: true,
         });
-
-        if (this.props.navigation.state.params !== undefined) {
-            NetworkInfo.getIPV4Address(ipv4=>{
-                fetchPost('A08461101', {
-                empeIdLandNm: this.state.name,
-                usrPswd: this.state.pswd,
-                cstCtcTel: '',
-                usrIpAdr: ipv4
-            }, this._success, this._failure)})
-        } else {
-            setTimeout(
-                () => anyOfficeLogin.login(this.state.name, this.state.pswd, () => {
-                    //waitingLogin = true;
-                }, rs => {
-                    this.setState({
-                        showLoading: false,
-                    });
-                    Toast.show({
-                        text: anyofficeCodeUtil(rs),
-                        position: 'bottom',
-                        buttonText: 'OK',
-                        duration: 2000
-                    });
-                    waitingLogin = false;
-                }), 1
-            );
-        }
+        this.timer && clearTimeout(this.timer);
+        this.timer = setTimeout(
+            () => anyOfficeLogin.login(this.state.name, this.state.pswd, () => {
+            }, rs => {
+                console.log("failed");
+                // this.setState({
+                //     showLoading: false,
+                // });
+                // ToastAndroid.show(anyofficeCodeUtil(parseInt(rs)),ToastAndroid.SHORT);
+                // console.log("errohandle");
+                // waitingLogin = false;
+            }), 1
+        );
+        // }
     }
 
     _success = resp => {
+        console.log(JSON.stringify(resp));
         if (resp.BK_STATUS == "00") {
-            // alert(JSON.stringify(resp))
+            alert(JSON.stringify(resp))
             storage.save({
                 key: 'user',
                 data: JSON.stringify(resp),
                 // expires: 1000 * 3600 
-            }).then(() => this.props.navigation.navigate('Home'))
-                .then(() => {
-                    this.setState({
-                        showLoading: false,
-                    });
-                })
+            }).then(this.props.navigation.navigate('Home'))
+            .then(this.setState({
+                showLoading: false,
+            }))
         } else {
-            Toast.show({
-                text: resp.BK_DESC,
-                position: 'bottom',
-                buttonText: 'OK',
-                duration: 2000
-            })
+            ToastAndroid.show(resp.BK_DESC,ToastAndroid.SHORT);
             this.setState({
                 showLoading: false,
             });
@@ -195,15 +190,11 @@ export default class LoginForm extends Component {
     };
 
     _failure = error => {
+        console.log(JSON.stringify(error));
         this.setState({
             showLoading: false,
         });
-        Toast.show({
-            text: error,
-            position: 'bottom',
-            buttonText: 'OK',
-            duration: 2000
-        });
+       // ToastAndroid.show(error,ToastAndroid.SHORT);
     };
 
 }

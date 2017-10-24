@@ -459,7 +459,7 @@ export default class CreateActivity extends Component {
     if (resp.BK_STATUS == "00") {
         this.setState({
             showLoading: false,
-        },() => this.props.navigation.navigate('Home'));
+        },() => this.props.navigation.goBack('Home'));
     } else {
       this.setState({
         showLoading: false,

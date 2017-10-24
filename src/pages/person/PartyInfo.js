@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-18 21:03:33
+ * @Last Modified time: 2017-10-19 23:00:09
 */
 
 import React from 'react';
@@ -171,10 +171,10 @@ class PartyInfo extends React.Component {
             </View>
             <View style={{ flex: 2, paddingVertical: 10 }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={{ flex: 1, fontSize: 12 }}>党小组组长：{this.info.groupData.zz}</Text>
+                <Text style={{ flex: 1, fontSize: 12 }}>组长：{this.info.groupData.zz}</Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={{ flex: 1, fontSize: 12 }}>党小组组员：{this.info.groupData.zy}</Text>
+                <Text style={{ flex: 1, fontSize: 12 }}>组员：{this.info.groupData.zy}</Text>
               </View>
             </View>
           </View>

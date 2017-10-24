@@ -2,7 +2,7 @@
 * @Author: caixin1.zh
 * @Date:   2017-10-19 06:06:10
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-19 16:55:48
+ * @Last Modified time: 2017-10-24 18:11:02
 */
 import React from 'react';
 import {
@@ -27,6 +27,8 @@ class PartyFee extends React.Component {
     super(props);
     this.data = [];
     this.now = new Date()
+    this.totalAmount = 0
+    this.payAmount = 0
     this.state = {
       ready: false,
       year: this.now.getFullYear(),
@@ -35,7 +37,7 @@ class PartyFee extends React.Component {
   }
 
   async componentDidMount() {
-    u = await getUser();    
+    u = await getUser();
     fetchPost('A08463104', {
       thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
       yrYyyy: this.state.year + ""
@@ -48,12 +50,18 @@ class PartyFee extends React.Component {
     this.setState({showLoading:false},()=>{
       if (resp.BK_STATUS == "00") {
         this.data =[];
+        this.totalAmount = 0
+        this.payAmount = 0
         for (let i = 0; resp.list != undefined && i < resp.list.length; i++) {
           let item = {
             month:'',
             money:'',
             status:'00'
           };
+          this.totalAmount += resp.list[i].thpyadthmsactPyfAmt;
+          if(resp.list[i].thpyadthmsPyfStcd == '01') {
+            this.payAmount += resp.list[i].thpyadthmsactPyfAmt;
+          }
           item.month = resp.list[i].moMo;
           item.money = resp.list[i].thpyadthmsactPyfAmt;
           item.status = resp.list[i].thpyadthmsPyfStcd;
@@ -117,7 +125,7 @@ class PartyFee extends React.Component {
             <Text style={{ flex: 1 }}>本次应缴党费：</Text>
             <View style={{ flexDirection: 'row' }}>
               <Icon name='rmb' size={18} color='gold' />
-              <Text>  143</Text>
+              <Text> {this.payAmount}元</Text>
             </View>
           </View>
           <EmptyView h={10} />
@@ -125,7 +133,7 @@ class PartyFee extends React.Component {
             <Text style={{ flex: 1 }}>历史已缴党费：</Text>
             <View style={{ flexDirection: 'row' }}>
               <Icon name='rmb' size={18} color='gold' />
-              <Text>  10000</Text>
+              <Text> {this.totalAmount}元</Text>
             </View>
           </View>
           <EmptyView h={10} />
@@ -142,6 +150,7 @@ class PartyFee extends React.Component {
             horizontal={false}
             numColumns={3}
             columnWrapperStyle={{ justifyContent: 'flex-start' }}
+            keyExtractor={(item, index) => item}
             renderItem={this._renderItemComponent}
           />:<Text style={{fontSize:16}}> 无数据 </Text>}
         </ScrollView> 
