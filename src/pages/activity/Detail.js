@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-25 10:22:39
+ * @Last Modified time: 2017-10-25 10:31:36
  */
 
 import React, { Component } from 'react';
@@ -121,51 +121,51 @@ export default class Detail extends Component {
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动名称: </Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.title}</Text>
+                            <Text style={{ fontSize: 14 }}>{this.state.title}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动时间: </Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.starttime + '   至   ' + this.state.endtime}</Text>
+                            <Text style={{ fontSize: 14 }}>{this.state.starttime + '   至   ' + this.state.endtime}</Text>
                         </View>
                         {this.state.isreg == '1' && <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动报名时间: </Text>
                         </View>
                         }
                         {this.state.isreg == '1' && <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.regstarttime + '   至   ' + this.state.regendtime}</Text>
+                            <Text style={{ fontSize: 14 }}>{this.state.regstarttime + '   至   ' + this.state.regendtime}</Text>
                         </View>
                         }
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动地点: </Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.address === undefined ? '待定' : this.state.address}</Text>
+                            <Text style={{ fontSize: 14 }} >{this.state.address === undefined ? '待定' : this.state.address}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动详情: </Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.detail}</Text>
+                            <Text style={{ fontSize: 14 }}>{this.state.detail}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>温馨提示: </Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.tip}</Text>
+                            <Text style={{ fontSize: 14 }}>{this.state.tip}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动联系人: </Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.host}</Text>
+                            <Text style={{ fontSize: 14 }}>{this.state.host}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
                             <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>联系人电话: </Text>
                         </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontSize: 12 }}>{this.state.phone}</Text>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.phone}</Text>
                         </View>
                         {(this.state.hasReg == '01' ? <Button block disabled onPress={this._registe} style={{ flex: 1, height: 50 }}><Text>已报名</Text></Button>
                             : <Button block success onPress={this._registe} style={{ flex: 1, height: 50 }}><Text>报名</Text></Button>)}
@@ -224,7 +224,7 @@ export default class Detail extends Component {
 const styles = StyleSheet.create({
     header: {
         height: 40,
-        backgroundColor: 'blue'
+        backgroundColor: 'black'
     },
     cardheader: {
         flexDirection: 'row',
