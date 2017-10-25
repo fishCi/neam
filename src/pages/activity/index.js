@@ -1,6 +1,6 @@
 /*
  * @Author: zhaozheng1.zh 
- * @Date: 2017-09-09 22:10:22 
+ * @Date: 2017-09-09 22:10:22
  * @Last Modified by: zhaozheng1.zh
  * @Last Modified time: 2017-10-24 16:00:46
  */
@@ -39,7 +39,7 @@ export default class activity extends Component {
   listPageEnd = false;
 
   componentDidMount() {
-    this.fetchData(this.pageNo, this.pageCount, this.state.type, this.state.flag);
+   this.fetchData(this.pageNo, this.pageCount, this.state.type, this.state.flag);
   }
 
   render() {
@@ -118,12 +118,14 @@ export default class activity extends Component {
   };
 
   _success(resp) {
-    console.log(resp);
+    //console.log(resp);
     if (resp.BK_STATUS == "00") {
       const acts = [];
       if (resp.list != undefined && resp.list != null && resp.list.length > 0) {
         acts = this.state.activities.concat(resp.list)
       }
+      console.log("------------------------------");
+      resp.list.map((item)=>{console.log(item.thpyadthmsAvyId)}) 
       this.setState({
         activities: acts
       },

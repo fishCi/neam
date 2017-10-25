@@ -58,14 +58,6 @@ class Party extends Component {
               columnFormat='two-column'
             />}
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 100, marginBottom: 20 }}>
-            <Button bordered danger onPress={() => this.props.navigation.navigate('PartyFee')} style={{ height: 30 }}>
-              <Text style={{ color: 'red' }}>缴纳党费</Text>
-            </Button>
-            <Button bordered danger onPress={() => this.props.navigation.navigate('PartyInfo',{department:this.department,pos:this.pos})} style={{ height: 30 }}>
-              <Text style={{ color: 'red' }}>革命战友</Text>
-            </Button>
-          </View>
         </ScrollView>
       </View>
     );

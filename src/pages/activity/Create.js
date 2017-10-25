@@ -171,6 +171,7 @@ export default class CreateActivity extends Component {
                         title: "请选择活动类型"
                       },
                       buttonIndex => {
+                        console.log(buttonIndex);
                         this.setState({type : typeValue[buttonIndex]});
                       }
                     )}
@@ -506,7 +507,7 @@ export default class CreateActivity extends Component {
       thpyadthmsAvyNm: this.state.title, 
       thpyadthmavyplccntdsc: this.state.address,
       thpyadthmsAvyCntdsc: this.state.description,
-      thpyadthmsAvyClcd: typeValue[this.state.type],
+      thpyadthmsAvyClcd: this.state.type,
       thpyadthmsAvyStdt: this.state.starttime.split(' ')[0].replace(/-/g, ''),	    //活动开始日期         
       thpyadthmsAvySttm: this.state.starttime.split(' ')[1].replace(':', '') + "00",
       thpyadthmsAvyEddt: this.state.endtime.split(' ')[0].replace(/-/g, ''),		//活动结束日期
@@ -543,7 +544,7 @@ export default class CreateActivity extends Component {
   validate = () => {
     if (this.state.title == undefined || this.state.title == '')
       return '活动名称不能为空！';
-    if (this.state.type == -1)
+    if (this.state.type == '')
       return '活动类型不能为空！';
     if (this.state.starttime == undefined || this.state.starttime == '')
       return '活动开始时间不能为空！';

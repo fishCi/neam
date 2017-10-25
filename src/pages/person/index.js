@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator } from 'react-native'
+import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator,ToastAndroid} from 'react-native'
 import { Container,Root, Header, Content, List, ListItem, Thumbnail, Text, Body, Separator, Left, Right,Button} from 'native-base';
 import common from '../../common'
 import EmptyView from '../../components/EmptyView'
@@ -83,7 +83,7 @@ export default class Person extends Component {
                 <Text note>{this.dscp}</Text>
               </Body>
             </ListItem>
-            <Separator />
+            <View sytle={[styles.separator]}><Text> </Text></View>
             <View style={{backgroundColor: '#ffffff'}}>
             <ListItem icon>
               <Left>
@@ -100,19 +100,6 @@ export default class Person extends Component {
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name='ios-people-outline' size={25} color='skyblue' />
-              </Left>
-              <Body>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Party', { name: this.name, department: this.department, records: this.records,pos:this.pos})}>
-                  <Text>组织关系</Text>
-                </TouchableOpacity>
-              </Body>
-              <Right>
-                <Icon name='ios-arrow-forward-outline' size={25} color='black' />
-              </Right>
-            </ListItem>
-            <ListItem icon last>
-              <Left>
                 <Icon name='ios-book-outline' size={25} color='skyblue' />
               </Left>
               <Body>
@@ -122,20 +109,70 @@ export default class Person extends Component {
                 <Icon name='ios-arrow-forward-outline' size={25} color='black' />
               </Right>
             </ListItem>
-            </View>
-            <Separator />
             <ListItem icon last>
+            <Left>
+              <Icon name='ios-hand-outline' size={25} color='skyblue' />
+            </Left>
+            <Body>
+              <Text>我的权益</Text>
+            </Body>
+            <Right>
+              <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+            </Right>
+          </ListItem>
+            </View>
+            
+            <View sytle={[styles.separator]}><Text> </Text></View>
+            <View style={{backgroundColor: '#ffffff'}}>
+            <ListItem icon>
               <Left>
-                <Icon name='ios-hand-outline' size={25} color='skyblue' />
+                <Icon name='ios-aperture-outline' size={25} color='skyblue' />
               </Left>
               <Body>
-                <Text>我的权益</Text>
+                <TouchableOpacity onPress={() => {
+                  if(this.records.length == 0) {
+                    ToastAndroid.show("暂时未录入党员履历！",ToastAndroid.SHORT);
+                  } else {
+                    this.props.navigation.navigate('Party', { name: this.name, department: this.department, records: this.records,pos:this.pos})}
+                  }
+                }>
+                  <Text>党员历程</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name='ios-arrow-forward-outline' size={25} color='black' />
               </Right>
             </ListItem>
-            <Separator />
+            <ListItem icon>
+            <Left>
+              <Icon name='ios-people-outline' size={25} color='skyblue' />
+            </Left>
+            <Body>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyInfo',{department:this.department,pos:this.pos})} >
+                <Text>革命战友</Text>
+              </TouchableOpacity>
+            </Body>
+            <Right>
+              <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+            </Right>
+          </ListItem>
+          <ListItem icon>
+          <Left>
+            <Icon name='ios-pricetags-outline' size={25} color='skyblue' />
+          </Left>
+          <Body>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyFee')}>
+              <Text>缴纳党费</Text>
+            </TouchableOpacity>
+          </Body>
+          <Right>
+            <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+          </Right>
+        </ListItem>
+            </View>
+
+            
+            <View sytle={[styles.separator]}><Text> </Text></View>
             <ListItem icon last>
               <Left>
                 <Icon name='ios-build-outline' size={25} color='skyblue' />
@@ -147,7 +184,7 @@ export default class Person extends Component {
                 <Icon name='ios-arrow-forward-outline' size={25} color='black' />
               </Right>
             </ListItem>
-            <Separator />
+            <View sytle={[styles.separator]}><Text> </Text></View>
             <Button full onPress={this._logout}>
             <Text>退出</Text>
            </Button>
@@ -159,7 +196,8 @@ export default class Person extends Component {
 
  _logout=()=>{
    storage.clearMapForKey('user');
-   this.props.navigation.navigate('Login',{logout:true});
+  //  this.props.navigation.navigate('Login',{logout:true});
+  this.props.navigation.goBack('Login');
  }
 
   render() {
@@ -170,3 +208,7 @@ export default class Person extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  separator : {flex:1, backgroundColor: '#f0f0f0',height:20}
+});

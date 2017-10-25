@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-24 16:18:02
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-24 23:39:38
  */
 
 import React, { Component } from 'react';
@@ -167,7 +167,7 @@ export default class Detail extends Component {
     _registe = () => {
 
         fetchPost('A08464105', {
-            thpyadthmsAvyId: this.props.actId,
+            thpyadthmsAvyId: this.props.navigation.state.params.actId,
             thpyadthmsStmUsrId: this.u.thpyadthmsStmUsrId
         },
             (resp) => {
@@ -185,7 +185,7 @@ export default class Detail extends Component {
 
     _getFormProps = () => {
         let res = {
-            actId: this.props.actId,
+            actId: this.props.navigation.state.params.actId,
             title: this.state.title,
             address: this.state.address,
             description: this.state.description,
