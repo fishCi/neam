@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-25 10:07:42
+ * @Last Modified time: 2017-10-25 10:22:39
  */
 
 import React, { Component } from 'react';
@@ -179,7 +179,7 @@ export default class Detail extends Component {
 
     _registe = () => {
         fetchPost('A08464105', {
-            thpyadthmsAvyId: this.props.actId,
+            thpyadthmsAvyId: this.props.navigation.state.params.actId,
             thpyadthmsStmUsrId: this.u.thpyadthmsStmUsrId
         },
             (resp) => {
