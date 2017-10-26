@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-26 14:49:17
+ * @Last Modified time: 2017-10-26 15:38:40
  */
 
 
@@ -230,7 +230,8 @@ const styles = StyleSheet.create({
     // height: 40,
   },
   filter: {
-    marginHorizontal: 10,
+    backgroundColor:'white',
+    paddingHorizontal: 10,
     paddingVertical: 10,
     borderStyle: 'solid',
     borderColor: 'aliceblue',
