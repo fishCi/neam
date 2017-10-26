@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
- * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 12:37:30
+ * @Last Modified by: zhaozheng1.zh
+ * @Last Modified time: 2017-10-26 14:51:38
  */
 
 import React, { Component } from 'react';
@@ -102,7 +102,7 @@ export default class Detail extends Component {
                 </Header>
                 <ScrollView>
                     <View>
-                        <Image style={{ height: common.width * 2 / 3, width: common.width }} source={require('../../img/activity/adv.png')} />
+                        <Image style={{ height: common.width /2, width: common.width }} source={require('../../img/activity/adv.png')} />
                     </View>
                     <EmptyView h={20} bc='lightgrey' />
                     <View style={{ flex: 1 }}>

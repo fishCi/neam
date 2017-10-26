@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
- * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 12:39:41
+ * @Last Modified by: zhaozheng1.zh
+ * @Last Modified time: 2017-10-26 14:49:17
  */
 
 
@@ -16,7 +16,7 @@ import EmptyView from '../../components/EmptyView';
 import { fetchPost } from '../../utils/fetchAPI';
 import { getUser } from '../../utils/StorageUtil';
 import W from '../../common/index';
-import C from '../activity/Card';
+import Cell from '../activity/Cell';
 
 
 const butts = [{ name: '全部', type: '00' }, { name: '党', type: '01' }, { name: '团', type: '02' }, { name: '工会', type: '03' }, { name: '协会', type: '04' }, { name: '其他', type: '99' }];
@@ -72,6 +72,7 @@ export default class activity extends Component {
             data={activities}
             keyExtractor={(item, index) => item.thpyadthmsAvyId}
             renderItem={this._renderActivityItem}
+            ItemSeparatorComponent={() => <EmptyView h={1} bc='darkgrey'/>}
             onEndReached={this.fetchMore}
             ListFooterComponent={() => {
               return pager &&
@@ -192,35 +193,8 @@ export default class activity extends Component {
   }
 
 
-  _renderActivityItem = ({ item }) => (
-    <C item={item} navigate = {this.props.navigation.navigate}/>
-    // <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail', { info: item })}>
-    //   <Card style={{ backgroundColor: 'red' }}>
-    //     <CardItem header style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-    //       <View style={{ flexDirection: 'row' }}>
-    //         <Image source={require('../../img/activity/party.png')} />
-    //         <Text style={{ marginLeft: 10, fontWeight: '200' }}>{item.theme}</Text>
-    //       </View>
-
-    //       <Text style={{ color: 'gray', fontSize: 12 }}>{item.status}</Text>
-    //     </CardItem>
-    //     <CardItem>
-    //       <Body>
-    //         <Text style={{ fontSize: 12, fontWeight: '100' }}>
-    //           {item.content}
-    //         </Text>
-    //       </Body>
-    //     </CardItem>
-    //     {
-    //       // <View style={{ height: 1, backgroundColor: 'lightgray' }} />
-    //     }
-    //     <CardItem footer style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-    //       <Text style={{ fontSize: 12 }}>{item.starttime}</Text>
-    //       <Text style={{ fontSize: 12 }}>{item.org}</Text>
-    //     </CardItem>
-    //   </Card>
-    // </TouchableOpacity>
-  );
+  _renderActivityItem = ({ item }) => <Cell item={item} navigate = {this.props.navigation.navigate}/>
+  
 
   _renderButtonItem = ({ item }) => {
     return (
@@ -268,7 +242,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   activityList: {
-    paddingHorizontal: 10,
-    flex: 1
+    marginTop:10,
+    backgroundColor:'white',
+    flex: 1,
   }
 });
