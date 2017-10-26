@@ -97,7 +97,7 @@ export default class Detail extends Component {
                         <Text style={{ color: 'white' }}>活动详情</Text>
                     </Left>
                     <Right>
-                        <Icon.Button name='ios-create-outline' color='white' style={{ alignSelf: 'flex-end' }} size={20} onPress={() => this.props.navigation.navigate('Create', { form: this._getFormProps() })} />
+                        <Icon.Button name='ios-create-outline' color='white' style={{ alignSelf: 'flex-end'}} size={20} onPress={() => this.props.navigation.navigate('Create', { form: this._getFormProps(),title:'修改活动' })} />
                     </Right>
                 </Header>
                 <ScrollView>

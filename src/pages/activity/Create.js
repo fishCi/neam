@@ -37,9 +37,11 @@ const CANCEL_INDEX = 4;
 const reNum = /^[0-9]+.?[0-9]*$/
 
 export default class CreateActivity extends Component {
+  static navigationOptions = ({navigation})=>({title:navigation.state.params.title});
+
   constructor(props) {
     super(props);
-    if (this.props.navigation.state.params == undefined) {
+    if (this.props.navigation.state.params.form == undefined) {
       this.state = {
         isEdit: false,
         title: '',
@@ -199,7 +201,7 @@ export default class CreateActivity extends Component {
               <Text style={[styles.datetext]}>活动开始时间</Text>
               <DatePicker
                 style={[styles.datepicker, styles.margintop]}
-                date={this.state.starttime == '000000'?'':this.state.starttime}
+                date={this.state.starttime}
                 mode="datetime"
                 placeholder="活动开始时间"
                 format="YYYY-MM-DD HH:mm"
@@ -217,7 +219,7 @@ export default class CreateActivity extends Component {
                 onDateChange={(date) => { 
                   if(this.state.endtime != '' && this.state.endtime != undefined 
                     && this.state.endtime < date) {
-                      ToastAndroid.show("活动开始时间不能晚于结束时间！",ToastAndroid.SHORT);
+                      ToastAndroid.show("活动开始时间不能晚于结束时间！",ToastAndroid.LONG);
                       
                   } else {
                     this.setState({ starttime: date })
@@ -235,7 +237,7 @@ export default class CreateActivity extends Component {
               <Text style={[styles.datetext]}>活动结束时间</Text>
               <DatePicker
                 style={[styles.datepicker]}
-                date={this.state.endtime == '000000'?'':this.state.endtime}
+                date={this.state.endtime}
                 mode="datetime"
                 placeholder="活动结束时间"
                 format="YYYY-MM-DD HH:mm"
@@ -253,8 +255,11 @@ export default class CreateActivity extends Component {
                 onDateChange={(date) => { 
                   if(this.state.starttime != '' && this.state.starttime != undefined 
                     && this.state.starttime > date) {
-                      ToastAndroid.show("活动结束时间不能早于开始时间！",ToastAndroid.SHORT);
+                      ToastAndroid.show("活动结束时间不能早于开始时间！",ToastAndroid.LONG);
                      
+                  } else if(this.state.regstarttime != '' && this.state.regstarttime != undefined 
+                  && this.state.regstarttime  > date){
+                      ToastAndroid.show("活动结束时间不能早于报名开始时间！",ToastAndroid.LONG);
                   } else {
                       this.setState({ endtime: date })
                   }
@@ -306,8 +311,11 @@ export default class CreateActivity extends Component {
                 onDateChange={(date) => { 
                   if(this.state.regendtime != '' && this.state.regendtime != undefined 
                     && this.state.regendtime < date) {
-                      ToastAndroid.show("报名开始时间不能晚于截止时间！",ToastAndroid.SHORT);
+                      ToastAndroid.show("报名开始时间不能晚于截止时间！",ToastAndroid.LONG);
                       
+                  } else if(this.state.endtime != '' && this.state.endtime != undefined 
+                    && this.state.endtime  < date){
+                      ToastAndroid.show("报名开始时间不能晚于活动结束时间！",ToastAndroid.LONG);
                   } else {
                     this.setState({ regstarttime: date })
                   }
@@ -345,7 +353,7 @@ export default class CreateActivity extends Component {
                 onDateChange={(date) => { 
                   if(this.state.regstarttime != '' && this.state.regstarttime != undefined 
                     && this.state.regstarttime > date) {
-                      ToastAndroid.show("报名截止时间不能早于开始时间！",ToastAndroid.SHORT);
+                      ToastAndroid.show("报名截止时间不能早于开始时间！",ToastAndroid.LONG);
                 
                   } else {
                     this.setState({ regendtime: date })
@@ -456,7 +464,7 @@ export default class CreateActivity extends Component {
         ? fetchPost('A08464104', { ...this._tranferToJSON(u), thpyadthmsAvyId: this.state.actId }, this._success, this._failure)
         : fetchPost('A08464101', this._tranferToJSON(u), this._success, this._failure));
     } else {
-      ToastAndroid.show(this.validate(),ToastAndroid.SHORT);
+      ToastAndroid.show(this.validate(),ToastAndroid.LONG);
     }
   }
 
@@ -469,7 +477,7 @@ export default class CreateActivity extends Component {
       this.setState({
         showLoading: false,
       },
-      ToastAndroid.show(resp.BK_DESC,ToastAndroid.SHORT));
+      ToastAndroid.show(resp.BK_DESC,ToastAndroid.LONG));
     }
   };
 

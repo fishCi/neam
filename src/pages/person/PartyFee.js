@@ -2,7 +2,7 @@
 * @Author: caixin1.zh
 * @Date:   2017-10-19 06:06:10
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 12:42:03
+ * @Last Modified time: 2017-10-26 15:02:15
 */
 import React from 'react';
 import {
@@ -58,9 +58,10 @@ class PartyFee extends React.Component {
             money:'',
             status:'00'
           };
-          this.totalAmount += resp.list[i].thpyadthmsactPyfAmt;
           if(resp.list[i].thpyadthmsPyfStcd == '01') {
             this.payAmount += resp.list[i].thpyadthmsactPyfAmt;
+          } else if(resp.list[i].thpyadthmsPyfStcd == '02') {
+            this.totalAmount += resp.list[i].thpyadthmsactPyfAmt;
           }
           item.month = resp.list[i].moMo;
           item.money = resp.list[i].thpyadthmsactPyfAmt;

@@ -65,10 +65,7 @@ const App = StackNavigator(
       }
     },
     Create: {
-      screen : Create,
-      navigationOptions: {
-        title: '活动创建',
-      }
+      screen : Create
     },
     Detail:{
       screen:Detail,
@@ -83,10 +80,7 @@ const App = StackNavigator(
       }
     },
     PartyInfo:{
-      screen:PartyInfo,
-      navigationOptions: {
-        title: '革命战友',
-      }
+      screen:PartyInfo
     },
     PartyFee:{
       screen:PartyFee,
