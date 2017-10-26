@@ -1,13 +1,13 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-24 18:45:36
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-26 13:10:47
  */
 
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, ImageBackground, DeviceEventEmitter, Keyboard, TextInput,ToastAndroid,Dimensions,TouchableOpacity,Modal,ActivityIndicator } from 'react-native';
-import { Container, Item, Input, Header, Body, Content, Title, Button, Text, Spinner, Label, Toast, Root } from 'native-base';
+import { Container, Item, Input, Header, Body, Content, Title, Button, Text, Spinner, Label, Toast,ActionSheet, Root } from 'native-base';
 import { Field, reduxForm } from 'redux-form';
 import common from '../common'
 import { fetchPost } from '../utils/fetchAPI';
@@ -15,6 +15,7 @@ import { anyofficeCodeUtil } from '../utils/AnyOfficeCodeUtil'
 import { NativeModules } from 'react-native';
 import LoadingView from '../components/LoadingView';
 import { NetworkInfo } from 'react-native-network-info';
+import NavigationUtil from '../utils/NavigationUtil';
 
 
 var anyOfficeLogin = NativeModules.AnyOfficeLogin;
@@ -36,7 +37,7 @@ export default class LoginForm extends Component {
                     empeIdLandNm: this.state.name,
                     usrPswd: this.state.pswd,
                     cstCtcTel: '',
-                    usrIpAdr: ''
+                    usrIpAdr: ipv4
                 }, this._success, this._failure)});
             }
 
@@ -52,8 +53,8 @@ export default class LoginForm extends Component {
         });
 
         this.onNetError = DeviceEventEmitter.addListener("onNetError", (errorCode) => {
-            console.log("onNetError");
-            ToastAndroid.show(anyofficeCodeUtil(parseInt(errorCode)),ToastAndroid.SHORT);
+            console.log("onNetError" + anyofficeCodeUtil(parseInt(errorCode)));
+            ToastAndroid.show(errorCode + ",当前网络不稳定！", ToastAndroid.SHORT);
             this.setState({
                 showLoading: false,
             });
@@ -61,13 +62,19 @@ export default class LoginForm extends Component {
 
 
         this.onLoginError = DeviceEventEmitter.addListener("onLoginError", (errorCode) => {
-            console.log("onLoginError" + errorCode);
-            this.setState({
-                name: '',
-                pswd: '',
-                showLoading: false,
-            });
-            //ToastAndroid.show(anyofficeCodeUtil(parseInt(errorCode)),ToastAndroid.SHORT);
+            console.log("onLoginError" + anyofficeCodeUtil(parseInt(errorCode)));
+            if (waitingLogin) {
+                waitingLogin = false;
+                this.setState({
+                    showLoading: false,
+                });
+                ToastAndroid.show(anyofficeCodeUtil(parseInt(errorCode)),ToastAndroid.SHORT);
+            } else {
+                ToastAndroid.show("网络多次重连失败，请重新登录！",ToastAndroid.SHORT);
+                this.props.navigation.goBack('Login');
+                //NavigationUtil.reset(this.props.navigation, 'Login');
+            }
+           
             // this.props.navigation.navigate('Home');
             //only triggered by auto relogin  
             // this can be the same as login method's callback
@@ -135,17 +142,13 @@ export default class LoginForm extends Component {
                                 />
                             </Item>
                             <Button rounded primary small style={styles.loginbtn} onPress={this._submit}>
-                                <Text>登陆</Text>
+                                <Text>登录</Text>
                             </Button>
                         </Content>
                     </Container>
                     <LoadingView showLoading={this.state.showLoading} backgroundColor='#323233' opacity={0.8} />
                 </ImageBackground>
         )
-    }
-
-    _close(){
-        console.log("onRequestClose ---- ")
     }
 
     _submit = () => {
@@ -156,14 +159,9 @@ export default class LoginForm extends Component {
         this.timer && clearTimeout(this.timer);
         this.timer = setTimeout(
             () => anyOfficeLogin.login(this.state.name, this.state.pswd, () => {
+                console.log("success");
             }, rs => {
                 console.log("failed");
-                // this.setState({
-                //     showLoading: false,
-                // });
-                // ToastAndroid.show(anyofficeCodeUtil(parseInt(rs)),ToastAndroid.SHORT);
-                // console.log("errohandle");
-                // waitingLogin = false;
             }), 1
         );
         // }
@@ -189,7 +187,8 @@ export default class LoginForm extends Component {
     };
 
     _failure = error => {
-        console.log(JSON.stringify(error));
+        console.log(error);
+        ToastAndroid.show("网络连接失败，请稍后再试！", ToastAndroid.LONG);
         this.setState({
             showLoading: false,
         });

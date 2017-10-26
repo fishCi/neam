@@ -1,8 +1,8 @@
 /*
 * @Author: caixin1.zh
 * @Date:   2017-10-19 06:06:10
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-24 18:11:02
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-26 12:42:03
 */
 import React from 'react';
 import {
@@ -76,8 +76,10 @@ class PartyFee extends React.Component {
   };
 
   _failure(error) {
+    console.log(error);
+    
     this.setState({showLoading:false},()=>
-      ToastAndroid.show(JSON.stringify(error), ToastAndroid.SHORT)
+    ToastAndroid.show("网络连接失败，请稍后再试！", ToastAndroid.LONG)
     );
   };
 

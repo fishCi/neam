@@ -1,8 +1,8 @@
 /*
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-10-19 23:00:09
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-26 12:43:54
 */
 
 import React from 'react';
@@ -13,7 +13,8 @@ import {
   View,
   processColor,
   ScrollView,
-  Image
+  Image,
+  ToastAndroid
 } from 'react-native';
 import { Button,Root,Toast } from 'native-base';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -273,24 +274,15 @@ class PartyInfo extends React.Component {
  
       this.setState({showLoading:false});
     } else {
-      Toast.show({
-        text: resp.BK_DESC,
-        position: 'bottom',
-        buttonText: 'OK',
-        duration: 2000
-      });
+      ToastAndroid.show(resp.BK_DESC, ToastAndroid.LONG);
       this.setState({showLoading:false});
     }
   };
 
   _failure(error) {
+    console.log(error);
+    ToastAndroid.show("网络连接失败，请稍后再试！", ToastAndroid.LONG);
     this.setState({showLoading:false});
-    Toast.show({
-      text: error,
-      position: 'bottom',
-      buttonText: 'OK',
-      duration: 2000
-    });
   };
 
 }

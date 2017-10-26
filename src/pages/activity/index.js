@@ -1,14 +1,14 @@
 /*
  * @Author: zhaozheng1.zh 
- * @Date: 2017-09-09 22:10:22
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-24 16:00:46
+ * @Date: 2017-09-09 22:10:22 
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-26 12:39:41
  */
 
 
 import React, { Component } from 'react';
-import { Image, View, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, Modal } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Title, Text, Card, CardItem, Root, Toast } from 'native-base';
+import { Image, View, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, Modal, ToastAndroid } from 'react-native';
+import { Container, Header, Left, Body, Right, Button, Title, Text, Card, CardItem, Root } from 'native-base';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { ACTIVITY_TYPE } from '../../constants/ActivityFilterType';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,7 +19,7 @@ import W from '../../common/index';
 import C from '../activity/Card';
 
 
-const butts = [{ name: '全部', type: '00' }, { name: '党', type: '02' }, { name: '团', type: '03' }, { name: '工会', type: '04' }, { name: '协会', type: '05' }, { name: '其他', type: '01' }];
+const butts = [{ name: '全部', type: '00' }, { name: '党', type: '01' }, { name: '团', type: '02' }, { name: '工会', type: '03' }, { name: '协会', type: '04' }, { name: '其他', type: '99' }];
 const buttonmenus = ['我发起的', '我参与的']
 export default class activity extends Component {
 
@@ -101,6 +101,7 @@ export default class activity extends Component {
     const endDate = end.getFullYear() + "" + this.formatTime(end.getMonth() + 1) + "" + this.formatTime(end.getDate());
     const endTime = '235959';
     u = await getUser();
+    
     fetchPost('A08464102', {
       thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
       thpyadthmsAvyStdt: beginDate,
@@ -123,9 +124,11 @@ export default class activity extends Component {
       const acts = [];
       if (resp.list != undefined && resp.list != null && resp.list.length > 0) {
         acts = this.state.activities.concat(resp.list)
+      } else {
+        acts = this.state.activities
       }
       console.log("------------------------------");
-      resp.list.map((item)=>{console.log(item.thpyadthmsAvyId)}) 
+      // resp.list.map((item)=>{console.log(item.thpyadthmsAvyId)}) 
       this.setState({
         activities: acts
       },
@@ -139,11 +142,22 @@ export default class activity extends Component {
           })
         }
       );
+    } else {
+      ToastAndroid.show(resp.BK_DESC, ToastAndroid.SHORT);
+      this.setState({
+        ready: true,
+        pager: false
+      })
     }
   };
 
   _failure(error) {
-    alert(error);
+    console.log(error);
+    ToastAndroid.show("网络连接失败，请稍后再试！", ToastAndroid.LONG);
+    this.setState({
+      ready: true,
+      pager: false
+    })
   };
 
 
@@ -222,6 +236,7 @@ export default class activity extends Component {
 
 
   _filterActivities = async type => {
+    this.listPageEnd = false;
     this.setState({
       ready: false,
       type,

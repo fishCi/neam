@@ -24,12 +24,12 @@ import { getUser } from '../../utils/StorageUtil'
 import LoadingView from '../../components/LoadingView';
 
 
-const ACTIVITY_TYPE = [{ key: '02', value: '党员活动' }, { key: '03', value: '团员活动' }, { key: '04', value: '工会活动' }, { key: '05', value: '协会活动' }, { key: '01', value: '其他活动' }];
+const ACTIVITY_TYPE = [{ key: '01', value: '党员活动' }, { key: '02', value: '团员活动' }, { key: '03', value: '工会活动' }, { key: '04', value: '协会活动' }, { key: '99', value: '其他活动' }];
 const ACTIVITY_TPCD = ['营业机构', '党群组织机构'];
 // var BUTTONS = [{ key: '02', text: '党员活动' }, { key: '03', text: '团员活动' }, { key: '04', text: '工会活动' }, { key: '05', text: '协会活动' }, { key: '01', text: '其他活动' }];
 
 const types = ['党员活动', '团员活动', '工会活动', '协会活动', '其他活动' ]
-const typeValue = ['02', '03', '04', '05', '01' ]
+const typeValue = ['01', '02', '03', '04', '99' ]
 const title = '请选择活动类型'
 const DESTRUCTIVE_INDEX = 3;
 const CANCEL_INDEX = 4;
@@ -75,8 +75,8 @@ export default class CreateActivity extends Component {
         isreg: form.isreg,
         starttime: form.starttime,
         endtime: form.endtime,
-        regstarttime: form.regstarttime,
-        regendtime: form.regendtime,
+        regstarttime: form.isreg ? form.regstarttime : "",
+        regendtime: form.isreg ? form.regendtime : "",
         host: form.host,
         phone: form.phone,
         showLoading: false,
@@ -86,10 +86,12 @@ export default class CreateActivity extends Component {
   }
 
   componentWillMount() {
+    console.log("create mount");
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }
 
   componentWillUnmount() {
+    console.log("create unmount");
     this.keyboardDidHideListener.remove();
   }
 
@@ -105,6 +107,7 @@ export default class CreateActivity extends Component {
 
 
   render() {
+    console.log("create render");
     return (
       <Root>
       <ScrollView style={{backgroundColor: '#f0f0f0'}}>
@@ -437,6 +440,7 @@ export default class CreateActivity extends Component {
         </Button>
         <View sytle={[styles.separator]}><Text> </Text></View>
         <LoadingView showLoading={this.state.showLoading} backgroundColor='#323233' opacity={0.8} />
+        <ActionSheet ref={(c)=>{ActionSheet.actionsheetInstance = c}} />
       </ScrollView>
       </Root>
     );
@@ -464,21 +468,23 @@ export default class CreateActivity extends Component {
     } else {
       this.setState({
         showLoading: false,
-    },
+      },
       ToastAndroid.show(resp.BK_DESC,ToastAndroid.SHORT));
     }
   };
 
   _failure = error => {
+    console.log(error);
     this.setState({
       showLoading: false,
     },
-    ToastAndroid.show(error,ToastAndroid.SHORT));
+    ()=>ToastAndroid.show("网络连接失败，请稍后再试！", ToastAndroid.LONG));
   };
 
 
   _getddValue(k) {
     let r = ''
+    console.log("type");
     ACTIVITY_TYPE.forEach((item) => {
       if (item.key === k) {
         r = item.value;
