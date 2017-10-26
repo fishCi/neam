@@ -39,6 +39,7 @@ const reNum = /^[0-9]+.?[0-9]*$/
 export default class CreateActivity extends Component {
   static navigationOptions = ({navigation})=>({title:navigation.state.params.title});
 
+  isSubmit = false;
   constructor(props) {
     super(props);
     if (this.props.navigation.state.params.form == undefined) {
@@ -181,7 +182,7 @@ export default class CreateActivity extends Component {
                       }
                     )}
                   }
-                >{this.state.type == ''?'请选择':this._getddValue(this.state.type)}</Text>
+                >{this.state.type == ''?'请选择类型':this._getddValue(this.state.type)}</Text>
               
                 </Body>
               
@@ -377,7 +378,7 @@ export default class CreateActivity extends Component {
           <TextInput
           style={[styles.margintop, styles.largeinput]}
           multiline={true}
-          placeholder="请填写活动内容详细内容"
+          placeholder="请填写活动详细内容"
           placeholderTextColor="#c9c9c9"
           value={this.state.detail}
           underlineColorAndroid='transparent'
@@ -455,6 +456,10 @@ export default class CreateActivity extends Component {
   }
 
   _submit = async () => {
+    if(this.isSubmit) {
+      return;
+    }
+    this.isSubmit = true;
     let u = await getUser();
     if (this.validate() == true) {
       this.setState({
@@ -465,6 +470,7 @@ export default class CreateActivity extends Component {
         : fetchPost('A08464101', this._tranferToJSON(u), this._success, this._failure));
     } else {
       ToastAndroid.show(this.validate(),ToastAndroid.LONG);
+      this.isSubmit = false;
     }
   }
 
@@ -478,10 +484,12 @@ export default class CreateActivity extends Component {
         showLoading: false,
       },
       ToastAndroid.show(resp.BK_DESC,ToastAndroid.LONG));
+      this.isSubmit = false;
     }
   };
 
   _failure = error => {
+    this.isSubmit = false;
     console.log(error);
     this.setState({
       showLoading: false,
