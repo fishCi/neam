@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-26 15:26:20
+ * @Last Modified time: 2017-10-26 15:31:36
  */
 
 import React, { Component } from 'react';
@@ -41,7 +41,7 @@ export default class Detail extends Component {
     u = {};
 
     async componentDidMount() {
-        this.u = await getUser();        
+        this.u = await getUser();
         fetchPost('A08464103', {
             thpyadthmsAvyId: this.props.navigation.state.params.actId,
             thpyadthmsStmUsrId: this.u.thpyadthmsStmUsrId
@@ -94,74 +94,75 @@ export default class Detail extends Component {
             <View style={{ flex: 1 }}>
                 <Header style={styles.header}>
                     <Left>
-                        <Text style={{color:'white'}}>活动详情</Text>
+                        <Text style={{ color: 'white' }}>活动详情</Text>
                     </Left>
                     <Right>
-                        <Icon.Button name='ios-create-outline' color='white' style={{ alignSelf: 'flex-end'}} size={20} onPress={() => this.props.navigation.navigate('Create', { form: this._getFormProps() })} />
+                        <Icon.Button name='ios-create-outline' color='white' style={{ alignSelf: 'flex-end' }} size={20} onPress={() => this.props.navigation.navigate('Create', { form: this._getFormProps() })} />
                     </Right>
                 </Header>
                 <ScrollView>
                     <View>
-                        <Image style={{ height: common.width /2, width: common.width }} source={require('../../img/activity/detail.png')} />
+                        <Image style={{ height: common.width / 2, width: common.width }} source={require('../../img/activity/detail.png')} />
                     </View>
                     <EmptyView h={20} bc='lightgrey' />
                     <View style={{ flex: 1 }}>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 20, }}>
-                            <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 24 }}>活动详情: </Text>
+                            <Text style={{ fontWeight: 'bold', color: 'deepskyblue', fontSize: 20 }}>活动详情: </Text>
                         </View>
                         <EmptyView h={1} bc='lightgrey' />
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>活动名称: </Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动名称: </Text>
+                        </View>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.title}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.title}</Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动时间: </Text>
                         </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>活动时间: </Text>
-                        </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.starttime + '~' + this.state.endtime}</Text>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.starttime + '   至   ' + this.state.endtime}</Text>
                         </View>
                         {this.state.isreg == '1' && <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>活动报名时间: </Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动报名时间: </Text>
                         </View>
                         }
-                        {this.state.isreg == '1' && <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.regstarttime +'~'+ this.state.regendtime}</Text>
+                        {this.state.isreg == '1' && <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.regstarttime + '   至   ' + this.state.regendtime}</Text>
                         </View>
                         }
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>活动地点: </Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动地点: </Text>
+                        </View>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }} >{this.state.address === undefined ? '待定' : this.state.address}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.address === undefined ? '待定' : this.state.address}</Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动详情: </Text>
+                        </View>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.detail}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>活动详情: </Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>温馨提示: </Text>
+                        </View>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.tip}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.detail}</Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>活动联系人: </Text>
+                        </View>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.host}</Text>
                         </View>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>温馨提示: </Text>
+                            <Text style={{ fontWeight: 'bold', color: 'cornflowerblue' }}>联系人电话: </Text>
                         </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.tip}</Text>
+                        <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 14 }}>{this.state.phone}</Text>
                         </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>活动联系人: </Text>
-                        </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.host}</Text>
-                        </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text style={{ fontWeight: 'bold' }}>联系人电话: </Text>
-                        </View>
-                        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                            <Text>{this.state.phone}</Text>
-                        </View>
-                        {this.state.isreg == '1' && (this.state.hasReg == '01' ? <Button block disabled onPress={this._registe} style={{ flex: 1, height: 40 }}><Text>已报名</Text></Button>
-                            : <Button block success onPress={this._registe} style={{ flex: 1, height: 30 }}><Text>报名</Text></Button>)}
+                        {this.state.isreg == '1' && (this.state.hasReg == '01' ? <Button block disabled onPress={this._registe} style={{ flex: 1, height: 50 }}><Text>已报名</Text></Button>
+                            : <Button block success onPress={this._registe} style={{ flex: 1, height: 50 }}><Text>报名</Text></Button>)}
+                        <EmptyView h={10} />
                     </View>
                 </ScrollView>
             </View>
