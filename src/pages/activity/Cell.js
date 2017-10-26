@@ -34,8 +34,8 @@ export default class Cell extends Component {
                     <View style={{flex:1, paddingLeft: 15, paddingVertical: 15}}>
                         <View style={{ flex: 1, flexDirection: 'row',justifyContent:'space-between'}}>
                             <Text style={{flex:1, fontFamily: 'Georgia', fontSize: 14, fontWeight: 'bold' }} numberOfLines={2}>{this.props.item.thpyadthmsAvyNm}</Text>
-                            <View style={{ backgroundColor: 'red', borderRadius: 2,marginRight:10,height:18}}>
-                                <Text style={{fontSize: 12, color: this._transferType().color,padding:2}}>{this._transferType().name}</Text>
+                            <View style={{ backgroundColor: this._transferType().color, borderRadius: 2,marginRight:10,height:18}}>
+                                <Text style={{fontSize: 12, color: 'white',padding:2}}>{this._transferType().name}</Text>
                             </View>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'column' }}>

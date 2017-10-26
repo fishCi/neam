@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-26 15:31:36
+ * @Last Modified time: 2017-10-26 16:45:04
  */
 
 import React, { Component } from 'react';
@@ -97,7 +97,9 @@ export default class Detail extends Component {
                         <Text style={{ color: 'white' }}>活动详情</Text>
                     </Left>
                     <Right>
-                        <Icon.Button name='ios-create-outline' color='white' style={{ alignSelf: 'flex-end'}} size={20} onPress={() => this.props.navigation.navigate('Create', { form: this._getFormProps(),title:'修改活动' })} />
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Create', { form: this._getFormProps(), title: '修改活动' })}>
+                            <Icon name='ios-create-outline' size={30} color='white' />
+                        </TouchableOpacity>
                     </Right>
                 </Header>
                 <ScrollView>
