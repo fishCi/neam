@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 13:10:47
+ * @Last Modified time: 2017-10-26 15:11:02
  */
 
 import React, { Component } from 'react';
@@ -54,7 +54,7 @@ export default class LoginForm extends Component {
 
         this.onNetError = DeviceEventEmitter.addListener("onNetError", (errorCode) => {
             console.log("onNetError" + anyofficeCodeUtil(parseInt(errorCode)));
-            ToastAndroid.show(errorCode + ",当前网络不稳定！", ToastAndroid.SHORT);
+            ToastAndroid.show(errorCode + ",当前网络不稳定！", ToastAndroid.LONG);
             this.setState({
                 showLoading: false,
             });
@@ -68,9 +68,9 @@ export default class LoginForm extends Component {
                 this.setState({
                     showLoading: false,
                 });
-                ToastAndroid.show(anyofficeCodeUtil(parseInt(errorCode)),ToastAndroid.SHORT);
+                ToastAndroid.show(anyofficeCodeUtil(parseInt(errorCode)),ToastAndroid.LONG);
             } else {
-                ToastAndroid.show("网络多次重连失败，请重新登录！",ToastAndroid.SHORT);
+                ToastAndroid.show("网络多次重连失败，请重新登录！",ToastAndroid.LONG);
                 this.props.navigation.goBack('Login');
                 //NavigationUtil.reset(this.props.navigation, 'Login');
             }
@@ -179,7 +179,7 @@ export default class LoginForm extends Component {
                 showLoading: false,
             }))
         } else {
-            ToastAndroid.show(resp.BK_DESC,ToastAndroid.SHORT);
+            ToastAndroid.show(resp.BK_DESC,ToastAndroid.LONG);
             this.setState({
                 showLoading: false,
             });
@@ -192,7 +192,7 @@ export default class LoginForm extends Component {
         this.setState({
             showLoading: false,
         });
-       // ToastAndroid.show(error,ToastAndroid.SHORT);
+       // ToastAndroid.show(error,ToastAndroid.LONG);
     };
 
 }

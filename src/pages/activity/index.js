@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-26 15:38:40
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-26 15:18:00
  */
 
 
@@ -52,7 +52,7 @@ export default class activity extends Component {
             <Text>活动</Text>
           </Left>
           <Right>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Create')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Create',{title:'创建活动'})}>
               <Icon name='md-add' size={30} color='skyblue' />
             </TouchableOpacity>
           </Right>
