@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator,ToastAndroid} from 'react-native'
+import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator,ToastAndroid,BackHandler} from 'react-native'
 import { Container,Root, Header, Content, List, ListItem, Thumbnail, Text, Body, Separator, Left, Right,Button} from 'native-base';
 import common from '../../common'
 import EmptyView from '../../components/EmptyView'
@@ -62,12 +62,13 @@ export default class Person extends Component {
       //   // expires: 1000 * 3600 
       // }).then(() => this.setState({ ready: true }))
     } else {
-      alert(resp.BK_DESC)
+      ToastAndroid.show("革命战友" + resp.BK_DESC, ToastAndroid.SHORT);
     }
   };
 
   _failure(error) {
-    alert(error);
+    console.log(error);
+    ToastAndroid.show("网络连接失败，请稍后再试！", ToastAndroid.LONG);
   };
 
 
@@ -197,7 +198,8 @@ export default class Person extends Component {
  _logout=()=>{
    storage.clearMapForKey('user');
   //  this.props.navigation.navigate('Login',{logout:true});
-  this.props.navigation.goBack('Login');
+  // this.props.navigation.goBack('Login');
+  BackHandler.exitApp();
  }
 
   render() {
