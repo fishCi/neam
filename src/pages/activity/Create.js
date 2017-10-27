@@ -576,8 +576,7 @@ export default class CreateActivity extends Component {
     if (this.state.title == undefined || this.state.title == '')
       return '活动名称不能为空！';
     if (this.state.type == undefined || this.state.type == '')
-      console.log(this.state.type)
-    return '活动类型不能为空！';
+      return '活动类型不能为空！';
     if (this.state.starttime == undefined || this.state.starttime == '')
       return '活动开始时间不能为空！';
     if (this.state.endtime == undefined || this.state.endtime == '')

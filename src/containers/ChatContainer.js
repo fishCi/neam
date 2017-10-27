@@ -27,8 +27,8 @@ class ChatContainer extends Component {
     // title: 'Welcome',
     header: null,
     tabBarLabel: '工作圈',
-    tabBarIcon: () => (
-      <Icon name='ios-contacts-outline' size={30}/>
+    tabBarIcon: ({tintColor}) => (
+      <Icon name='ios-contacts-outline' size={30} color={tintColor}/>
     ),
   };
 

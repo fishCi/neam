@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-26 16:45:04
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-27 15:40:16
  */
 
 import React, { Component } from 'react';
@@ -90,6 +90,9 @@ export default class Detail extends Component {
     };
 
     render() {
+        let now = new Date();
+        let current = now.getFullYear() + "-" + this._formatTime(now.getMonth() + 1) + "-" + this._formatTime(now.getDate()) + " " + this._formatTime(now.getHours()) + ":" + this._formatTime(now.getMinutes());    
+        console.log(current);
         return (
             <View style={{ flex: 1 }}>
                 <Header style={styles.header}>
@@ -162,7 +165,7 @@ export default class Detail extends Component {
                         <View style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
                             <Text style={{ fontSize: 14 }}>{this.state.phone}</Text>
                         </View>
-                        {this.state.isreg == '1' && (this.state.hasReg == '01' ? <Button block disabled onPress={this._registe} style={{ flex: 1, height: 50 }}><Text>已报名</Text></Button>
+                        {this.state.isreg == '1' && (this.state.hasReg == '01' || current > this.state.regendtime ? <Button block disabled onPress={this._registe} style={{ flex: 1, height: 50 }}><Text>{this.state.hasReg == '01'?'已报名':'报名截止'}</Text></Button>
                             : <Button block success onPress={this._registe} style={{ flex: 1, height: 50 }}><Text>报名</Text></Button>)}
                         <EmptyView h={10} />
                     </View>
@@ -170,6 +173,15 @@ export default class Detail extends Component {
             </View>
         )
     }
+
+    
+  _formatTime = i => {
+    if (i < 10) {
+      return "0" + i;
+    } else {
+      return i;
+    }
+  }
 
     _registe = () => {
 
