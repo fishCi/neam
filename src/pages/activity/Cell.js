@@ -7,7 +7,7 @@ import common from '../../common';
 export default class Cell extends Component {
 
     _transferST(dt, tm) {
-        return dt.substring(0, 4) + '-' + dt.substring(4, 6) + '-' + dt.substring(6, 8) + ' ' + tm.substring(0, 2) + ':' + tm.substring(2, 4)
+        return dt.substring(0, 4) + '年' + dt.substring(4, 6) + '月' + dt.substring(6, 8) + '日 ' + tm.substring(0, 2) + ':' + tm.substring(2, 4)
     }
     _transferType(){
         switch (this.props.item.thpyadthmsAvyClcd) {
@@ -39,16 +39,16 @@ export default class Cell extends Component {
                             </View>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'column' }}>
-                            <Text style={{ fontSize: 12 }}><Text style={{ fontSize: 12, color: 'blue' }}>活动简介：</Text>{this.props.item.thpyadthmsAvyCntdsc === undefined?'无':this.props.item.thpyadthmsAvyCntdsc}</Text>
+                            <Text style={{ fontSize: 12 }}><Text style={{ fontSize: 12, color: 'blue' }}>活动时间：</Text>{this._transferST(this.props.item.thpyadthmsAvyStdt, this.props.item.thpyadthmsAvySttm) + '   至   ' + this._transferST(this.props.item.thpyadthmsAvyEddt, this.props.item.thpyadthmsAvyEdtm)}</Text>
                         </View>
                         <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="ios-flag" color='red' size={16} />
-                                <Text style={{ paddingLeft: 10, fontSize: 10 }}>地点: {this.props.item.thpyadthmavyplccntdsc}</Text>
+                                <Text style={{ paddingLeft: 10, fontSize: 12 }}>地点: {this.props.item.thpyadthmavyplccntdsc == undefined?'待定':this.props.item.thpyadthmavyplccntdsc}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="md-person" color='lime' size={16} />
-                                <Text style={{ paddingLeft: 10, fontSize: 10 }}>发起人: {this.props.item.usrNm}</Text>
+                                <Text style={{ paddingLeft: 10, fontSize: 12 }}>发起人: {this.props.item.usrNm}</Text>
                             </View>
 
                         </View>
