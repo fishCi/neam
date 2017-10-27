@@ -91,7 +91,7 @@ const App = StackNavigator(
     Party:{
       screen:Party,
       navigationOptions: {
-        title: '组织关系',
+        title: '党员历程',
       }  
     },
     PersonInfo:{

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions ,ActivityIndicator,ToastAndroid,BackHandler} from 'react-native'
-import { Container,Root, Header, Content, List, ListItem, Thumbnail, Text, Body, Separator, Left, Right,Button} from 'native-base';
+import { View, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, Dimensions, ActivityIndicator, ToastAndroid, BackHandler } from 'react-native'
+import { Container, Root, Header, Content, List, ListItem, Thumbnail, Text, Body, Separator, Left, Right, Button } from 'native-base';
 import common from '../../common'
 import EmptyView from '../../components/EmptyView'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,13 +36,13 @@ export default class Person extends Component {
   _success = (resp) => {
     if (resp.BK_STATUS == "00") {
       this.name = resp.usrNm;
-      if(resp.wrkUnitNm != undefined && resp.blngDeptNm != undefined) {
+      if (resp.wrkUnitNm != undefined && resp.blngDeptNm != undefined) {
         this.dscp = resp.wrkUnitNm + ' ' + resp.blngDeptNm;
       }
-      
+
       this.department = resp.ptytbrOrgNm + ' ' + resp.ptybrchOrgNm + ' ' + resp.ptygrpOrgNm;
-      this.pos = resp.List3 === undefined? true:false
-      for (let i = 0; resp.list1!=undefined && i < resp.list1.length; i++) {
+      this.pos = resp.List3 === undefined ? true : false
+      for (let i = 0; resp.list1 != undefined && i < resp.list1.length; i++) {
         let item = {
           lineColor: 'red',
           icon: require('../../img/person/dang.png'),
@@ -85,101 +85,118 @@ export default class Person extends Component {
               </Body>
             </ListItem>
             <View sytle={[styles.separator]}><Text> </Text></View>
-            <View style={{backgroundColor: '#ffffff'}}>
-            <ListItem icon>
-              <Left>
-                <Icon name='ios-contact-outline' size={25} color='skyblue' />
-              </Left>
-              <Body>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('PersonInfo')}>
-                  <Text>基本信息</Text>
-                </TouchableOpacity>
-              </Body>
-              <Right>
-                <Icon name='ios-arrow-forward-outline' size={25} color='black' />
-              </Right>
-            </ListItem>
-            <ListItem icon>
-              <Left>
-                <Icon name='ios-book-outline' size={25} color='skyblue' />
-              </Left>
-              <Body>
-                <Text>岗位能力</Text>
-              </Body>
-              <Right>
-                <Icon name='ios-arrow-forward-outline' size={25} color='black' />
-              </Right>
-            </ListItem>
-            <ListItem icon last>
-            <Left>
-              <Icon name='ios-hand-outline' size={25} color='skyblue' />
-            </Left>
-            <Body>
-              <Text>我的权益</Text>
-            </Body>
-            <Right>
-              <Icon name='ios-arrow-forward-outline' size={25} color='black' />
-            </Right>
-          </ListItem>
-            </View>
-            
-            <View sytle={[styles.separator]}><Text> </Text></View>
-            <View style={{backgroundColor: '#ffffff'}}>
-            <ListItem icon>
-              <Left>
-                <Icon name='ios-aperture-outline' size={25} color='skyblue' />
-              </Left>
-              <Body>
-                <TouchableOpacity onPress={() => {
-                  if(this.records.length == 0) {
-                    ToastAndroid.show("暂时未录入党员履历！",ToastAndroid.SHORT);
-                  } else {
-                    this.props.navigation.navigate('Party', { name: this.name, department: this.department, records: this.records,pos:this.pos})}
-                  }
-                }>
-                  <Text>党员历程</Text>
-                </TouchableOpacity>
-              </Body>
-              <Right>
-                <Icon name='ios-arrow-forward-outline' size={25} color='black' />
-              </Right>
-            </ListItem>
-            <ListItem icon>
-            <Left>
-              <Icon name='ios-people-outline' size={25} color='skyblue' />
-            </Left>
-            <Body>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyInfo',{department:this.department,pos:this.pos})} >
-                <Text>革命战友</Text>
-              </TouchableOpacity>
-            </Body>
-            <Right>
-              <Icon name='ios-arrow-forward-outline' size={25} color='black' />
-            </Right>
-          </ListItem>
-          <ListItem icon>
-          <Left>
-            <Icon name='ios-pricetags-outline' size={25} color='skyblue' />
-          </Left>
-          <Body>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyFee')}>
-              <Text>缴纳党费</Text>
-            </TouchableOpacity>
-          </Body>
-          <Right>
-            <Icon name='ios-arrow-forward-outline' size={25} color='black' />
-          </Right>
-        </ListItem>
+            <View style={{ backgroundColor: '#ffffff' }}>
+              <ListItem icon>
+                <Left>
+                  <Icon name='ios-contact-outline' size={25} color='skyblue' />
+                </Left>
+                <Body>
+                  <TouchableOpacity onPress={
+                    () => ToastAndroid.show("开发中...", ToastAndroid.SHORT)
+                    // () => this.props.navigation.navigate('PersonInfo')
+                  }>
+                    <Text style={{color:'grey'}}>基本信息</Text>
+                  </TouchableOpacity>
+                </Body>
+                <Right>
+                  <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+                </Right>
+              </ListItem>
+              <ListItem icon>
+                <Left>
+                  <Icon name='ios-book-outline' size={25} color='skyblue' />
+                </Left>
+                <Body>
+                  <TouchableOpacity onPress={
+                    () => ToastAndroid.show("开发中...", ToastAndroid.SHORT)
+                    // () => this.props.navigation.navigate('PersonInfo')
+                  }>
+                    <Text style={{color:'grey'}}>岗位能力</Text>
+                  </TouchableOpacity>
+                </Body>
+                <Right>
+                  <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+                </Right>
+              </ListItem>
+              <ListItem icon last>
+                <Left>
+                  <Icon name='ios-hand-outline' size={25} color='skyblue' />
+                </Left>
+                <Body>
+                  <TouchableOpacity onPress={
+                    () => ToastAndroid.show("开发中...", ToastAndroid.SHORT)
+                    // () => this.props.navigation.navigate('PersonInfo')
+                  }>
+                    <Text style={{color:'grey'}}>我的权益</Text>
+                  </TouchableOpacity>
+                </Body>
+                <Right>
+                  <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+                </Right>
+              </ListItem>
             </View>
 
-            
             <View sytle={[styles.separator]}><Text> </Text></View>
+            <View style={{ backgroundColor: '#ffffff' }}>
+              <ListItem icon>
+                <Left>
+                  <Icon name='ios-aperture-outline' size={25} color='skyblue' />
+                </Left>
+                <Body>
+                  <TouchableOpacity onPress={() => {
+                    if (this.records.length == 0) {
+                      ToastAndroid.show("暂时未录入党员履历！", ToastAndroid.SHORT);
+                    } else {
+                      this.props.navigation.navigate('Party', { name: this.name, department: this.department, records: this.records, pos: this.pos })
+                    }
+                  }
+                  }>
+                    <Text>党员历程</Text>
+                  </TouchableOpacity>
+                </Body>
+                <Right>
+                  <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+                </Right>
+              </ListItem>
+              <ListItem icon>
+                <Left>
+                  <Icon name='ios-people-outline' size={25} color='skyblue' />
+                </Left>
+                <Body>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyInfo', { department: this.department, pos: this.pos })} >
+                    <Text>革命战友</Text>
+                  </TouchableOpacity>
+                </Body>
+                <Right>
+                  <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+                </Right>
+              </ListItem>
+              <ListItem icon>
+                <Left>
+                  <Icon name='ios-pricetags-outline' size={25} color='skyblue' />
+                </Left>
+                <Body>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyFee')}>
+                    <Text>缴纳党费</Text>
+                  </TouchableOpacity>
+                </Body>
+                <Right>
+                  <Icon name='ios-arrow-forward-outline' size={25} color='black' />
+                </Right>
+              </ListItem>
+            </View>
+            <View style={[styles.separator]}><Text> </Text></View>
             <ListItem icon last>
               <Left>
                 <Icon name='ios-build-outline' size={25} color='skyblue' />
               </Left>
               <Body>
-                <Text>设置</Text>
+                <TouchableOpacity onPress={
+                  () => ToastAndroid.show("开发中...", ToastAndroid.SHORT)
+                  // () => this.props.navigation.navigate('PersonInfo')
+                }>
+                  <Text style={{color:'grey'}}>设置</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name='ios-arrow-forward-outline' size={25} color='black' />
@@ -187,20 +204,20 @@ export default class Person extends Component {
             </ListItem>
             <View sytle={[styles.separator]}><Text> </Text></View>
             <Button full onPress={this._logout}>
-            <Text>退出</Text>
-           </Button>
-         </List>       
-       </Content>
-     </Root>
-   );
- }
+              <Text>退出</Text>
+            </Button>
+          </List>
+        </Content>
+      </Root>
+    );
+  }
 
- _logout=()=>{
-   storage.clearMapForKey('user');
-  //  this.props.navigation.navigate('Login',{logout:true});
-  // this.props.navigation.goBack('Login');
-  BackHandler.exitApp();
- }
+  _logout = () => {
+    storage.clearMapForKey('user');
+    //  this.props.navigation.navigate('Login',{logout:true});
+    // this.props.navigation.goBack('Login');
+    BackHandler.exitApp();
+  }
 
   render() {
     return (
@@ -212,5 +229,5 @@ export default class Person extends Component {
 }
 
 const styles = StyleSheet.create({
-  separator : {flex:1, backgroundColor: '#f0f0f0',height:20}
+  separator: { flex: 1, backgroundColor: '#f0f0f0', height: 20 }
 });

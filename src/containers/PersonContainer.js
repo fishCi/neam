@@ -7,18 +7,16 @@
     View
   } from 'react-native';
 
-  import {Icon} from 'native-base';
   import Person from '../pages/person'
-
+  import Icon from 'react-native-vector-icons/Ionicons';
+  
   class PersonContainer extends Component {
     static navigationOptions = {
       // title: 'Welcome',
       header:null,
       tabBarLabel: '我的',
       tabBarIcon: () => (
-        <Image
-        source={require('../img/person/psn.png')}
-        /> 
+        <Icon name='ios-contact-outline' size={30}/>        
         ),
     };
     render() {

@@ -7,7 +7,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { ListItem, Header,Left, Body, Right, Text, Thumbnail } from 'native-base';
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import common from '../common'
 
 const notices = [
   { title: '关于2017年度国庆节放假安排通知', note: '10月1日（星期日）至8日放假调休', time: '13:49' },
@@ -22,9 +23,7 @@ class MessageContainer extends Component {
     header: null,
     tabBarLabel: '通知',
     tabBarIcon: () => (
-      <Image
-        source={require('../img/message/msg.png')}
-      />
+      <Icon name='ios-chatboxes-outline' size={30}/>      
     ),
   };
 
@@ -66,13 +65,16 @@ class MessageContainer extends Component {
           <Right>
           </Right>
         </Header>
-        <View style={{backgroundColor: '#ffffff'}}>
-          <FlatList
-            data={notices}
-            keyExtractor={(item, index) => item.title}
-            renderItem={this._renderNoticeList}
-          />
-        </View>
+        {
+        // <View style={{backgroundColor: '#ffffff'}}>
+        //   <FlatList
+        //     data={notices}
+        //     keyExtractor={(item, index) => item.title}
+        //     renderItem={this._renderNoticeList}
+        //   />
+        // </View>
+        }
+        <Image style={{ width: common.width, height:common.height-120}} source={require('../img/constructing.jpg')} />        
       </View>
     );
   }

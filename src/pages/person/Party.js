@@ -37,7 +37,6 @@ class Party extends Component {
             </ListItem>
           </List>
           <View style={styles.container}>
-            <Text style={{ fontWeight: 'bold' }}>党员历程</Text>
             {this.records.length != 0 &&
             <Timeline
               style={styles.list}

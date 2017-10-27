@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Root,
   StyleSheet,
   View,
   Text,
@@ -15,7 +16,7 @@ import { Header, Left, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import EmptyView from '../components/EmptyView';
 import contacts from '../utils/data';
-
+import common from '../common';
 
 const { width, height } = Dimensions.get('window');
 const global = require('../utils/global');
@@ -27,9 +28,7 @@ class ChatContainer extends Component {
     header: null,
     tabBarLabel: '工作圈',
     tabBarIcon: () => (
-      <Image
-        source={require('../img/chat/chat.png')}
-      />
+      <Icon name='ios-contacts-outline' size={30}/>
     ),
   };
 
@@ -129,7 +128,7 @@ class ChatContainer extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex:1}}>
         <Header style={styles.header}>
           <Left>
             <Text style={{ color: '#FFFFFF' }}>工作圈</Text>
@@ -144,7 +143,10 @@ class ChatContainer extends Component {
             </TouchableHighlight>
           </Right>
         </Header>
-        {this._renderSuccessView()}
+        {
+          // this._renderSuccessView()
+        }
+        <Image style={{ width: common.width, height:common.height-120}} source={require('../img/constructing.jpg')} />
       </View>
     );
   }
