@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-28 14:59:05 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 13:09:22
+ * @Last Modified time: 2017-10-26 18:52:47
  */
 
 import CONFIG from './config';
@@ -10,7 +10,11 @@ import CONFIG from './config';
 export function fetchPost(serviceId, jsonData, success, failure){
         jsonData.transaction_id = serviceId;
         jd = JSON.stringify(jsonData);
-        console.log(jd);
+        jd = encodeURIComponent(jd);
+        //let jd = {};
+        //for (let key of Object.keys(jsonData)) {
+        //  jd[key] = encodeURIComponent(jsonData[key]);
+        //}
         url =`${CONFIG.URL}?_fw_service_id=F30070011&jsonClass=java.util.HashMap&jsonData=${jd}`;
         fetch(url)
             .then((response) =>{

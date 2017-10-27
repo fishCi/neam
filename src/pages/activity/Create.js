@@ -206,6 +206,7 @@ export default class CreateActivity extends Component {
                 mode="datetime"
                 placeholder="活动开始时间"
                 format="YYYY-MM-DD HH:mm"
+                minDate={(new Date()).toLocaleDateString()}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
@@ -242,6 +243,7 @@ export default class CreateActivity extends Component {
                 mode="datetime"
                 placeholder="活动结束时间"
                 format="YYYY-MM-DD HH:mm"
+                minDate={(new Date()).toLocaleDateString()}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
@@ -261,6 +263,9 @@ export default class CreateActivity extends Component {
                   } else if(this.state.regstarttime != '' && this.state.regstarttime != undefined 
                   && this.state.regstarttime  > date){
                       ToastAndroid.show("活动结束时间不能早于报名开始时间！",ToastAndroid.LONG);
+                  }  else if(this.state.regendtime != '' && this.state.regendtime != undefined 
+                  && this.state.regendtime  > date){
+                      ToastAndroid.show("活动结束时间不能早于报名截止时间！",ToastAndroid.LONG);
                   } else {
                       this.setState({ endtime: date })
                   }
@@ -298,6 +303,7 @@ export default class CreateActivity extends Component {
                 mode="datetime"
                 placeholder="报名开始时间"
                 format="YYYY-MM-DD HH:mm"
+                minDate={(new Date()).toLocaleDateString()}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
@@ -340,6 +346,7 @@ export default class CreateActivity extends Component {
                 mode="datetime"
                 placeholder="报名截止时间"
                 format="YYYY-MM-DD HH:mm"
+                minDate={(new Date()).toLocaleDateString()}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
@@ -356,6 +363,9 @@ export default class CreateActivity extends Component {
                     && this.state.regstarttime > date) {
                       ToastAndroid.show("报名截止时间不能早于开始时间！",ToastAndroid.LONG);
                 
+                  } else if(this.state.endtime != '' && this.state.endtime != undefined 
+                  && this.state.endtime  < date){
+                    ToastAndroid.show("报名结束时间不能晚于活动结束时间！",ToastAndroid.LONG);
                   } else {
                     this.setState({ regendtime: date })
                   }
@@ -490,7 +500,7 @@ export default class CreateActivity extends Component {
 
   _failure = error => {
     this.isSubmit = false;
-    console.log(error);
+    console.log(JSON.stringify(error));
     this.setState({
       showLoading: false,
     },
