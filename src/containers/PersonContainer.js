@@ -15,8 +15,8 @@
       // title: 'Welcome',
       header:null,
       tabBarLabel: '我的',
-      tabBarIcon: () => (
-        <Icon name='ios-contact-outline' size={30}/>        
+      tabBarIcon: ({tintColor}) => (
+        <Icon name='ios-contact-outline' size={30} color={tintColor}/>        
         ),
     };
     render() {

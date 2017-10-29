@@ -22,9 +22,8 @@ class MessageContainer extends Component {
     // title: 'Welcome',
     header: null,
     tabBarLabel: '通知',
-    tabBarIcon: () => (
-      <Icon name='ios-chatboxes-outline' size={30}/>      
-    ),
+    tabBarIcon: ({tintColor}) =><Icon name='ios-chatboxes-outline' size={30} color={tintColor}/>      
+    
   };
 
   _renderNoticeList = ({ item }) => (
