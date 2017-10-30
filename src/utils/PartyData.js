@@ -1,8 +1,8 @@
 /*
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
- * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-10-12 21:27:58
+ * @Last Modified by: fishci
+ * @Last Modified time: 2017-10-30 15:36:47
 */
 
 import React from 'react';
@@ -49,8 +49,8 @@ export function getPartyPieData(value) {
         case 'sex':
             jsonPieData = {
                 dataSets: [{
-                    values: [{ value: 230, label: '男' },
-                    { value: 10, label: '女' }],
+                    values: [{ value: 215, label: '男' },
+                    { value: 181, label: '女' }],
                     label: '性别区分',
                     config: {
                         colors: [processColor('#C0FF8C'), processColor('#FF8C9D')],
@@ -65,14 +65,13 @@ export function getPartyPieData(value) {
         case 'diploma':
             jsonPieData = {
                 dataSets: [{
-                    values: [{ value: 5, label: '专科' },
-                    { value: 8, label: '大学本科' },
-                    { value: 130, label: '硕士研究生' },
-                    { value: 3, label: '博士研究生' },
-                    { value: 2, label: '其他' }],
+                    values: [{ value: 10, label: '博士研究生' },
+                    { value: 307, label: '研究生' },
+                    { value: 2, label: '双学士' },
+                    { value: 77, label: '大学本科' }],
                     label: '学历区分',
                     config: {
-                        colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C'), processColor('#FF8C9D'), processColor('#8CEAFF')],
+                        colors: [processColor('#C0FF8C'), processColor('#FFD08C'), processColor('#FF8C9D'), processColor('#8CEAFF')],
                         valueTextSize: 20,
                         valueTextColor: processColor('green'),
                         sliceSpace: 5,
@@ -84,12 +83,12 @@ export function getPartyPieData(value) {
         case 'type':
             jsonPieData = {
                 dataSets: [{
-                    values: [{ value: 5, label: '入党积极分子' },
-                    { value: 8, label: '预备党员' },
-                    { value: 210, label: '正式党员' }],
+                    values: [
+                    { value: 393, label: '正式党员' },
+                    { value: 3, label: '预备党员' }],
                     label: '党员类型区分',
                     config: {
-                        colors: [processColor('#FFF78C'), processColor('#FFD08C'), processColor('#FF8C9D'),],
+                        colors: [ processColor('#FFD08C'), processColor('#FF8C9D'),],
                         valueTextSize: 20,
                         valueTextColor: processColor('green'),
                         sliceSpace: 5,

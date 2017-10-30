@@ -40,10 +40,12 @@ const TabContainer = TabNavigator(
   },
   {
     tabBarPosition:'bottom',
+    // swipeEnabled: false,
+    animationEnabled:false, 
     tabBarOptions:{
       activeTintColor: 'red', 
       inactiveTintColor: 'black', 
-      showIcon:true,
+      showIcon:true,    
       style: {
         height:55,
         backgroundColor: 'white',
@@ -80,7 +82,10 @@ const App = StackNavigator(
       }
     },
     PartyInfo:{
-      screen:PartyInfo
+      screen:PartyInfo,
+      navigationOptions: {
+        title: '革命战友',
+      }  
     },
     PartyFee:{
       screen:PartyFee,

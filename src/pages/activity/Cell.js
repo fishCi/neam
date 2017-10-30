@@ -28,9 +28,26 @@ export default class Cell extends Component {
         return (
             <TouchableOpacity onPress={() => this.props.navigate('Detail', { actId: this.props.item.thpyadthmsAvyId })}>
                 <View style={[{ flexDirection: 'row', width: common.width, height: common.width / 3, paddingLeft: 10, paddingRight: 10 }, { backgroundColor: 'white' }]}>
+                    {this.props.item.thpyadthmsAvyClcd == '01' &&
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Image style={{ width: common.width / 5, height: common.width / 5, resizeMode: 'cover' }} source={require('../../img/activity/actlist.jpg')} />
+                        <Image style={{ width: common.width / 5, height: common.width / 5, resizeMode: 'cover' }} source={require('../../img/activity/dang_small.png')} />
                     </View>
+                    }
+                    {this.props.item.thpyadthmsAvyClcd == '02' &&
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Image style={{ width: common.width / 5, height: common.width / 5, resizeMode: 'cover' }} source={require('../../img/activity/dtuan_small.png')} />
+                    </View>
+                    }
+                    {this.props.item.thpyadthmsAvyClcd == '03' &&
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Image style={{ width: common.width / 5, height: common.width / 5, resizeMode: 'cover' }} source={require('../../img/activity/gonghui_small.png')} />
+                    </View>
+                    }
+                    {(this.props.item.thpyadthmsAvyClcd == '04' || this.props.item.thpyadthmsAvyClcd == '99' || this.props.item.thpyadthmsAvyClcd == undefined) &&
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Image style={{ width: common.width / 5, height: common.width / 5, resizeMode: 'cover' }} source={require('../../img/activity/xiehui_small.png')} />
+                    </View>
+                    }
                     <View style={{flex:1, paddingLeft: 15, paddingVertical: 15}}>
                         <View style={{ flex: 1, flexDirection: 'row',justifyContent:'space-between'}}>
                             <Text style={{flex:1, fontFamily: 'Georgia', fontSize: 14, fontWeight: 'bold' }} numberOfLines={2}>{this.props.item.thpyadthmsAvyNm}</Text>

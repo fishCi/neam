@@ -2,11 +2,11 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-29 10:47:42 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-27 15:40:16
+ * @Last Modified time: 2017-10-30 16:27:00
  */
 
 import React, { Component } from 'react';
-import { LayoutAnimation, UIManager, View, TouchableOpacity, StyleSheet, ScrollView, ToastAndroid, Image } from 'react-native';
+import { LayoutAnimation, UIManager, View, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator,ToastAndroid, Image } from 'react-native';
 import { Container, Header, Left, Body, Right, Button, Title, Text, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import common from '../../common'
@@ -19,6 +19,7 @@ export default class Detail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            ready: false,
             title: '',
             address: '',
             description: '',
@@ -75,7 +76,7 @@ export default class Detail extends Component {
                 regendtime: this._transferST(resp.thpyadthmsavyrgstcodt, resp.thpyadthmsargstctoftm),
                 host: resp.thpyadthmsavyctcpsnnm,
                 phone: resp.thpyadthmactcpsntelno,
-
+                ready: true,
                 hasReg: resp.pcpthpyadthmsavyTpcd
             });
         } else {
@@ -105,10 +106,29 @@ export default class Detail extends Component {
                         </TouchableOpacity>
                     </Right>
                 </Header>
+                {this.state.ready ? 
+                
                 <ScrollView>
+                    {this.state.type == '01' &&
                     <View>
-                        <Image style={{ height: common.width / 2, width: common.width }} source={require('../../img/activity/detail.png')} />
+                        <Image style={{ height: common.width / 2, width: common.width }} source={require('../../img/activity/dang.png')} />
                     </View>
+                    }
+                    {this.state.type == '02' &&
+                    <View>
+                        <Image style={{ height: common.width / 2, width: common.width }} source={require('../../img/activity/dtuan.png')} />
+                    </View>
+                    }
+                    {this.state.type == '03' &&
+                    <View>
+                        <Image style={{ height: common.width / 2, width: common.width }} source={require('../../img/activity/gonghui.png')} />
+                    </View>
+                    }
+                    {(this.state.type == '04' || this.state.type == '99' || this.state.type == undefined) &&
+                    <View>
+                        <Image style={{ height: common.width / 2, width: common.width }} source={require('../../img/activity/xiehui.png')} />
+                    </View>
+                    }
                     <EmptyView h={20} bc='lightgrey' />
                     <View style={{ flex: 1 }}>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 20, }}>
@@ -170,6 +190,7 @@ export default class Detail extends Component {
                         <EmptyView h={10} />
                     </View>
                 </ScrollView>
+                :<ActivityIndicator size="large" style={styles.loading} />}
             </View>
         )
     }

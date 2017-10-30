@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 21:42:48
+ * @Last Modified time: 2017-10-30 13:13:11
  */
 
 import React, { Component } from 'react';
@@ -181,10 +181,9 @@ export default class LoginForm extends Component {
                 pswd:''
             }))
         } else {
-            ToastAndroid.show(resp.BK_DESC,ToastAndroid.LONG);
             this.setState({
-                showLoading: false,
-            });
+                showLoading: false
+            },()=>ToastAndroid.show(resp.BK_DESC,ToastAndroid.LONG));
         }
     };
 

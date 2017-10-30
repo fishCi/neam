@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 12:43:54
+ * @Last Modified time: 2017-10-30 15:46:41
 */
 
 import React from 'react';
@@ -99,8 +99,8 @@ class PartyInfo extends React.Component {
       <Root style={{ flex: 1, margin: 10 }}>
         <ScrollView>
           <View style={{ height: 100, backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
-            <View style={{ flex: 1, alignItems: 'center' }}>
-              <Text style={{ color: 'red', fontWeight: 'bold', marginTop: 10, fontSize: 14 }}>{this.department[0]}</Text>
+            <View style={{ flex: 1, alignItems: 'center'}}>
+              <Text style={{ color: 'red', fontWeight: 'bold', marginTop: 10, fontSize: 14,textAlign:'center'}}>{this.department[0]}</Text>
               <Image source={require('../../img/person/zongzhi.png')} style={{ marginTop: 10 }} />
             </View>
             <View style={{ flex: 2, paddingVertical: 10 }}>
@@ -197,7 +197,7 @@ class PartyInfo extends React.Component {
                   rotationEnabled={false}
                   drawSliceText={true}
                   usePercentValues={false}
-                  centerText={'党员信息统计图'}
+                  centerText={'北京开发中心党员视图'}
                   centerTextRadiusPercent={100}
                   holeRadius={40}
                   holeColor={processColor('#f0f0f0')}

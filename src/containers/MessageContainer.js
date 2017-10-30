@@ -54,7 +54,12 @@ class MessageContainer extends Component {
   </ListItem> 
   )
 
+  componentWillMount() {
+    console.log("message mount");
+  }
+
   render() {
+    console.log("message render");
     return (
       <View style={{ flex: 1}}>
         <Header style={styles.header}>
@@ -73,7 +78,7 @@ class MessageContainer extends Component {
         //   />
         // </View>
         }
-        <Image style={{ width: common.width, height:common.height-120}} source={require('../img/constructing.jpg')} />        
+        <Image style={{ width: common.width, height:common.height-110}} source={require('../img/constructing.png')} />        
       </View>
     );
   }
