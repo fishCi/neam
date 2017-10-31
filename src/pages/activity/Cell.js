@@ -56,7 +56,8 @@ export default class Cell extends Component {
                             </View>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'column' }}>
-                            <Text style={{ fontSize: 12 }}><Text style={{ fontSize: 12, color: 'blue' }}>活动时间：</Text>{this._transferST(this.props.item.thpyadthmsAvyStdt, this.props.item.thpyadthmsAvySttm) + '   至   ' + this._transferST(this.props.item.thpyadthmsAvyEddt, this.props.item.thpyadthmsAvyEdtm)}</Text>
+                            <Text style={{ fontSize: 12 }}><Text style={{ fontSize: 12, color: 'blue' }}>开始时间：</Text>{this._transferST(this.props.item.thpyadthmsAvyStdt, this.props.item.thpyadthmsAvySttm)}</Text>
+                            <Text style={{ fontSize: 12 }}><Text style={{ fontSize: 12, color: 'blue' }}>结束时间：</Text>{this._transferST(this.props.item.thpyadthmsAvyEddt, this.props.item.thpyadthmsAvyEdtm)}</Text>
                         </View>
                         <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
