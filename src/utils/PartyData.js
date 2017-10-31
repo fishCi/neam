@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-30 15:36:47
+ * @Last Modified time: 2017-10-31 14:08:13
 */
 
 import React from 'react';
@@ -49,15 +49,16 @@ export function getPartyPieData(value) {
         case 'sex':
             jsonPieData = {
                 dataSets: [{
-                    values: [{ value: 215, label: '男' },
-                    { value: 181, label: '女' }],
+                    values: [{ value: parseInt('215'), label: '男' },
+                   { value: 181 - 0, label: '女' }],
                     label: '性别区分',
                     config: {
                         colors: [processColor('#C0FF8C'), processColor('#FF8C9D')],
-                        valueTextSize: 20,
+                        valueTextSize: 14,
                         valueTextColor: processColor('green'),
-                        sliceSpace: 5,
-                        selectionShift: 13
+                        sliceSpace: 2,
+                        selectionShift: 13,
+                        valueFormatter: 'largeValue',// 'percent'
                     }
                 }],
             };
@@ -72,10 +73,11 @@ export function getPartyPieData(value) {
                     label: '学历区分',
                     config: {
                         colors: [processColor('#C0FF8C'), processColor('#FFD08C'), processColor('#FF8C9D'), processColor('#8CEAFF')],
-                        valueTextSize: 20,
+                        valueTextSize: 14,
                         valueTextColor: processColor('green'),
-                        sliceSpace: 5,
-                        selectionShift: 13
+                        sliceSpace: 2,
+                        selectionShift: 13,
+                        valueFormatter: 'largeValue'
                     }
                 }],
             };
@@ -89,10 +91,11 @@ export function getPartyPieData(value) {
                     label: '党员类型区分',
                     config: {
                         colors: [ processColor('#FFD08C'), processColor('#FF8C9D'),],
-                        valueTextSize: 20,
+                        valueTextSize: 14,
                         valueTextColor: processColor('green'),
-                        sliceSpace: 5,
-                        selectionShift: 13
+                        sliceSpace: 2,
+                        selectionShift: 13,
+                        valueFormatter: 'largeValue'
                     }
                 }],
             };

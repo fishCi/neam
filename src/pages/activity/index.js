@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-30 16:20:55
+ * @Last Modified time: 2017-10-31 15:58:46
  */
 
 
@@ -217,11 +217,12 @@ export default class activity extends Component {
       return;
     }
     this.listPageEnd = false;
+    this.pageNo = 1;
     this.setState({
       ready: false,
       type,
       activities: []
-    }, () => this.fetchData(1, 10, type, '00'));
+    }, () => this.fetchData(this.pageNo, 10, type, '00'));
   }
 
 }

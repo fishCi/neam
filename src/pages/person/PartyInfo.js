@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-30 15:46:41
+ * @Last Modified time: 2017-10-31 17:12:05
 */
 
 import React from 'react';
@@ -25,6 +25,7 @@ import { PieChart } from 'react-native-charts-wrapper';
 import { getUser } from '../../utils/StorageUtil'
 import { fetchPost } from '../../utils/fetchAPI';
 import LoadingView from '../../components/LoadingView';
+import W from '../../common/index';
 
 const legend = {
   enabled: true,
@@ -43,7 +44,8 @@ class PartyInfo extends React.Component {
       position: '123',//this.props.navigation.state.params.pos, //enum：zongzhi，zhibu
       branch: '第一党支部',
       group: '第一党小组',
-      data: getPartyPieData('sex')
+      data: getPartyPieData('sex'),
+      type: 'sex'
     }
   }
 
@@ -89,7 +91,7 @@ class PartyInfo extends React.Component {
   }
 
   _onClickPie = (value) => {
-    this.setState({ data: getPartyPieData(value) })
+    this.setState({ data: getPartyPieData(value),type: value })
   }
 
 
@@ -182,9 +184,9 @@ class PartyInfo extends React.Component {
           {this.state.position !== '00' &&
             <View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderTopWidth: 1, borderColor: 'lightgrey', marginVertical: 5, paddingVertical: 5 }}>
-                <Button rounded light style={{ justifyContent: 'center', height: 20 }} onPress={() => { this._onClickPie('sex') }}><Text>性  别</Text></Button>
-                <Button rounded light style={{ justifyContent: 'center', height: 20 }} onPress={() => { this._onClickPie('diploma') }}><Text>学  历</Text></Button>
-                <Button rounded light style={{ justifyContent: 'center', height: 20 }} onPress={() => { this._onClickPie('type') }}><Text>党员类型</Text></Button>
+                {this.state.type == 'sex' ? <Button info style={styles.butt} ><Text>性  别</Text></Button> : <Button bordered  style={styles.butt} onPress={() => { this._onClickPie('sex') }}><Text>性  别</Text></Button> }
+                {this.state.type == 'diploma' ? <Button info style={styles.butt} ><Text>学  历</Text></Button> : <Button bordered  style={styles.butt} onPress={() => { this._onClickPie('diploma') }}><Text>学  历</Text></Button> }
+                {this.state.type == 'type' ? <Button info style={styles.butt} ><Text>党员类型</Text></Button> : <Button bordered  style={styles.butt} onPress={() => { this._onClickPie('type') }}><Text>党员类型</Text></Button> }                
               </View>
               <View style={{ height: 200 }}>
                 <PieChart
@@ -293,6 +295,12 @@ const styles = StyleSheet.create({
   },
   chart: {
     flex: 1
+  },
+  butt: {
+    width: W.width / 3 - 30,
+    height: 20,
+    marginHorizontal: 5,
+    justifyContent: 'center'
   }
 });
 

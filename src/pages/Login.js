@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-30 13:13:11
+ * @Last Modified time: 2017-10-31 16:43:27
  */
 
 import React, { Component } from 'react';
@@ -118,23 +118,23 @@ export default class LoginForm extends Component {
                 <ImageBackground style={styles.backgroundImage} source={require('../img/login.png')} resizeMode='cover'>
                     <Container style={styles.userform}>
                         <Content padder>
-                            <Image source={require('../img/CCB.png')} style={{ alignSelf: 'center' }} />
 
                             <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
-                                <Label>用户名: </Label>
+                                <Label style={{color:'white',width:80}}>用户名: </Label>
                                 <TextInput
-                                    style={{ flex: 1, fontSize: 16 }}
+                                    style={{ flex: 1, fontSize: 16, color:'white' }}
                                     onChangeText={(name) => this.setState({ name })}
                                     value={this.state.name}
                                     underlineColorAndroid="transparent"
                                     ref="textInput1"
+                                    
                                 />
                             </Item>
                             <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
-                                <Label>密码: </Label>
+                                <Label style={{color:'white',width:80}}>密码: </Label>
                                 <TextInput
                                     secureTextEntry={true}
-                                    style={{ flex: 1, fontSize: 16 }}
+                                    style={{ flex: 1, fontSize: 16,color:'white' }}
                                     onChangeText={(pswd) => this.setState({ pswd })}
                                     underlineColorAndroid="transparent"
                                     value={this.state.pswd}

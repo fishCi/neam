@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { getUser } from '../../utils/StorageUtil'
 import { fetchPost } from '../../utils/fetchAPI';
+import W from '../../common/index'
 
 export default class Person extends Component {
 
@@ -120,7 +121,7 @@ export default class Person extends Component {
               </ListItem>
               <ListItem icon last>
                 <Left>
-                  <Icon name='ios-hand-outline' size={25} color='skyblue' />
+                  <Icon name='ios-leaf-outline' size={25} color='skyblue' />
                 </Left>
                 <Body>
                   <TouchableOpacity onPress={
@@ -171,7 +172,7 @@ export default class Person extends Component {
                   <Icon name='ios-arrow-forward-outline' size={25} color='black' />
                 </Right>
               </ListItem>
-              <ListItem icon>
+              <ListItem icon last>
                 <Left>
                   <Icon name='ios-pricetags-outline' size={25} color='skyblue' />
                 </Left>

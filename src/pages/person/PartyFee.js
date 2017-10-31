@@ -2,7 +2,7 @@
 * @Author: caixin1.zh
 * @Date:   2017-10-19 06:06:10
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 15:02:15
+ * @Last Modified time: 2017-10-31 14:27:07
 */
 import React from 'react';
 import {
@@ -20,6 +20,7 @@ import EmptyView from '../../components/EmptyView';
 import { getUser } from '../../utils/StorageUtil'
 import { fetchPost } from '../../utils/fetchAPI';
 import LoadingView from '../../components/LoadingView';
+import W from '../../common/index';
 
 class PartyFee extends React.Component {
 
@@ -47,7 +48,6 @@ class PartyFee extends React.Component {
 
 
   _success(resp) {
-    this.setState({showLoading:false},()=>{
       if (resp.BK_STATUS == "00") {
         this.data =[];
         this.totalAmount = 0
@@ -68,13 +68,14 @@ class PartyFee extends React.Component {
           item.status = resp.list[i].thpyadthmsPyfStcd;
           this.data.push(item);
         }
-        this.setState({year: resp.yrYyyy});
+        
+        this.setState({showLoading:false});
+        //this.setState({year: resp.yrYyyy});
       } else {
         this.setState({showLoading:false},()=>
         ToastAndroid.show(error, ToastAndroid.SHORT));
       }
-    })
-  };
+  }
 
   _failure(error) {
     console.log(error);
@@ -86,7 +87,7 @@ class PartyFee extends React.Component {
 
   _onClick = year => {
     if(year == this.state.year) return;
-    this.setState({showLoading:true});
+    this.setState({showLoading:true, year:year});
     fetchPost('A08463104', {
       thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
       yrYyyy: year + ""
@@ -142,11 +143,35 @@ class PartyFee extends React.Component {
           <EmptyView h={10} />
           <View style={{ height: 1, backgroundColor: 'grey' }} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 5 }}>
-            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick(parseInt(this.now.getFullYear()))}><Text>{this.now.getFullYear()}年</Text></Button>
-            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 1)}><Text>{"" + (parseInt(this.now.getFullYear() - 1))}年</Text></Button>
-            <Button bordered style={{ justifyContent: 'center', height: 20 }} onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 2)}><Text>{"" + (parseInt(this.now.getFullYear() - 2))}年</Text></Button>
+          {
+            this.state.year == this.now.getFullYear() ?
+              <Button info style={styles.butt}  onPress={() => this._onClick(parseInt(this.now.getFullYear()))}>
+                <Text style={{ textAlign: 'center' }}>{this.now.getFullYear()}年</Text>
+              </Button>
+              : <Button bordered style={styles.butt}  onPress={() => this._onClick(parseInt(this.now.getFullYear()))}>
+                <Text style={{ textAlign: 'center' }}>{this.now.getFullYear()}年</Text>
+              </Button>
+          }
+          {
+            this.state.year == this.now.getFullYear() - 1 ?
+              <Button info style={styles.butt}  onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 1)}>
+                <Text style={{ textAlign: 'center' }}>{"" + (parseInt(this.now.getFullYear() - 1))}年</Text>
+              </Button>
+              : <Button bordered style={styles.butt}  onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 1)}>
+                <Text style={{ textAlign: 'center' }}>{"" + (parseInt(this.now.getFullYear() - 1))}年</Text>
+              </Button>
+          }
+          {
+            this.state.year == this.now.getFullYear() - 2 ?
+              <Button info style={styles.butt}  onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 2)}>
+                <Text style={{ textAlign: 'center' }}>{"" + (parseInt(this.now.getFullYear() - 2))}年</Text>
+              </Button>
+              : <Button bordered style={styles.butt}  onPress={() => this._onClick(parseInt(this.now.getFullYear()) - 2)}>
+                <Text style={{ textAlign: 'center' }}>{"" + (parseInt(this.now.getFullYear() - 2))}年</Text>
+              </Button>
+          }
           </View>
-          <EmptyView h={20} />
+          <EmptyView h={10} />
           {this.data.length > 0?
           <FlatList
             data={this.data}
@@ -162,5 +187,14 @@ class PartyFee extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  butt: {
+    width: W.width / 3 - 30,
+    height: 28,
+    marginHorizontal: 5,
+    justifyContent: 'center'
+  }
+});
 
 export default PartyFee;
