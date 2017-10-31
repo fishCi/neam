@@ -17,7 +17,7 @@ export function anyofficeCodeUtil(code) {
         case -8:
             return '用户IP受限---错误码:'+code;
         case -9:
-            return '登录用户名、密码错误---错误码:'+code;//'多媒体隧道功能未开启---错误码:'+code;
+            return '多媒体隧道功能未开启---错误码:'+code;
         case -10:
             return '用户ID无效---错误码:'+code;
         case -11:
