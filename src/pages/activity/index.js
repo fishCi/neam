@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-09-09 22:10:22 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-26 15:18:00
+ * @Last Modified time: 2017-10-30 16:20:55
  */
 
 
@@ -74,6 +74,7 @@ export default class activity extends Component {
             renderItem={this._renderActivityItem}
             ItemSeparatorComponent={() => <EmptyView h={1} bc='darkgrey'/>}
             onEndReached={this.fetchMore}
+            onEndReachedThreshold={0.5}
             ListFooterComponent={() => {
               return pager &&
                 <ActivityIndicator size="large" style={styles.loading} />
@@ -164,7 +165,9 @@ export default class activity extends Component {
 
 
   fetchMore = () => {
+    console.log(this.pageNo);
     if (this.state.pager || this.listPageEnd) {
+      console.log(this.state.pager + this.listPageEnd);
       return
     }
     // if (this.listPageEnd) {
@@ -210,6 +213,9 @@ export default class activity extends Component {
 
 
   _filterActivities = async type => {
+    if (this.state.pager || !this.state.ready) {
+      return;
+    }
     this.listPageEnd = false;
     this.setState({
       ready: false,

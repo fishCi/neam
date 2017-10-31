@@ -146,8 +146,8 @@ class ChatContainer extends Component {
         {
           // this._renderSuccessView()
         }
-        <Image style={{ width: common.width, height:common.height-120}} source={require('../img/constructing.jpg')} />
-      </View>
+        <Image style={{ width: common.width, height:common.height-110}} source={require('../img/constructing.png')} />        
+        </View>
     );
   }
 }
