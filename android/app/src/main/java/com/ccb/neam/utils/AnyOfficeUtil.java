@@ -49,14 +49,14 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
     //服务器IP和端口
     private String hostIP;
     private int hostPort;
-    public boolean jump_anyoffice = false;
+    public boolean skipAnyoffice = false;
     //context
     private Activity context;
 
     private String userName;
     private String userPass;
     private LoginParam loginParam;
-    private int init_flag = -1;  // -1 未初始化 , 0 正在初始化, 1 初始化成功
+    private int initFlag = -1;  // -1 未初始化 , 0 正在初始化, 1 初始化成功
 
     protected int netStatus;
     protected boolean logined = false;
@@ -65,8 +65,12 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
         return netStatus == NetStatusManager.NET_STATUS_ONLINE;
     }
 
-    public boolean isJumpAnyoffice() {
-        return jump_anyoffice;
+    public boolean isSkipAnyoffice() {
+        return skipAnyoffice;
+    }
+
+    public void setSkipAnyoffice(boolean skip) {
+        skipAnyoffice = skip;
     }
 
     // public void setAnyOfficeParam(String hostIp, int port) {
@@ -78,6 +82,10 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
         return hostIP;
     }
 
+    public int getInitFlag() {
+        return this.initFlag;
+    }
+
     private void initAssetsProperty() {
 
         String filePath = "anyoffice.properties";
@@ -87,7 +95,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
             pop.load(is);
             this.hostIP = pop.getProperty("anyoffice.host", "128.196.200.29").trim();
             this.hostPort = Integer.parseInt(pop.getProperty("anyoffice.port", "443").trim());
-            this.jump_anyoffice = !Boolean.parseBoolean(pop.getProperty("anyoffice.enabled", "true").trim());
+            this.skipAnyoffice = !Boolean.parseBoolean(pop.getProperty("anyoffice.enabled", "true").trim());
 
             //String p2server = pop.getProperty("p2server").trim();
             //GData.setAPP_BASE_URL(p2server);
@@ -95,7 +103,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
             DefaultLogger.getInstance().error("anyOffice initAssetsProperty error: " + e.getMessage());
         }
 
-        if (this.jump_anyoffice) {
+        if (this.skipAnyoffice) {
             this.hostIP = "";
             DefaultLogger.getInstance().info("jump anyoffice true");
         }
@@ -109,9 +117,9 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
     public void initAnyOffice(Activity context) {
         this.context = context;
         initAssetsProperty();
-        if (jump_anyoffice) return;
-        if (this.init_flag >= 0) return;
-        this.init_flag = 0;
+        if (skipAnyoffice) return;
+        if (this.initFlag >= 0) return;
+        this.initFlag = 0;
 
         new Thread(new Runnable() {
             @Override
@@ -151,7 +159,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
             // step 1
             ctx.hookNetworkEnable();
             // step 2
-           setWhitelist(WhiteList);
+            setWhitelist(WhiteList);
 //            setBlacklist(Blacklist);
             // step 3
             ctx.hookInit();
@@ -165,7 +173,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
 
 //        synchronized (this) {
         //HandlerHelper.getInstance().sendMessage(true, 0, IConfig.AnyofficeInitOK);
-            this.init_flag = 1;
+            this.initFlag = 1;
 //        }
 
         DefaultLogger.getInstance().info("结束anyOffice初始化log");
@@ -181,7 +189,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
         loginParam.setLoginBackground(true);  // 使用自己的登录界面
         loginParam.setUseSecureTransfer(true);
 //            loginParam.setTokenEnable(false);
-        InetSocketAddress add = new InetSocketAddress(hostIP, 443);
+        InetSocketAddress add = new InetSocketAddress(hostIP, hostPort);
         //DefaultLogger.getInstance().info(">>>>> anyoffice config: 128.196.200.29:443");
         loginParam.setInternetAddress(add);
 
@@ -198,10 +206,6 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
         loginParam.setuserType("staticUid");
     }
 
-    public int getInit_flag() {
-        return this.init_flag;
-    }
-
     private String getTestServer() {
 //        if (BuildConfig.DEBUG) {
 //            return TestServer;
@@ -211,7 +215,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
     }
 
     public void setBlacklist(String blacklist) {
-        if (jump_anyoffice) return;
+        if (skipAnyoffice) return;
 //        已经试验 在anyoffice 登录成功之后, 再设置, 也是ok 的
 //        而且之前设置过的名单, 这次没有设置, 好像依然生效
 //        重复设置也没问题
@@ -221,7 +225,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
     }
 
     public void setWhitelist(String whitelist) {
-        if (jump_anyoffice) return;
+        if (skipAnyoffice) return;
         DefaultLogger.getInstance().info("set whitelist : " + whitelist);
         SvnWebViewProxy.getInstance().setExceptionAddressList(true, whitelist);
     }
@@ -249,6 +253,11 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
 //        }
     }
 
+    public void setHostAndPort(String host, int port) {
+        this.hostIP = host;
+        this.hostPort = port;
+    }
+
     /***
      * 开始登录
      *
@@ -256,10 +265,11 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
      * @param userPass
      */
     public int startLogin(Activity context, String userName, String userPass) {
-        if(jump_anyoffice) {
+        if(skipAnyoffice) {
             //HandlerHelper.getInstance().sendMessage(true, 0, AppConfig.H_AnyOffice_LOGIN_OK);
             return 0;
         }
+        logined = false;
 
         this.userName = userName;
         this.userPass = userPass;
@@ -268,7 +278,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
         initLoginParam();
 
 //        synchronized (this) {
-        if(this.init_flag > 0) return doLoginSync();
+        if(this.initFlag > 0) return doLoginSync();
             else return 1;
 //            else {
 //                final HandlerListener hl = new HandlerListener() {
@@ -289,28 +299,21 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
     }
 
     private int doLoginSync() {
-
-        // ToastUtils.showToast(MainActivity.getInstance(), "开始登录...");
         int loginstatus = loginSync();
 
         if (loginstatus == Integer.MIN_VALUE) {
-            // ToastUtils.showToast(MainActivity.getInstance(), "登录失败:" + loginstatus);
             return 1;
         } else if (loginstatus != 0) {
             JsCallModule.onNetConnecting(false);
             //HandlerUtils.sendToMain(MyConstants.L_LOADING_END, null);
             //HandlerHelper.getInstance().sendMessage(true, 0, AppConfig.H_AnyOffice_LOGIN_Fail, getAnyofficceByCode(loginstatus));
             //ToastUtils.showToast(context, "登陆失败:" + getAnyofficceByCode(loginstatus));
-            // ToastUtils.showToast(MainActivity.getInstance(), "登录失败:" + loginstatus);
             JsCallModule.onLoginError(loginstatus);
             return loginstatus;
         } else {
-            new Thread(new Runnable(){
-                public void run() {
-                checkNetStatus(25);
-                }
-            }).start();
+            checkNetStatus(25);
         }
+        logined = true;
         return 0;
     }
 
@@ -318,7 +321,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
      * 重新登录
      */
     public void reStartLogin() {
-        if( jump_anyoffice ) return;
+        if( skipAnyoffice ) return;
         if (loginParam != null) {
             run();
         }
@@ -329,6 +332,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
 
             DefaultLogger.getInstance().info("start anyOffice loginSync" + TimeUtils.getCurrentStamp());
             long start = System.currentTimeMillis();
+            logined = false;
 
             try {
                 int rs = LoginAgent.getInstance().loginSync(context, loginParam);
@@ -347,8 +351,8 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
     }
 
     public void onResume() {
-        if(jump_anyoffice) return;
-        if (init_flag == 0 || context == null) return;
+        if(skipAnyoffice) return;
+        if (initFlag == 0 || context == null) return;
         if (!logined) return;
 
         int netStatus = NetStatusManager.getInstance().getNetStatus();

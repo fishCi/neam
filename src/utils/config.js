@@ -5,5 +5,7 @@ export default {
     HEADER: {
 
     },
-    TIMEOUT: 2000
+    TIMEOUT: 2000,
+    anyofficeIp: '128.196.200.29',
+    anyofficeHost: 443
 }

@@ -2,8 +2,6 @@ package com.ccb.neam.module;
 
 import com.ccb.neam.MainActivity;
 import com.ccb.neam.utils.AnyOfficeUtil;
-import com.ccb.neam.utils.TimeUtils;
-import com.ccb.neam.utils.ToastUtils;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -60,8 +58,16 @@ public class LoginModule extends ReactContextBaseJavaModule {
 //                e.printStackTrace();
 //            }
 //            JsCallModule.callJsAsync("testEvent", "this is " + count + TimeUtils.getCurrentStamp());
-
- //       }
+//       }
     }
 
+    @ReactMethod
+    public void setHostAndPort(String host, int port) {
+        AnyOfficeUtil.getInstance().setHostAndPort(host, port);
+    }
+
+    @ReactMethod
+    public void setWhiteList(String whiteList) {
+        AnyOfficeUtil.getInstance().setWhitelist(whiteList);
+    }
 }
