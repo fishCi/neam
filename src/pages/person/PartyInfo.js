@@ -2,7 +2,7 @@
 * @Author: miaoxinyu.zh
 * @Date:   2017-08-22 06:06:10
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-31 17:12:05
+ * @Last Modified time: 2017-11-06 15:31:51
 */
 
 import React from 'react';
@@ -100,10 +100,10 @@ class PartyInfo extends React.Component {
     return (
       <Root style={{ flex: 1, margin: 10 }}>
         <ScrollView>
-          <View style={{ height: 100, backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
+          <View style={{ backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
             <View style={{ flex: 1, alignItems: 'center'}}>
               <Text style={{ color: 'red', fontWeight: 'bold', marginTop: 10, fontSize: 14,textAlign:'center'}}>{this.department[0]}</Text>
-              <Image source={require('../../img/person/zongzhi.png')} style={{ marginTop: 10 }} />
+              <Image source={require('../../img/person/zongzhi.png')} style={{marginVertical: 5}} />
             </View>
             <View style={{ flex: 2, paddingVertical: 10 }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
@@ -120,7 +120,7 @@ class PartyInfo extends React.Component {
             </View>
           </View>
 
-          <View style={{ height: 100, backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
+          <View style={{ backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
             <View style={{ flex: 1, alignItems: 'center' }}>
               {
                 // this.state.position === 'zongzhi' ?
@@ -137,7 +137,7 @@ class PartyInfo extends React.Component {
                 <Text style={{ color: 'red', fontWeight: 'bold', marginTop: 10, fontSize: 14 }}>{this.department[1]}</Text>
 
               }
-              <Image source={require('../../img/person/zhibu.png')} style={{ marginTop: 10 }} />
+              <Image source={require('../../img/person/zhibu.png')} style={{marginVertical: 5 }} />
             </View>
 
             <View style={{ flex: 2, paddingVertical: 10 }}>
@@ -155,7 +155,7 @@ class PartyInfo extends React.Component {
             </View>
           </View>
 
-          <View style={{ height: 100, backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
+          <View style={{ backgroundColor: 'white', flexDirection: 'row', borderTopWidth: 6, borderBottomWidth: 6, borderColor: 'darkblue', marginVertical: 5 }}>
             <View style={{ flex: 1, alignItems: 'center' }}>
               {
                 // this.state.position === '' ?
@@ -170,7 +170,7 @@ class PartyInfo extends React.Component {
                 //   </View>
                 // </ModalDropdown>
               }
-              <Image source={require('../../img/person/xiaozu.png')} style={{ marginTop: 10 }} />
+              <Image source={require('../../img/person/xiaozu.png')} style={{ marginVertical: 5 }} />
             </View>
             <View style={{ flex: 2, paddingVertical: 10 }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-31 16:43:27
+ * @Last Modified time: 2017-11-06 15:10:40
  */
 
 import React, { Component } from 'react';
@@ -16,6 +16,7 @@ import { NativeModules } from 'react-native';
 import LoadingView from '../components/LoadingView';
 import { NetworkInfo } from 'react-native-network-info';
 import NavigationUtil from '../utils/NavigationUtil';
+import CONFIG from '../utils/config';
 
 
 var anyOfficeLogin = NativeModules.AnyOfficeLogin;
@@ -27,7 +28,7 @@ export default class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-
+        anyOfficeLogin.setHostAndPort(CONFIG.anyofficeIp, CONFIG.anyofficeHost);
         this.onNetConnected = DeviceEventEmitter.addListener("onNetConnected", (msg) => {
             console.log("onNetConnected");
             if (waitingLogin) {
@@ -119,8 +120,8 @@ export default class LoginForm extends Component {
                     <Container style={styles.userform}>
                         <Content padder>
 
-                            <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
-                                <Label style={{color:'white',width:80}}>用户名: </Label>
+                            <Item  style={{ width: common.width * 4 / 5 }}>
+                                <Label style={{color:'white',width:80}}>用户名</Label>
                                 <TextInput
                                     style={{ flex: 1, fontSize: 16, color:'white' }}
                                     onChangeText={(name) => this.setState({ name })}
@@ -130,8 +131,8 @@ export default class LoginForm extends Component {
                                     
                                 />
                             </Item>
-                            <Item inlineLabel style={{ width: common.width * 4 / 5 }}>
-                                <Label style={{color:'white',width:80}}>密码: </Label>
+                            <Item style={{ width: common.width * 4 / 5 }}>
+                                <Label style={{color:'white',width:80}}>密码</Label>
                                 <TextInput
                                     secureTextEntry={true}
                                     style={{ flex: 1, fontSize: 16,color:'white' }}
@@ -183,7 +184,8 @@ export default class LoginForm extends Component {
         } else {
             this.setState({
                 showLoading: false
-            },()=>ToastAndroid.show(resp.BK_DESC,ToastAndroid.LONG));
+            });
+            ToastAndroid.show(resp.BK_DESC,ToastAndroid.LONG);
         }
     };
 

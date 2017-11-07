@@ -27,7 +27,7 @@ export default class Cell extends Component {
     render() {
         return (
             <TouchableOpacity onPress={() => this.props.navigate('Detail', { actId: this.props.item.thpyadthmsAvyId })}>
-                <View style={[{ flexDirection: 'row', width: common.width, height: common.width / 3, paddingLeft: 10, paddingRight: 10 }, { backgroundColor: 'white' }]}>
+                <View style={[{ flexDirection: 'row', width: common.width,  paddingLeft: 10, paddingRight: 10 }, { backgroundColor: 'white' }]}>
                     {this.props.item.thpyadthmsAvyClcd == '01' &&
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Image style={{ width: common.width / 5, height: common.width / 5, resizeMode: 'cover' }} source={require('../../img/activity/dang_small.png')} />
@@ -49,9 +49,9 @@ export default class Cell extends Component {
                     </View>
                     }
                     <View style={{flex:1, paddingLeft: 15, paddingVertical: 15}}>
-                        <View style={{ flex: 1, flexDirection: 'row',justifyContent:'space-between'}}>
+                        <View style={{ flex: 1, flexDirection: 'row',justifyContent:'space-between',alignItems:'flex-start'}}>
                             <Text style={{flex:1, fontFamily: 'Georgia', fontSize: 14, fontWeight: 'bold' }} numberOfLines={2}>{this.props.item.thpyadthmsAvyNm}</Text>
-                            <View style={{ backgroundColor: this._transferType().color, borderRadius: 2,marginRight:10,height:18}}>
+                            <View style={{ backgroundColor: this._transferType().color, borderRadius: 2,marginRight:10}}>
                                 <Text style={{fontSize: 12, color: 'white',padding:2}}>{this._transferType().name}</Text>
                             </View>
                         </View>
@@ -59,12 +59,12 @@ export default class Cell extends Component {
                             <Text style={{ fontSize: 12 }}><Text style={{ fontSize: 12, color: 'blue' }}>开始时间：</Text>{this._transferST(this.props.item.thpyadthmsAvyStdt, this.props.item.thpyadthmsAvySttm)}</Text>
                             <Text style={{ fontSize: 12 }}><Text style={{ fontSize: 12, color: 'blue' }}>结束时间：</Text>{this._transferST(this.props.item.thpyadthmsAvyEddt, this.props.item.thpyadthmsAvyEdtm)}</Text>
                         </View>
-                        <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{flex:1,flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                            <View style={{flex:1, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="ios-flag" color='red' size={16} />
                                 <Text style={{ paddingLeft: 10, fontSize: 12 }}>地点: {this.props.item.thpyadthmavyplccntdsc == undefined?'待定':this.props.item.thpyadthmavyplccntdsc}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={{flex:1,marginLeft: 5, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="md-person" color='lime' size={16} />
                                 <Text style={{ paddingLeft: 10, fontSize: 12 }}>发起人: {this.props.item.usrNm}</Text>
                             </View>
@@ -76,7 +76,3 @@ export default class Cell extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-
-});
