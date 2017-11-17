@@ -105,10 +105,10 @@ android {
     }
 	signingConfigs {
         config {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('keystore/debug.keystore')
-            storePassword 'android'
+            keyAlias 'partyccb'
+            keyPassword 'ccb123456'
+            storeFile file('keystore/partyccb.keystore')
+            storePassword 'ccb2017'
         }
     }
     splits {
