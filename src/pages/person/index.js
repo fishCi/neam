@@ -25,12 +25,16 @@ export default class Person extends Component {
   records = [];
   pos = false;
 
-
   async componentDidMount() {
     u = await getUser();
-    fetchPost('A08463101', {
-      thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
-    }, this._success.bind(this), this._failure.bind(this))
+    if (u.thpyadthmsStmUsrId){
+      fetchPost('A08463101', {
+        thpyadthmsStmUsrId: u.thpyadthmsStmUsrId,
+      }, this._success.bind(this), this._failure.bind(this)) 
+    }else{
+
+    }
+
   }
 
 
@@ -144,6 +148,14 @@ export default class Person extends Component {
                   <Icon name='ios-aperture-outline' size={25} color='skyblue' />
                 </Left>
                 <Body>
+                  {this.department == '' ?
+                    <TouchableOpacity onPress={
+                      () => ToastAndroid.show("你还不是党员吧", ToastAndroid.SHORT)
+                      // () => this.props.navigation.navigate('PersonInfo')
+                    }>
+                      <Text style={{ color: 'grey' }}>党员历程</Text>
+                    </TouchableOpacity>
+                    : 
                   <TouchableOpacity onPress={() => {
                     if (this.records.length == 0) {
                       ToastAndroid.show("暂时未录入党员履历！", ToastAndroid.SHORT);
@@ -154,6 +166,7 @@ export default class Person extends Component {
                   }>
                     <Text>党员历程</Text>
                   </TouchableOpacity>
+                }
                 </Body>
                 <Right>
                   <Icon name='ios-arrow-forward-outline' size={25} color='black' />
@@ -164,10 +177,19 @@ export default class Person extends Component {
                   <Icon name='ios-people-outline' size={25} color='skyblue' />
                 </Left>
                 <Body>
+                  {this.department == '' ?
+                    <TouchableOpacity onPress={
+                      () => ToastAndroid.show("你还不是党员吧", ToastAndroid.SHORT)
+                      // () => this.props.navigation.navigate('PersonInfo')
+                    }>
+                      <Text style={{ color: 'grey' }}>革命战友</Text>
+                    </TouchableOpacity>
+                    : 
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyInfo', { department: this.department, pos: this.pos })} >
                     <Text>革命战友</Text>
                   </TouchableOpacity>
-                </Body>
+                  }
+                  </Body>
                 <Right>
                   <Icon name='ios-arrow-forward-outline' size={25} color='black' />
                 </Right>
@@ -177,10 +199,18 @@ export default class Person extends Component {
                   <Icon name='ios-pricetags-outline' size={25} color='skyblue' />
                 </Left>
                 <Body>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('PartyFee')}>
+                  {this.department == '' ?
+                    <TouchableOpacity onPress={
+                      () => ToastAndroid.show("你还不是党员吧", ToastAndroid.SHORT)
+                      // () => this.props.navigation.navigate('PersonInfo')
+                    }>
+                      <Text style={{ color: 'grey' }}>我的权益</Text>
+                    </TouchableOpacity>
+                  :<TouchableOpacity onPress={() => this.props.navigation.navigate('PartyFee')}>
                     <Text>缴纳党费</Text>
                   </TouchableOpacity>
-                </Body>
+                  }
+                  </Body>
                 <Right>
                   <Icon name='ios-arrow-forward-outline' size={25} color='black' />
                 </Right>

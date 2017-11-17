@@ -1,8 +1,8 @@
 /*
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
- * @Last Modified by: fishci
- * @Last Modified time: 2017-11-06 15:10:40
+ * @Last Modified by: zhaozheng1.zh
+ * @Last Modified time: 2017-11-17 17:29:24
  */
 
 import React, { Component } from 'react';
@@ -159,6 +159,16 @@ export default class LoginForm extends Component {
         });
         this.timer && clearTimeout(this.timer);
         this.timer = setTimeout(
+            // () => {
+            //     NetworkInfo.getIPV4Address(ipv4 => {
+            //         fetchPost('A08461101', {
+            //             empeIdLandNm: this.state.name,
+            //             usrPswd: this.state.pswd,
+            //             cstCtcTel: '',
+            //             usrIpAdr: ipv4
+            //         }, this._success, this._failure)
+            //     })
+            // }
             () => anyOfficeLogin.login(this.state.name, this.state.pswd, () => {
                 console.log("success");
             }, rs => {

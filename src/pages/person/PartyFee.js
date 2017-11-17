@@ -1,8 +1,8 @@
 /*
 * @Author: caixin1.zh
 * @Date:   2017-10-19 06:06:10
- * @Last Modified by: fishci
- * @Last Modified time: 2017-11-17 14:00:33
+ * @Last Modified by: zhaozheng1.zh
+ * @Last Modified time: 2017-11-17 17:21:57
 */
 import React from 'react';
 import {
@@ -109,7 +109,7 @@ class PartyFee extends React.Component {
         color = 'grey';
     }
     return (
-      <View style={{ flexDirection: 'row', width: (Dimensions.get('window').width - 40) /3, margin:5 }}>
+      <View style={{width: (Dimensions.get('window').width - 40) /3, margin:5 }}>
         <Card>
           <CardItem style={{flex:1, backgroundColor: color, justifyContent: 'center' }}>
             <Text>{item.month}月</Text>
