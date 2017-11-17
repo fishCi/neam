@@ -162,7 +162,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
             setWhitelist(WhiteList);
 //            setBlacklist(Blacklist);
             // step 3
-            ctx.hookInit();
+            //ctx.hookInit();
         }
 
 //        try {

@@ -2,7 +2,7 @@
 * @Author: caixin1.zh
 * @Date:   2017-10-19 06:06:10
  * @Last Modified by: fishci
- * @Last Modified time: 2017-10-31 14:27:07
+ * @Last Modified time: 2017-11-17 14:00:33
 */
 import React from 'react';
 import {
@@ -48,6 +48,7 @@ class PartyFee extends React.Component {
 
 
   _success(resp) {
+    console.log(JSON.stringify(resp));
       if (resp.BK_STATUS == "00") {
         this.data =[];
         this.totalAmount = 0
@@ -110,10 +111,10 @@ class PartyFee extends React.Component {
     return (
       <View style={{ flexDirection: 'row', width: (Dimensions.get('window').width - 40) /3, margin:5 }}>
         <Card>
-          <CardItem style={{ backgroundColor: color, justifyContent: 'center' }}>
+          <CardItem style={{flex:1, backgroundColor: color, justifyContent: 'center' }}>
             <Text>{item.month}月</Text>
           </CardItem>
-          <CardItem style={{ justifyContent: 'center' }}>
+          <CardItem style={{flex:1, justifyContent: 'center' }}>
             <Text>{item.money}元</Text>
           </CardItem>
         </Card>
@@ -178,7 +179,7 @@ class PartyFee extends React.Component {
             horizontal={false}
             numColumns={3}
             columnWrapperStyle={{ justifyContent: 'flex-start' }}
-            keyExtractor={(item, index) => item}
+            keyExtractor={(item, index) => item.month}
             renderItem={this._renderItemComponent}
           />:<Text style={{fontSize:16}}> 无数据 </Text>}
         </ScrollView> 

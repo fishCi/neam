@@ -36,7 +36,7 @@ public class MainActivity extends ReactActivity {
 
 //        new Thread(new Runnable() {
  //           public void run() {
-                AnyOfficeUtil.getInstance().initAnyOffice(MainActivity.getInstance());
+        AnyOfficeUtil.getInstance().initAnyOffice(MainActivity.getInstance());
   //          }
    //     }).start();
 
