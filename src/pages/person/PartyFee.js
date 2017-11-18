@@ -2,7 +2,7 @@
 * @Author: caixin1.zh
 * @Date:   2017-10-19 06:06:10
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-11-17 17:21:57
+ * @Last Modified time: 2017-11-17 20:46:51
 */
 import React from 'react';
 import {
@@ -110,13 +110,13 @@ class PartyFee extends React.Component {
     }
     return (
       <View style={{width: (Dimensions.get('window').width - 40) /3, margin:5 }}>
-        <Card>
-          <CardItem style={{flex:1, backgroundColor: color, justifyContent: 'center' }}>
+        <Card style={{flexDirection:'column'}}>
+          <View style={{flex:1, backgroundColor: color, justifyContent: 'center',alignItems:'center',paddingVertical:10}}>
             <Text>{item.month}月</Text>
-          </CardItem>
-          <CardItem style={{flex:1, justifyContent: 'center' }}>
+          </View>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 10}}>
             <Text>{item.money}元</Text>
-          </CardItem>
+          </View>
         </Card>
       </View>
     );

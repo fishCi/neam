@@ -2,7 +2,7 @@
  * @Author: zhaozheng1.zh 
  * @Date: 2017-10-16 10:51:20 
  * @Last Modified by: zhaozheng1.zh
- * @Last Modified time: 2017-11-17 17:29:24
+ * @Last Modified time: 2017-11-18 10:13:42
  */
 
 import React, { Component } from 'react';
@@ -173,7 +173,8 @@ export default class LoginForm extends Component {
                 console.log("success");
             }, rs => {
                 console.log("failed");
-            }), 1
+            })
+            , 1
         );
         // }
     }
