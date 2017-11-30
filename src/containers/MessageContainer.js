@@ -23,7 +23,7 @@ class MessageContainer extends Component {
   static navigationOptions = {
     // title: 'Welcome',
     header: null,
-    tabBarLabel: '通知',
+    tabBarLabel: '党建要闻',
     tabBarIcon: ({ tintColor }) => <Icon name='ios-chatboxes-outline' size={30} color={tintColor} />
 
   };
@@ -31,11 +31,12 @@ class MessageContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: 'https://www.baidu.com',
+      url: 'http://lxyz.12371.cn',
       title: '',
       canBack: false
     }
   }
+
 
 
   onBack() {
@@ -101,7 +102,7 @@ class MessageContainer extends Component {
       <View style={{ flex: 1 }}>
         <Header style={styles.header}>
           <Left>
-            <Text style={{ color: '#FFFFFF' }}>通知</Text>
+            <Text style={{ color: '#FFFFFF'}}>党建要闻</Text>
           </Left>
           <Right>
           </Right>
@@ -116,13 +117,6 @@ class MessageContainer extends Component {
           // </View>
         }
         <View style={styles.container}>
-          <View style={styles.item}>
-            <Text style={styles.text} onPress={() => { this.onBack() }}>返回</Text>
-            <TextInput style={styles.input}
-              defaultValue={'https://www.baidu.com'}
-              onChangeText={text => this.text = text}></TextInput>
-            <Text style={styles.text} onPress={() => { this.onNext() }}>GO</Text>
-          </View>
           <WebView source={{ uri: this.state.url }}
             onNavigationStateChange={(e) => this.onNavigationStateChange(e)}
             ref={webView => this.webView = webView}></WebView>

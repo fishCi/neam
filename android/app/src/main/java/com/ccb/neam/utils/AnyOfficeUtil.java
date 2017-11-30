@@ -30,7 +30,7 @@ public class AnyOfficeUtil implements NetChangeCallback, Runnable {
     private static final String TestServer = ";128.192.156.*;128.192.165.*;128.192.132.*;128.192.134.*;128.192.135.*;" +
             "128.192.152.*;pub_vt1.nemc.dev.jh;pub_vt1_nh.nemc.dev.jh;128.196.101.*;mb.by.nemc.jh";
     private static final String blacklistFile = "common/blacklist.txt";
-    private static final String WhiteList = "localhost;127.0.0.1;*.ccb.com;*.baidu.com;*.amap.com;119.6.87.*;ccvea.jh;172.20.10.*;";
+    private static final String WhiteList = "localhost;127.0.0.1;*.ccb.com;*.baidu.com;*.12371.cn;*.cctvpic.com;*.amap.com;119.6.87.*;ccvea.jh;172.20.10.*;";
 
     private static Lock lock = new ReentrantLock();
 
